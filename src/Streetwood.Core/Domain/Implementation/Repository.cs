@@ -7,7 +7,7 @@ using Streetwood.Core.Exceptions;
 
 namespace Streetwood.Core.Domain.Implementation
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    internal class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly IDbContext dbContext;
         private readonly DbSet<T> dbSet;
