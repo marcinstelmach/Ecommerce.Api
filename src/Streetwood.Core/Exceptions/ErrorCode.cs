@@ -19,5 +19,8 @@ namespace Streetwood.Core.Exceptions
             : this(errorCodeName, errorCodeName, statusCode)
         {
         }
+
+        public static ErrorCode GenericNotExist<T>() => new ErrorCode($"{nameof(T)}NotExist");
+        public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
     }
 }

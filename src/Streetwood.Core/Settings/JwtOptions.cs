@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Streetwood.Core.Settings
+﻿namespace Streetwood.Core.Settings
 {
     public class JwtOptions
     {

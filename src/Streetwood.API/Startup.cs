@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
@@ -35,6 +36,7 @@ namespace Streetwood.API
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
+            builder.RegisterInstance(LogManager.GetCurrentClassLogger()).As<ILogger>();
             Container = builder.Build();
             return new AutofacServiceProvider(Container);
         }
