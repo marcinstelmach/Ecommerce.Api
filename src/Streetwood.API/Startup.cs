@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Streetwood.API.Filters;
+using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
 
 namespace Streetwood.API
@@ -25,7 +27,9 @@ namespace Streetwood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(opt => opt.Filters.Add(typeof(ValidationActionFilter)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
             services.AddStreetwoodContext();
 
@@ -48,6 +52,7 @@ namespace Streetwood.API
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 
             applicationLifetime.ApplicationStopped.Register(() => Container.Dispose());
