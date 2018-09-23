@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Streetwood.Core.Domain.Models;
+using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Core.Domain.Abstract
 {

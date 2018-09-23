@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Streetwood.Core.Domain.Models;
+using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Core.Domain.Configuration
 {

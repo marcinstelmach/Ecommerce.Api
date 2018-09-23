@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
-using Streetwood.Core.Domain.Models;
+using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Core.Domain.Implementation
 {

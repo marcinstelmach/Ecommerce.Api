@@ -2,7 +2,7 @@
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Enums;
 
-namespace Streetwood.Core.Domain.Models
+namespace Streetwood.Core.Domain.Entities
 {
     public class Discount : Entity
     {

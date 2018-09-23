@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
 
-namespace Streetwood.Core.Domain.Models
+namespace Streetwood.Core.Domain.Entities
 {
     public class ProductOrder : Entity
     {

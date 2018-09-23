@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Streetwood.Core.Domain.Abstract;
 
-namespace Streetwood.Core.Domain.Models
+namespace Streetwood.Core.Domain.Entities
 {
     public class Address : Entity
     {
