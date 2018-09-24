@@ -10,7 +10,8 @@ using NLog;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
-using Streetwood.Core.Module;
+using Streetwood.Core.Modules;
+using Streetwood.Infrastructure.Modules;
 
 namespace Streetwood.API
 {
@@ -37,7 +38,9 @@ namespace Streetwood.API
             var builder = new ContainerBuilder();
             builder.Populate(services);
             builder.RegisterInstance(LogManager.GetCurrentClassLogger()).As<ILogger>();
-            builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule<RepositoriesModule>();
+            builder.RegisterModule<ManagersModule>();
+
             Container = builder.Build();
             return new AutofacServiceProvider(Container);
         }

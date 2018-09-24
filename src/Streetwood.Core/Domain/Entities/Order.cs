@@ -6,40 +6,59 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Order : Entity
     {
-        public int UserId { get; set; }
+        private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
-        public int AddressId { get; set; }
+        public bool IsShipped { get; protected set; }
 
-        public int? DiscountId { get; set; }
+        public bool IsPayed { get; protected set; }
 
-        public bool IsShipped { get; set; }
+        public bool IsClosed { get; protected set; }
 
-        public bool IsPayed { get; set; }
+        public string Comment { get; protected set; }
 
-        public bool IsClosed { get; set; }
+        public decimal Price { get; protected set; }
 
-        public string Comment { get; set; }
+        public decimal PriceWithShippment { get; protected set; }
 
-        public decimal ShippmentPrice { get; set; }
+        public DateTime CreationDateTime { get; protected set; }
 
-        public decimal Price { get; set; }
+        public DateTime? PayedDateTime { get; protected set; }
 
-        public DateTime CreationDateTime { get; set; }
+        public DateTime? ShippmentDateTime { get; protected set; }
 
-        public DateTime? PayedDateTime { get; set; }
+        public DateTime? ClosedDateTime { get; protected set; }
 
-        public DateTime? ShippmentDateTime { get; set; }
+        public virtual Shippment Shippment { get; protected set; }
 
-        public DateTime? ClosedDateTime { get; set; }
+        public virtual User User { get; protected set; }
 
-        public Shippment Shippment { get; set; }
+        public virtual Discount Discount { get; protected set; }
 
-        public User User { get; set; }
+        public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Address Address { get; set; }
+        public Order(string comment, decimal price, Shippment shippment)
+        {
+            SetIsShipped(false);
+            SetIsPayed(false);
+            SetIsClosed(false);
+            Comment = comment;
+            Price = price;
+            Shippment = shippment;
+            PriceWithShippment = Price + shippment.Price;
+            CreationDateTime = DateTime.UtcNow;
+        }
 
-        public Discount Discount { get; set; }
+        protected Order()
+        {
+        }
 
-        public ICollection<ProductOrder> ProductOrders { get; set; }
+        public void SetIsShipped(bool isShipped)
+            => IsShipped = isShipped;
+
+        public void SetIsPayed(bool isPayed)
+            => IsPayed = isPayed;
+
+        public void SetIsClosed(bool isClosed)
+            => IsClosed = isClosed;
     }
 }

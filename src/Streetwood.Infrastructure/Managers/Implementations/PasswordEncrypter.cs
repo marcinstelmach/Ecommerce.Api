@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Security.Cryptography;
-using System.Text;
-using Streetwood.Core.Domain.Abstract;
+using Streetwood.Core.Managers;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
 {

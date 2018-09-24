@@ -28,8 +28,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\Entities\" />
-  </ItemGroup>
-
 </Project>

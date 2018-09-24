@@ -1,26 +1,29 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Streetwood.Core.Domain.Abstract;
+﻿using Streetwood.Core.Domain.Abstract;
 
 namespace Streetwood.Core.Domain.Entities
 {
     public class Address : Entity
     {
-        [MaxLength(50)]
-        public string Street { get; set; }
+        public string Street { get; protected set; }
 
-        [MaxLength(50)]
-        public string City { get; set; }
+        public string City { get; protected set; }
 
-        [MaxLength(50)]
-        public string Country { get; set; }
+        public string Country { get; protected set; }
 
-        [MaxLength(50)]
-        public string PostCode { get; set; }
+        public string PostCode { get; protected set; }
 
-        [MaxLength(6)]
-        public int PhoneNumber { get; set; }
+        public virtual User User { get; protected set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public Address(string street, string city, string country, string postCode)
+        {
+            Street = street;
+            City = city;
+            Country = country;
+            PostCode = postCode;
+        }
+
+        protected Address()
+        {
+        }
     }
 }

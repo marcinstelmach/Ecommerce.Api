@@ -1,4 +1,4 @@
-﻿namespace Streetwood.Core.Domain.Abstract
+﻿namespace Streetwood.Core.Managers
 {
     public interface IPasswordEncrypter
     {

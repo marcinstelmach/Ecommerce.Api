@@ -2,9 +2,9 @@
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Implementation.Repositories;
 
-namespace Streetwood.Core.Module
+namespace Streetwood.Core.Modules
 {
-    public class RepositoryModule : Autofac.Module
+    public class RepositoriesModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
