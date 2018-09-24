@@ -12,15 +12,23 @@ namespace Streetwood.Core.Domain.Entities
 
         [MaxLength(50)]
         public string Email { get; protected set; }
+
         public string PasswordHash { get; protected set; }
+
         public string Salt { get; protected set; }
+
         [MaxLength(30)]
         public string FirstName { get; protected set; }
+
         [MaxLength(40)]
         public string LastName { get; protected set; }
+
         public DateTime CreationDateTime { get; protected set; }
+
         public int PhoneNumber { get; protected set; }
+
         public UserType Type { get; protected set; }
+
         public IReadOnlyCollection<Order> Orders => orders;
 
         public User(string email, string firstName, string lastName)
@@ -33,7 +41,9 @@ namespace Streetwood.Core.Domain.Entities
             Type = UserType.Customer;
         }
 
-        protected User() { }
+        protected User()
+        {
+        }
 
         public void SetEmail(string email)
             => Email = email;

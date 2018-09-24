@@ -6,8 +6,11 @@ namespace Streetwood.Core.Domain.Entities
     public class ProductCategory : Entity
     {
         public string Name { get; set; }
+
         public bool IsPremium { get; set; }
+
         public int? ParentId { get; set; }
+
         public ICollection<Product> Products { get; set; }
     }
 }

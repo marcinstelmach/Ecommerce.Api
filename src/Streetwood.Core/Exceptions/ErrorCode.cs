@@ -5,9 +5,11 @@ namespace Streetwood.Core.Exceptions
     public class ErrorCode
     {
         public string ErrorCodeName { get; set; }
+
         public string Message { get; set; }
+
         public HttpStatusCode StatusCode { get; set; }
-        
+
         public ErrorCode(string errorCodeName, string message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
         {
             ErrorCodeName = errorCodeName;
@@ -21,6 +23,7 @@ namespace Streetwood.Core.Exceptions
         }
 
         public static ErrorCode GenericNotExist<T>() => new ErrorCode($"{nameof(T)}NotExist");
+
         public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
     }
 }

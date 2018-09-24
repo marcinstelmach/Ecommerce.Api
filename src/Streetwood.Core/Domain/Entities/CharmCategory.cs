@@ -6,6 +6,7 @@ namespace Streetwood.Core.Domain.Entities
     public class CharmCategory : Entity
     {
         public string Name { get; set; }
+
         public ICollection<Charm> Charms { get; set; }
     }
 }

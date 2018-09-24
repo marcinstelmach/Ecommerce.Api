@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F1ABDD9E-3CA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EF9C13DB-924E-4C5D-83D7-45C20CD72223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.API", "src\Streetwood.API\Streetwood.API.csproj", "{E5791745-3069-4A9A-A205-B7E6A2055688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.API", "src\Streetwood.API\Streetwood.API.csproj", "{E5791745-3069-4A9A-A205-B7E6A2055688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.Infrastructure", "src\Streetwood.Infrastructure\Streetwood.Infrastructure.csproj", "{D80FB728-1C79-4C55-B426-83B271D3AB6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Infrastructure", "src\Streetwood.Infrastructure\Streetwood.Infrastructure.csproj", "{D80FB728-1C79-4C55-B426-83B271D3AB6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.Core", "src\Streetwood.Core\Streetwood.Core.csproj", "{8412B90A-A3B1-4D71-BC65-53DA4CE648A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Core", "src\Streetwood.Core\Streetwood.Core.csproj", "{8412B90A-A3B1-4D71-BC65-53DA4CE648A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.API.Tests", "tests\Streetwood.API.Tests\Streetwood.API.Tests.csproj", "{6722D725-251F-4EEF-909C-15AB5D5A3EED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.API.Tests", "tests\Streetwood.API.Tests\Streetwood.API.Tests.csproj", "{6722D725-251F-4EEF-909C-15AB5D5A3EED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.Core.Tests", "tests\Streetwood.Core.Tests\Streetwood.Core.Tests.csproj", "{A7DFC482-5495-4E0D-B862-02E3B49EAEC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Core.Tests", "tests\Streetwood.Core.Tests\Streetwood.Core.Tests.csproj", "{A7DFC482-5495-4E0D-B862-02E3B49EAEC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.Infrastructure.Tests", "tests\Streetwood.Infrastructure.Tests\Streetwood.Infrastructure.Tests.csproj", "{D4F619EB-E2C2-48C2-B78C-B07F5B24DDC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Infrastructure.Tests", "tests\Streetwood.Infrastructure.Tests\Streetwood.Infrastructure.Tests.csproj", "{D4F619EB-E2C2-48C2-B78C-B07F5B24DDC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
