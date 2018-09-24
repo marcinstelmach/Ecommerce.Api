@@ -21,7 +21,7 @@ namespace Streetwood.Core.Domain.Entities
         public DateTime CreationDateTime { get; protected set; }
         public int PhoneNumber { get; protected set; }
         public UserType Type { get; protected set; }
-        public ICollection<Order> Orders => orders;
+        public IReadOnlyCollection<Order> Orders => orders;
 
         public User(string email, string firstName, string lastName)
         {
@@ -52,5 +52,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetPhoneNumber(int number)
             => PhoneNumber = number;
+
+        public void AddOrder(Order order)
+            => orders.Add(order);
     }
 }

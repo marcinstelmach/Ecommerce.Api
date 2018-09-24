@@ -6,6 +6,7 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Product : Entity
     {
+        public new int Id { get; protected set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
