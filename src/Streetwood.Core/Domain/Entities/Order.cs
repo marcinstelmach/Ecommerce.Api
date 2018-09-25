@@ -6,7 +6,7 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Order : Entity
     {
-        private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
+        private List<ProductOrder> productOrders = new List<ProductOrder>();
 
         public bool IsShipped { get; protected set; }
 
@@ -43,7 +43,7 @@ namespace Streetwood.Core.Domain.Entities
             SetIsClosed(false);
             Comment = comment;
             Price = price;
-            Shippment = shippment;
+            SetShippment(shippment);
             PriceWithShippment = Price + shippment.Price;
             CreationDateTime = DateTime.UtcNow;
         }
@@ -60,5 +60,26 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetIsClosed(bool isClosed)
             => IsClosed = isClosed;
+
+        public void SetPayedDateTime(DateTime dateTime)
+            => PayedDateTime = dateTime;
+
+        public void SetShippmentDateTime(DateTime dateTime)
+            => ShippmentDateTime = dateTime;
+
+        public void SetClosedDate(DateTime dateTime)
+            => ClosedDateTime = dateTime;
+
+        public void SetShippment(Shippment shippment)
+            => Shippment = shippment;
+
+        public void SetDiscount(Discount discount)
+            => Discount = discount;
+
+        public void AddProductOrder(ProductOrder productOrder)
+            => productOrders.Add(productOrder);
+
+        public void AddProductOrders(IEnumerable<ProductOrder> productOrderss)
+            => productOrders.AddRange(productOrderss);
     }
 }

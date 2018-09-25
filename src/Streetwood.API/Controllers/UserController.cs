@@ -19,7 +19,7 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] )
+//        [HttpPost]
+//        public async Task<IActionResult> Post([FromBody] )
     }
 }

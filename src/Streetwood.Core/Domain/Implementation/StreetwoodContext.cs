@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Domain.Entities.Configuration;
 
 namespace Streetwood.Core.Domain.Implementation
 {
@@ -37,7 +38,10 @@ namespace Streetwood.Core.Domain.Implementation
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new ShippmentConfiguration());
+            builder.ApplyConfiguration(new AddressConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
         }
     }
 }
