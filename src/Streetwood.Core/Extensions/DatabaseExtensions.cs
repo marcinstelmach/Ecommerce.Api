@@ -18,6 +18,7 @@ namespace Streetwood.Core.Extensions
 
             services.AddDbContext<StreetwoodContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 options.UseSqlServer(databaseOptions.ConnectionString);
             });
             services.AddScoped<IDbContext>(prov => prov.GetRequiredService<StreetwoodContext>());

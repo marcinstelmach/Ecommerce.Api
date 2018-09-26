@@ -24,6 +24,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public string Sizes { get; set; }
 
+        public virtual ProductDiscount ProductDiscount { get; protected set; }
+
         public ProductCategory ProductCategory { get; set; }
 
         public ICollection<Image> Images { get; set; }

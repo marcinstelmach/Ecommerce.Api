@@ -32,7 +32,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual User User { get; protected set; }
 
-        public virtual Discount Discount { get; protected set; }
+        public virtual ProductDiscount Discount { get; protected set; }
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
@@ -73,7 +73,7 @@ namespace Streetwood.Core.Domain.Entities
         public void SetShippment(Shippment shippment)
             => Shippment = shippment;
 
-        public void SetDiscount(Discount discount)
+        public void SetDiscount(ProductDiscount discount)
             => Discount = discount;
 
         public void AddProductOrder(ProductOrder productOrder)

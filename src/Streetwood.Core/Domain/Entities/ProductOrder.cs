@@ -15,7 +15,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public string Comment { get; set; }
 
-        public Discount Discount { get; set; }
+        public ProductDiscount Discount { get; set; }
 
         public Order Order { get; set; }
 

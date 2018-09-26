@@ -20,7 +20,7 @@ namespace Streetwood.Core.Domain.Implementation
 
         public DbSet<Shippment> Shippments { get; set; }
 
-        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<ProductDiscount> Discounts { get; set; }
 
         public DbSet<ProductOrder> ProductOrders { get; set; }
 

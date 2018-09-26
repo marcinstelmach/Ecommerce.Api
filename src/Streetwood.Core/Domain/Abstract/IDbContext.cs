@@ -16,7 +16,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<Shippment> Shippments { get; set; }
 
-        DbSet<Discount> Discounts { get; set; }
+        DbSet<ProductDiscount> Discounts { get; set; }
 
         DbSet<ProductOrder> ProductOrders { get; set; }
 

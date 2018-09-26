@@ -25,5 +25,7 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode GenericNotExist<T>() => new ErrorCode($"{nameof(T)}NotExist");
 
         public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
+
+        public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
     }
 }
