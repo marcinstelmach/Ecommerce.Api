@@ -4,14 +4,23 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class ProductOrderCharm : Entity
     {
-        public int CurrentPrice { get; set; }
+        public decimal CurrentPrice { get; protected set; }
 
-        public int OrderId { get; set; }
+        public virtual Charm Charm { get; protected set; }
 
-        public int CharmId { get; set; }
+        public virtual ProductOrder ProductOrder { get; protected set; }
 
-        public Charm Charm { get; set; }
+        public ProductOrderCharm(Charm charm)
+        {
+            CurrentPrice = charm.Price;
+            AddCharm(charm);
+        }
 
-        public ProductOrder ProductOrder { get; set; }
+        protected ProductOrderCharm()
+        {
+        }
+
+        public void AddCharm(Charm charm)
+            => Charm = charm;
     }
 }

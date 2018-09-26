@@ -14,7 +14,6 @@ namespace Streetwood.Core.Domain.Entities.Configuration
 
             builder.HasOne(s => s.User)
                 .WithMany(s => s.Addresses)
-                .HasForeignKey("AddressId")
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -7,8 +7,11 @@ namespace Streetwood.Core.Domain.Entities
     public class ProductCategoryDiscount : DiscountEntity
     {
         private List<ProductCategory> productCategories = new List<ProductCategory>();
+        private List<ProductOrder> productOrders = new List<ProductOrder>();
 
-        public virtual IReadOnlyCollection<ProductCategory> ProductCategories { get; set; }
+        public virtual IReadOnlyCollection<ProductCategory> ProductCategories => productCategories;
+
+        public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
         public ProductCategoryDiscount(string name, string nameEng, string description, string descriptionEng, decimal percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo) 
             : base(name, nameEng, description, descriptionEng, percentValue, isActive, avaibleFrom, avaibleTo)

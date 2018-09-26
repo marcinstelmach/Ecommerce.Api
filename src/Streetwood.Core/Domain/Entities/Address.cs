@@ -1,4 +1,5 @@
-﻿using Streetwood.Core.Domain.Abstract;
+﻿using System;
+using Streetwood.Core.Domain.Abstract;
 
 namespace Streetwood.Core.Domain.Entities
 {
@@ -16,6 +17,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public Address(string street, string city, string country, string postCode)
         {
+            Id = Guid.NewGuid();
             Street = street;
             City = city;
             Country = country;

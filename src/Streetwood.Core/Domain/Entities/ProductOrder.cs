@@ -1,26 +1,51 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
 
 namespace Streetwood.Core.Domain.Entities
 {
     public class ProductOrder : Entity
     {
-        public int OrderId { get; set; }
+        private List<ProductOrderCharm> productOrderCharms = new List<ProductOrderCharm>();
 
-        public int Amount { get; set; }
+        public int Amount { get; protected set; }
 
-        public decimal CurrentPrice { get; set; }
+        public decimal CurrentProductPrice { get; protected set; }
 
-        public int? DiscountId { get; set; }
+        public string Comment { get; protected set; }
 
-        public string Comment { get; set; }
+        public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
-        public ProductDiscount Discount { get; set; }
+        public virtual Order Order { get; protected set; }
 
-        public Order Order { get; set; }
+        public virtual Product Product { get; protected set; }
 
-        public Product Product { get; set; }
+        public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms { get; protected set; }
 
-        public ICollection<ProductOrderCharm> ProductOrderCharms { get; set; }
+        public ProductOrder(int amount, string comment)
+        {
+            Id = Guid.NewGuid();
+            Amount = amount;
+            Comment = comment;
+        }
+
+        protected ProductOrder()
+        {
+        }
+
+        public void SetCurrentProductPrice(decimal price)
+            => CurrentProductPrice = price;
+
+        public void AddProductCategoryDiscount(ProductCategoryDiscount discount)
+            => ProductCategoryDiscount = discount;
+
+        public void AddProduct(Product product)
+            => Product = product;
+
+        public void AddProductOrderCharm(ProductOrderCharm orderCharm)
+            => productOrderCharms.Add(orderCharm);
+
+        public void AddProductOrderCharms(IEnumerable<ProductOrderCharm> orderCharms)
+            => productOrderCharms.AddRange(orderCharms);
     }
 }

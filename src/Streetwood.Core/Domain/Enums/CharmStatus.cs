@@ -3,6 +3,7 @@
     public enum CharmStatus
     {
         Avaible,
-        Unavaible
+        Unavaible,
+        Deleted
     }
 }

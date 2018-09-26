@@ -15,7 +15,6 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.Property(s => s.LastName).HasMaxLength(40);
             builder.HasMany(s => s.Orders)
                 .WithOne(s => s.User)
-                .HasForeignKey("UserId")
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

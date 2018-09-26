@@ -12,9 +12,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.Property(s => s.NameEng).HasMaxLength(50);
 
             builder.HasMany(s => s.Orders)
-                .WithOne(s => s.Shippment)
-                .HasForeignKey("OrderId")
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne(s => s.Shippment);
         }
     }
 }
