@@ -23,7 +23,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public ShippmentType Type { get; set; }
 
-        public IReadOnlyCollection<Order> Orders => orders;
+        public virtual IReadOnlyCollection<Order> Orders => orders;
 
         public Shippment(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShippmentType type)
         {
