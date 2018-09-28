@@ -6,7 +6,7 @@ using Streetwood.Infrastructure.Services.Abstract.Commands.User;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
-    public class UserCommandService : IUserCommandService
+    internal class UserCommandService : IUserCommandService
     {
         private readonly IUserRepository userRepository;
         private readonly IPasswordEncrypter passwordEncrypter;
@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.passwordEncrypter = passwordEncrypter;
         }
 
-        public async Task AddUser(string email, string firstName, string lastName, string password, int phoneNumber)
+        public async Task AddUserAsync(string email, string firstName, string lastName, string password, int phoneNumber)
         {
             var user = new User(email, firstName, lastName, phoneNumber);
             user.SetPassword(password, passwordEncrypter);
