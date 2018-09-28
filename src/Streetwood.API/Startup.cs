@@ -24,7 +24,9 @@ namespace Streetwood.API
         }
 
         public IConfiguration Configuration { get; }
+
         public IHostingEnvironment HostingEnvironment { get; }
+
         public IContainer Container { get; private set; }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)

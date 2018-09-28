@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Streetwood.Infrastructure.Requests.Models.User
+namespace Streetwood.Infrastructure.Commands.Models.User
 {
-    public class AddUserRequest : IRequest
+    public class AddUserCommandModel : IRequest
     {
         [Required]
         public string FirstName { get; set; }
+
         [Required]
         public string LastName { get; set; }
+
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
+
         [Required]
         public string Password { get; set; }
+
         [Required]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
 
+        public int PhoneNumber { get; set; }
     }
 }

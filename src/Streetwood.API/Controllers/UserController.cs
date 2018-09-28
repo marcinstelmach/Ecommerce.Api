@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.Infrastructure.Commands.Models.User;
 
 namespace Streetwood.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -19,7 +16,11 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
-//        [HttpPost]
-//        public async Task<IActionResult> Post([FromBody] )
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] AddUserCommandModel model)
+        {
+            await mediator.Send(model);
+            return Accepted();
+        }
     }
 }

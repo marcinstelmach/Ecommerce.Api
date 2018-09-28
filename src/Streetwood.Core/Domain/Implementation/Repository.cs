@@ -35,9 +35,6 @@ namespace Streetwood.Core.Domain.Implementation
             return result;
         }
 
-        public async Task AddAsync(T entity)
-            => await dbSet.AddAsync(entity);
-
         public async Task Update(T entity)
             => await Task.FromResult(dbSet.Update(entity));
 

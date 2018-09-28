@@ -12,8 +12,6 @@ namespace Streetwood.Core.Domain.Abstract
 
         Task<Entity> GetAndEnsureExist(Guid id);
 
-        Task AddAsync(T entity);
-
         Task Update(T entity);
 
         Task Delete(T entity);
