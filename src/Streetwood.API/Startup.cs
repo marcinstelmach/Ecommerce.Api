@@ -12,6 +12,7 @@ using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
 using Streetwood.Core.Modules;
 using Streetwood.Infrastructure.Modules;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Streetwood.API
 {
@@ -36,6 +37,7 @@ namespace Streetwood.API
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
             services.AddStreetwoodContext();
+            services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -60,6 +62,8 @@ namespace Streetwood.API
                 app.UseHsts();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Streetwood API"));
             app.UseHttpsRedirection();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
