@@ -42,6 +42,8 @@ namespace Streetwood.API
             builder.RegisterInstance(LogManager.GetCurrentClassLogger()).As<ILogger>();
             builder.RegisterModule<RepositoriesModule>();
             builder.RegisterModule<ManagersModule>();
+            builder.RegisterModule<ServicesModule>();
+            builder.RegisterModule<MediaTrModule>();
 
             Container = builder.Build();
             return new AutofacServiceProvider(Container);
