@@ -20,6 +20,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             this.mapper = mapper;
         }
 
+        public async Task<IList<UserDto>> GetAsync()
+        {
+            var users = await userRepository.GetAsync();
+            return mapper.Map<IList<UserDto>>(users);
+        }
+
         public async Task<UserDto> GetByIdAsync(Guid id)
         {
             var user = await userRepository.GetAndEnsureExist(id);

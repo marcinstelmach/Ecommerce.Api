@@ -9,17 +9,21 @@ namespace Streetwood.API.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public UserController(IMediator mediator)
+        public UsersController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] Guid id)
+        public async Task<IActionResult> Get()
+            => Ok(await mediator.Send(new GetUsersQueryModel()));
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
             => Ok(await mediator.Send(new GetUserByIdQueryModel(id)));
 
         [HttpPost]

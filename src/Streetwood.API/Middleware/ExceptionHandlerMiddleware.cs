@@ -52,7 +52,7 @@ namespace Streetwood.API.Middleware
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
-            var responseBody = JsonConvert.SerializeObject(new {errorCodeName, message});
+            var responseBody = JsonConvert.SerializeObject(new { errorCodeName, message });
 
             return context.Response.WriteAsync(responseBody);
         }

@@ -21,7 +21,7 @@ namespace Streetwood.API.Filters
                     errors.Add(val.Key, val.Value.Errors.Select(s => s.ErrorMessage).ToArray());
                 }
 
-                var content = JsonConvert.SerializeObject(new {errors});
+                var content = JsonConvert.SerializeObject(new { errors });
                 result.Content = content;
                 result.ContentType = "application/json";
 

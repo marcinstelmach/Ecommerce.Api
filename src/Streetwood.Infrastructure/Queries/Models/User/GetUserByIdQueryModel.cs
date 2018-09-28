@@ -4,7 +4,7 @@ using Streetwood.Infrastructure.Dto.User;
 
 namespace Streetwood.Infrastructure.Queries.Models.User
 {
-    public class GetUserByIdQueryModel : IRequest<UserDto>, IRequest<Unit>
+    public class GetUserByIdQueryModel : IRequest<UserDto>
     {
         public Guid Id { get; }
 
