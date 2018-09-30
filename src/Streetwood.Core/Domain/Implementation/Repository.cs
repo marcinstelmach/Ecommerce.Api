@@ -30,7 +30,7 @@ namespace Streetwood.Core.Domain.Implementation
             var result = await dbSet.FindAsync(id);
             if (result == null)
             {
-                throw new StreetwoodException(ErrorCode.GenericNotExist<T>());
+                throw new StreetwoodException(ErrorCode.GenericNotExist(typeof(T)));
             }
 
             return result;

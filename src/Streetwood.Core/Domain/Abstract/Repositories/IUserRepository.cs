@@ -6,5 +6,7 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
     public interface IUserRepository : IRepository<User>
     {
         Task AddAsync(User user);
+
+        Task<User> GetByEmailAsync(string email);
     }
 }

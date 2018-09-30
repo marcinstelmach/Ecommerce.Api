@@ -9,6 +9,7 @@ namespace Streetwood.Core.Extensions
         public static void AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<DatabaseOptions>(configuration.GetSection("Database"));
+            services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
         }
     }
 }
