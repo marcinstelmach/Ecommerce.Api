@@ -4,7 +4,7 @@
     {
         public string SecretKey { get; set; }
 
-        public int ExpiryMinutes { get; set; }
+        public int ExpiresMinutes { get; set; }
 
         public string Issuer { get; set; }
     }

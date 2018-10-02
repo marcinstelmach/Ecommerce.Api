@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,18 +19,18 @@ namespace Streetwood.Core.Domain.Implementation
             dbSet = dbContext.Set<T>();
         }
 
-        public async Task<IQueryable<Entity>> GetAsync()
-            => await Task.FromResult(dbSet.AsQueryable());
+        public async Task<IList<T>> GetAsync()
+            => await dbSet.ToListAsync();
 
-        public async Task<Entity> GetAsync(Guid id)
+        public async Task<T> GetAsync(Guid id)
             => await dbSet.FindAsync(id);
 
-        public async Task<Entity> GetAndEnsureExist(Guid id)
+        public async Task<T> GetAndEnsureExist(Guid id)
         {
             var result = await dbSet.FindAsync(id);
             if (result == null)
             {
-                throw new StreetwoodException(ErrorCode.GenericNotExist<T>());
+                throw new StreetwoodException(ErrorCode.GenericNotExist(typeof(T)));
             }
 
             return result;

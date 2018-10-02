@@ -6,13 +6,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
 using Streetwood.Core.Modules;
 using Streetwood.Infrastructure.Modules;
 using Swashbuckle.AspNetCore.Swagger;
+using ILogger = NLog.ILogger;
 
 namespace Streetwood.API
 {
@@ -36,6 +40,7 @@ namespace Streetwood.API
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
+            services.AddJwtAuth(Configuration);
             services.AddStreetwoodContext();
             services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
 
@@ -44,27 +49,32 @@ namespace Streetwood.API
             builder.RegisterInstance(LogManager.GetCurrentClassLogger()).As<ILogger>();
             builder.RegisterModule<RepositoriesModule>();
             builder.RegisterModule<ManagersModule>();
-            builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<MediaTrModule>();
+            builder.RegisterModule<MapperModule>();
+            builder.RegisterModule<ServicesModule>();
 
             Container = builder.Build();
             return new AutofacServiceProvider(Container);
         }
 
-        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime)
+        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
-            if (HostingEnvironment.IsDevelopment())
+            loggerFactory.AddNLog();
+            HostingEnvironment.ConfigureNLog($"nlog.{HostingEnvironment.EnvironmentName}.config");
+
+            if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsStaging())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Streetwood API"));
             }
             else
             {
                 app.UseHsts();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Streetwood API"));
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 

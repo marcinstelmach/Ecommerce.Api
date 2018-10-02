@@ -2,6 +2,7 @@
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Extensions;
 
 namespace Streetwood.Core.Domain.Implementation.Repositories
 {
@@ -19,5 +20,8 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         {
             await dbContext.Users.AddAsync(user);
         }
+
+        public async Task<User> GetByEmailAsync(string email)
+            => await dbContext.Users.FindAndEnsureSingleAsync(s => s.Email == email);
     }
 }

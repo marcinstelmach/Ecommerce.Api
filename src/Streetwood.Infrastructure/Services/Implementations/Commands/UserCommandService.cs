@@ -6,21 +6,21 @@ using Streetwood.Infrastructure.Services.Abstract.Commands.User;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
-    public class UserCommandService : IUserCommandService
+    internal class UserCommandService : IUserCommandService
     {
         private readonly IUserRepository userRepository;
-        private readonly IPasswordEncrypter passwordEncrypter;
+        private readonly IEncrypter encrypter;
 
-        public UserCommandService(IUserRepository userRepository, IPasswordEncrypter passwordEncrypter)
+        public UserCommandService(IUserRepository userRepository, IEncrypter encrypter)
         {
             this.userRepository = userRepository;
-            this.passwordEncrypter = passwordEncrypter;
+            this.encrypter = encrypter;
         }
 
-        public async Task AddUser(string email, string firstName, string lastName, string password, int phoneNumber)
+        public async Task AddUserAsync(string email, string firstName, string lastName, string password, int phoneNumber)
         {
             var user = new User(email, firstName, lastName, phoneNumber);
-            user.SetPassword(password, passwordEncrypter);
+            user.SetPassword(password, encrypter);
             await userRepository.AddAsync(user);
             await userRepository.SaveChangesAsync();
         }

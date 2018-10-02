@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.User
 
         public async Task<Unit> Handle(AddUserCommandModel request, CancellationToken cancellationToken)
         {
-            await userCommandService.AddUser(request.Email, request.FirstName, request.LastName, request.Password, request.PhoneNumber);
+            await userCommandService.AddUserAsync(request.Email, request.FirstName, request.LastName, request.Password, request.PhoneNumber);
             return Unit.Value;
         }
     }

@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Streetwood.Core.Domain.Abstract
 {
-    public interface IRepository<in T> where T : Entity
+    public interface IRepository<T> where T : Entity
     {
-        Task<IQueryable<Entity>> GetAsync();
+        Task<IList<T>> GetAsync();
 
-        Task<Entity> GetAsync(Guid id);
+        Task<T> GetAsync(Guid id);
 
-        Task<Entity> GetAndEnsureExist(Guid id);
+        Task<T> GetAndEnsureExist(Guid id);
 
         Task Update(T entity);
 

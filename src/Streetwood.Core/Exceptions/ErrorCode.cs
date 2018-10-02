@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace Streetwood.Core.Exceptions
 {
@@ -22,10 +23,16 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
-        public static ErrorCode GenericNotExist<T>() => new ErrorCode($"{nameof(T)}NotExist");
+        public static ErrorCode GenericNotExist(Type type) => new ErrorCode($"{nameof(type)}NotExist");
 
         public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
 
         public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
+
+        public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials), HttpStatusCode.UnprocessableEntity);
+
+        public static ErrorCode InvalidUserClaimName => new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
+
+        public static ErrorCode InvalidRefreshToken => new ErrorCode(nameof(InvalidRefreshToken));
     }
 }

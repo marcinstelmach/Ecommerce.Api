@@ -20,17 +20,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Streetwood.Core\Streetwood.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Managers\Abstract\" />
-    <Folder Include="Requests\" />
-    <Folder Include="Services\Abstract\Queries\" />
-    <Folder Include="Services\Implementations\Queries\" />
   </ItemGroup>
 
 </Project>

@@ -56,7 +56,7 @@ namespace Streetwood.Core.Domain.Entities
         public void SetEmail(string email)
             => Email = email;
 
-        public void SetPassword(string password, IPasswordEncrypter encrypter)
+        public void SetPassword(string password, IEncrypter encrypter)
         {
             Salt = encrypter.GetSalt();
             PasswordHash = encrypter.GetHash(password, Salt);

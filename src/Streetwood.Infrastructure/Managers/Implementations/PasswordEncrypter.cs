@@ -4,7 +4,7 @@ using Streetwood.Core.Managers;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
 {
-    internal class PasswordEncrypter : IPasswordEncrypter
+    internal class Encrypter : IEncrypter
     {
         private const int SaltSize = 40;
         private const int DeriveBytesIterationsCount = 10000;
