@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Streetwood.Infrastructure.Dto.User
 {
@@ -14,12 +12,15 @@ namespace Streetwood.Infrastructure.Dto.User
 
         public DateTime Expires { get; protected set; }
 
-        public TokenModel(Guid userId, string email, string token, DateTime expires)
+        public string RefreshToken { get; protected set; }
+
+        public TokenModel(Guid userId, string email, string token, DateTime expires, string refreshToken)
         {
             UserId = userId;
             Email = email;
             Token = token;
             Expires = expires;
+            RefreshToken = refreshToken;
         }
     }
 }

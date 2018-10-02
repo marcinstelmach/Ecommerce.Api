@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Managers
 {
-    public interface IPasswordEncrypter
+    public interface IEncrypter
     {
         string GetSalt();
 

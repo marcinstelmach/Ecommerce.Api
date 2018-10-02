@@ -12,5 +12,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
         Task<UserDto> GetByIdAsync(Guid id);
 
         Task<TokenModel> GetTokenAsync(string email, string password);
+
+        Task<TokenModel> RefreshToken(string jwtToken, string refreshToken);
     }
 }

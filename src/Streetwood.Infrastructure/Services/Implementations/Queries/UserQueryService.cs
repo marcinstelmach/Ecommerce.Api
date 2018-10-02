@@ -15,10 +15,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
-        private readonly IPasswordEncrypter encrypter;
+        private readonly IEncrypter encrypter;
         private readonly ITokenManager tokenManager;
 
-        public UserQueryService(IUserRepository userRepository, IMapper mapper, IPasswordEncrypter encrypter, ITokenManager tokenManager)
+        public UserQueryService(IUserRepository userRepository, IMapper mapper, IEncrypter encrypter, ITokenManager tokenManager)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
@@ -48,6 +48,25 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             }
 
             var token = tokenManager.GetToken(user.Id, user.Email);
+            user.SetRefreshToken(token.RefreshToken);
+            await userRepository.SaveChangesAsync();
+
+            return token;
+        }
+
+        public async Task<TokenModel> RefreshToken(string jwtToken, string refreshToken)
+        {
+            var userId = tokenManager.GetUserIdFromExpiredToken(jwtToken);
+            var user = await userRepository.GetAndEnsureExist(userId);
+            if (refreshToken != user.RefreshToken)
+            {
+                throw new StreetwoodException(ErrorCode.InvalidRefreshToken);
+            }
+
+            var token = tokenManager.GetToken(userId, user.Email);
+            user.SetRefreshToken(token.RefreshToken);
+            await userRepository.SaveChangesAsync();
+
             return token;
         }
     }

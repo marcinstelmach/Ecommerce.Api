@@ -30,5 +30,9 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
 
         public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials), HttpStatusCode.UnprocessableEntity);
+
+        public static ErrorCode InvalidUserClaimName => new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
+
+        public static ErrorCode InvalidRefreshToken => new ErrorCode(nameof(InvalidRefreshToken));
     }
 }
