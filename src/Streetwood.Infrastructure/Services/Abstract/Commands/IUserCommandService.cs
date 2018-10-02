@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Streetwood.Infrastructure.Services.Abstract.Commands.User
+namespace Streetwood.Infrastructure.Services.Abstract.Commands
 {
     public interface IUserCommandService
     {

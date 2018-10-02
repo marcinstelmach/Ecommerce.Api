@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Streetwood.Infrastructure.Commands.Models.User;
-using Streetwood.Infrastructure.Services.Abstract.Commands.User;
+using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.User
 {

@@ -2,7 +2,7 @@
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Managers;
-using Streetwood.Infrastructure.Services.Abstract.Commands.User;
+using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
