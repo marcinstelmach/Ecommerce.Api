@@ -21,7 +21,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public bool IsActive { get; protected set; }
 
-        public ShipmentType Type { get; set; }
+        public ShipmentType Type { get; protected set; }
 
         public virtual IReadOnlyCollection<Order> Orders => orders;
 

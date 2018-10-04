@@ -4,12 +4,12 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Mappers.Profiles
 {
-    public class UserProfile : Profile
+    public class ShipmentProfile : Profile
     {
-        public UserProfile()
-            : base("Users")
+        public ShipmentProfile()
+            : base("Shipments")
         {
-            CreateMap<User, UserDto>();
+            CreateMap<Shipment, ShipmentDto>();
         }
     }
 }

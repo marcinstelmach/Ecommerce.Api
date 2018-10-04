@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Streetwood.Infrastructure.Dto.User;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.User;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 

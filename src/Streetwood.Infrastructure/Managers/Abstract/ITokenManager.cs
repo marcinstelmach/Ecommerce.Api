@@ -1,5 +1,5 @@
 ﻿using System;
-using Streetwood.Infrastructure.Dto.User;
+using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Managers.Abstract
 {

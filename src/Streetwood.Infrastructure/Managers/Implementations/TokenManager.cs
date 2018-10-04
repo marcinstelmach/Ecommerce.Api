@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Streetwood.Core.Extensions;
 using Streetwood.Core.Settings;
-using Streetwood.Infrastructure.Dto.User;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations

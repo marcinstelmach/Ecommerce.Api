@@ -5,7 +5,7 @@ using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Managers;
-using Streetwood.Infrastructure.Dto.User;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 

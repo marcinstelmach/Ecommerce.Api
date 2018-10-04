@@ -10,6 +10,7 @@ namespace Streetwood.Infrastructure.Mappers
             return new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
+                cfg.AddProfile(new ShipmentProfile());
             })
             .CreateMapper();
         }

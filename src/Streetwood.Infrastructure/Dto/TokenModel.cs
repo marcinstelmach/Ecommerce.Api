@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Streetwood.Infrastructure.Dto.User
+namespace Streetwood.Infrastructure.Dto
 {
     public class TokenModel
     {
