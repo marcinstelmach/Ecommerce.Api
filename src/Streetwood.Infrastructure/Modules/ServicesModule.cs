@@ -18,6 +18,9 @@ namespace Streetwood.Infrastructure.Modules
 
             builder.RegisterType<ShipmentCommandService>().As<IShipmentCommandService>().InstancePerLifetimeScope();
             builder.RegisterType<ShipmentQueryService>().As<IShipmentQueryService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<ProductCategoryCommandService>().As<IProductCategoryCommandService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductCategoryQueryService>().As<IProductCategoryQueryService>().InstancePerLifetimeScope();
         }
     }
 }

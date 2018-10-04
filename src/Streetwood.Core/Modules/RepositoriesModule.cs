@@ -11,6 +11,7 @@ namespace Streetwood.Core.Modules
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<AddressRepository>().As<IAddressRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ShipmentRepository>().As<IShipmentRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductCategoryRepository>().As<IProductCategoryRepository>().InstancePerLifetimeScope();
         }
     }
 }
