@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Domain.Enums
 {
-    public enum ShippmentType
+    public enum ShipmentType
     {
         Courier,
         CashOnDelivery,

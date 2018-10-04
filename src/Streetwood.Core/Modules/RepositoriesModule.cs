@@ -4,11 +4,13 @@ using Streetwood.Core.Domain.Implementation.Repositories;
 
 namespace Streetwood.Core.Modules
 {
-    public class RepositoriesModule : Autofac.Module
+    public class RepositoriesModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<AddressRepository>().As<IAddressRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ShipmentRepository>().As<IShipmentRepository>().InstancePerLifetimeScope();
         }
     }
 }

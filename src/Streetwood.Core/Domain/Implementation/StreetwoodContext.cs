@@ -31,7 +31,7 @@ namespace Streetwood.Core.Domain.Implementation
 
         public DbSet<ProductOrderCharm> ProductOrderCharms { get; set; }
 
-        public DbSet<Shippment> Shippments { get; set; }
+        public DbSet<Shipment> Shipments { get; set; }
 
         public DbSet<User> Users { get; set; }
 
@@ -54,7 +54,7 @@ namespace Streetwood.Core.Domain.Implementation
             builder.ApplyConfiguration(new ProductCategoryDiscountConfiguration());
             builder.ApplyConfiguration(new ProductOrderConfiguration());
             builder.ApplyConfiguration(new ProductOrderCharmConfiguration());
-            builder.ApplyConfiguration(new ShippmentConfiguration());
+            builder.ApplyConfiguration(new ShipmentConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
         }
     }

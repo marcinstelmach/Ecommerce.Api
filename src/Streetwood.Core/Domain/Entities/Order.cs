@@ -28,7 +28,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public DateTime? ClosedDateTime { get; protected set; }
 
-        public virtual Shippment Shippment { get; protected set; }
+        public virtual Shipment Shippment { get; protected set; }
 
         public virtual User User { get; protected set; }
 
@@ -36,7 +36,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(string comment, decimal price, Shippment shippment)
+        public Order(string comment, decimal price, Shipment shippment)
         {
             Id = Guid.NewGuid();
             SetIsShipped(false);
@@ -71,7 +71,7 @@ namespace Streetwood.Core.Domain.Entities
         public void SetClosedDate(DateTime dateTime)
             => ClosedDateTime = dateTime;
 
-        public void SetShippment(Shippment shippment)
+        public void SetShippment(Shipment shippment)
             => Shippment = shippment;
 
         public void SetDiscount(OrderDiscount discount)

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Streetwood.Core.Domain.Entities.Configuration
 {
-    public class ShippmentConfiguration : IEntityTypeConfiguration<Shippment>
+    public class ShipmentConfiguration : IEntityTypeConfiguration<Shipment>
     {
-        public void Configure(EntityTypeBuilder<Shippment> builder)
+        public void Configure(EntityTypeBuilder<Shipment> builder)
         {
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Name).HasMaxLength(50);

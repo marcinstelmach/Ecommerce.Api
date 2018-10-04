@@ -5,7 +5,7 @@ using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Core.Domain.Entities
 {
-    public class Shippment : Entity
+    public class Shipment : Entity
     {
         private readonly List<Order> orders = new List<Order>();
 
@@ -21,11 +21,11 @@ namespace Streetwood.Core.Domain.Entities
 
         public bool IsActive { get; protected set; }
 
-        public ShippmentType Type { get; set; }
+        public ShipmentType Type { get; set; }
 
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
-        public Shippment(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShippmentType type)
+        public Shipment(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShipmentType type)
         {
             Id = Guid.NewGuid();
             SetName(name);
@@ -37,7 +37,7 @@ namespace Streetwood.Core.Domain.Entities
             SetType(type);
         }
 
-        protected Shippment()
+        protected Shipment()
         {
         }
 
@@ -53,7 +53,7 @@ namespace Streetwood.Core.Domain.Entities
         public void SetDescriptionEng(string description)
             => DescriptionEng = description;
 
-        public void SetType(ShippmentType type)
+        public void SetType(ShipmentType type)
             => Type = type;
 
         public void SetIsActive(bool isActive)

@@ -32,7 +32,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<ProductOrderCharm> ProductOrderCharms { get; set; }
 
-        DbSet<Shippment> Shippments { get; set; }
+        DbSet<Shipment> Shipments { get; set; }
 
         DbSet<User> Users { get; set; }
 
