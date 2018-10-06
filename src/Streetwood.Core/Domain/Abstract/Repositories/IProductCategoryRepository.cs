@@ -9,7 +9,7 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
     {
         Task AddAsync(ProductCategory productCategory);
 
-        Task<ProductCategory> GetWithChildren(Guid id);
+        Task<ProductCategory> GetWithChildrenAsync(Guid id);
 
         Task<IList<ProductCategory>> GetTreeAsync();
     }

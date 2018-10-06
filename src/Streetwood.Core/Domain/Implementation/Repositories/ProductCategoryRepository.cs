@@ -24,7 +24,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
             await dbContext.ProductCategories.AddAsync(productCategory);
         }
 
-        public async Task<ProductCategory> GetWithChildren(Guid id)
+        public async Task<ProductCategory> GetWithChildrenAsync(Guid id)
         {
             return await dbContext
                 .ProductCategories
@@ -37,7 +37,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         {
             return await dbContext
                 .ProductCategories
-                .Where(s => s.Category == null)
+                .Where(s => s.ProductCategories.Any())
                 .Include(s => s.ProductCategories)
                 .ToListAsync();
         }

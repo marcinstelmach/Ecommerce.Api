@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<ProductCategoryDto> GetByIdAsync(Guid id)
         {
-            var productCategory = await productCategoryRepository.GetWithChildren(id);
+            var productCategory = await productCategoryRepository.GetWithChildrenAsync(id);
             return mapper.Map<ProductCategoryDto>(productCategory);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Streetwood.Infrastructure.Dto;
 
@@ -9,5 +10,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
         Task<IList<ProductListDto>> GetAsync();
 
         Task<ProductDto> GetAsync(int id);
+
+        Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id);
     }
 }
