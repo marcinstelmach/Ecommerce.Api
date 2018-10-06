@@ -33,11 +33,13 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Product(string name, decimal price, string description, bool acceptCharms, string sizes)
+        public Product(string name, string nameEng, decimal price, string description, string descriptionEng, bool acceptCharms, string sizes)
         {
             SetName(name);
+            SetNameEng(nameEng);
             SetPrice(price);
             SetDescription(description);
+            SetDescriptionEng(descriptionEng);
             AcceptCharms = acceptCharms;
             SetSizes(sizes);
             Status = ProductStatus.Avaible;
