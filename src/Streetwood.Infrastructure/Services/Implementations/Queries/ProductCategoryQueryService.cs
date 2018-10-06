@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -18,10 +19,16 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             this.mapper = mapper;
         }
 
-        public async Task<ProductCategoryDto> GetProductCategoryByIdAsync(Guid id)
+        public async Task<ProductCategoryDto> GetByIdAsync(Guid id)
         {
             var productCategory = await productCategoryRepository.GetWithChildren(id);
             return mapper.Map<ProductCategoryDto>(productCategory);
+        }
+
+        public async Task<IList<ProductCategoryDto>> GetAsync()
+        {
+            var productCategories = await productCategoryRepository.GetTreeAsync();
+            return mapper.Map<IList<ProductCategoryDto>>(productCategories);
         }
     }
 }

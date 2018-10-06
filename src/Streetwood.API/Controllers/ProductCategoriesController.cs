@@ -18,11 +18,13 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+            => Ok(await mediator.Send(new GetProductCategoriesQueryModel()));
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
-        {
-            return Ok(await mediator.Send(new GetProductCategoryByIdQueryModel(id)));
-        }
+            => Ok(await mediator.Send(new GetProductCategoryByIdQueryModel(id)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryCommandModel model)

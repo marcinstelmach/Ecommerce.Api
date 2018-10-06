@@ -43,6 +43,7 @@ namespace Streetwood.API
             services.AddJwtAuth(Configuration);
             services.AddStreetwoodContext();
             services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
+            services.AddMemoryCache();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);

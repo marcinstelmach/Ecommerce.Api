@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -25,12 +26,20 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 
         public async Task<ProductCategory> GetWithChildren(Guid id)
         {
-            var result = await dbContext
+            return await dbContext
                 .ProductCategories
                 .Where(s => s.Id == id)
                 .Include(s => s.ProductCategories)
                 .FirstOrDefaultAsync();
-            return result;
+        }
+
+        public async Task<IList<ProductCategory>> GetTreeAsync()
+        {
+            return await dbContext
+                .ProductCategories
+                .Where(s => s.Category == null)
+                .Include(s => s.ProductCategories)
+                .ToListAsync();
         }
     }
 }

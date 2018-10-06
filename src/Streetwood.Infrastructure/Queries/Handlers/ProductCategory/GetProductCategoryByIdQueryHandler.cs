@@ -5,7 +5,7 @@ using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.ProductCategory;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
-namespace Streetwood.Infrastructure.Queries.Handlers
+namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategory
 {
     public class GetProductCategoryByIdQueryHandler : IRequestHandler<GetProductCategoryByIdQueryModel, ProductCategoryDto>
     {
@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers
 
         public async Task<ProductCategoryDto> Handle(GetProductCategoryByIdQueryModel request, CancellationToken cancellationToken)
         {
-            return await productCategoryQueryService.GetProductCategoryByIdAsync(request.Id);
+            return await productCategoryQueryService.GetByIdAsync(request.Id);
         }
     }
 }
