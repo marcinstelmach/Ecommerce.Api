@@ -24,14 +24,12 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Product
 
         public async Task<IList<ProductDto>> Handle(GetProductsByCategoryIdQueryModel request, CancellationToken cancellationToken)
         {
-//            var result = await cache.GetOrCreateAsync($"{CacheKey.ProductsByCategory}{request.CategoryId.ToString()}", s =>
-//                {
-//                    s.SlidingExpiration = TimeSpan.FromMinutes(3);
-//                    return productQueryService.GetByCategoryIdAsync(request.CategoryId);
-//                });
-//            return result;
-
-            return await productQueryService.GetByCategoryIdAsync(request.CategoryId);
+            var result = await cache.GetOrCreateAsync($"{CacheKey.ProductsByCategory}{request.CategoryId.ToString()}", s =>
+                {
+                    s.SlidingExpiration = TimeSpan.FromMinutes(3);
+                    return productQueryService.GetByCategoryIdAsync(request.CategoryId);
+                });
+            return result;
         }
     }
 }
