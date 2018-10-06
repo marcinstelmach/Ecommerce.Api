@@ -21,6 +21,10 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get()
             => Ok(await mediator.Send(new GetProductsQueryModel()));
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+            => Ok(await mediator.Send(new GetProductByIdQueryModel(id)));
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
         {

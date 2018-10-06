@@ -34,5 +34,7 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode InvalidUserClaimName => new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
 
         public static ErrorCode InvalidRefreshToken => new ErrorCode(nameof(InvalidRefreshToken));
+
+        public static ErrorCode ProductNotFound => new ErrorCode(nameof(ProductNotFound));
     }
 }

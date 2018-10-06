@@ -10,6 +10,7 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
             : base("Products")
         {
             CreateMap<Product, ProductListDto>();
+            CreateMap<Product, ProductDto>();
         }
     }
 }

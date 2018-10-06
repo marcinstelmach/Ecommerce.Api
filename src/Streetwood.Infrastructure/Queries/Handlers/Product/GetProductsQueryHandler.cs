@@ -27,7 +27,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Product
             var result = await cache.GetOrCreateAsync(CacheKey.ProductList, e =>
             {
                 e.SlidingExpiration = TimeSpan.FromMinutes(2);
-                return productQueryService.GetProducts();
+                return productQueryService.GetAsync();
             });
             return result;
         }
