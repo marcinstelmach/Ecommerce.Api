@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Product;
+using Streetwood.Infrastructure.Queries.Models.Product;
 
 namespace Streetwood.API.Controllers
 {
@@ -15,6 +16,10 @@ namespace Streetwood.API.Controllers
         {
             this.mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+            => Ok(await mediator.Send(new GetProductsQueryModel()));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)

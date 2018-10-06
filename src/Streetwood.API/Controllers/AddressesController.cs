@@ -17,6 +17,7 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<IActionResult> Post(Guid userId, [FromBody] AddAddressCommandModel model)
         {
             await mediator.Send(model.SetUserId(userId));
