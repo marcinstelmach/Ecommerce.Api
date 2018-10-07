@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Streetwood.Infrastructure.Commands.Models.Address
+namespace Streetwood.Infrastructure.Commands.Models
 {
     public class AddAddressCommandModel : IRequest
     {

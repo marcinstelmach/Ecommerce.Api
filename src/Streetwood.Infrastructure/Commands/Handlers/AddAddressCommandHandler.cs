@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models.Address;
+using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Services.Abstract.Commands.Address;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.Address
+namespace Streetwood.Infrastructure.Commands.Handlers
 {
     public class AddAddressCommandHandler : IRequestHandler<AddAddressCommandModel, Unit>
     {

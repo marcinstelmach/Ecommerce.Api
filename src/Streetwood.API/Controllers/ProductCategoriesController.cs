@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models.ProductCategory;
+using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Queries.Models.ProductCategory;
 
 namespace Streetwood.API.Controllers

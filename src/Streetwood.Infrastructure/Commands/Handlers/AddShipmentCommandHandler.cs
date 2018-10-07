@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models.Shipments;
+using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.Shipment
+namespace Streetwood.Infrastructure.Commands.Handlers
 {
     public class AddShipmentCommandHandler : IRequestHandler<AddShipmentCommandModel, Unit>
     {

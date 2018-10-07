@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Streetwood.Core.Domain.Enums;
 
-namespace Streetwood.Infrastructure.Commands.Models.Shipments
+namespace Streetwood.Infrastructure.Commands.Models
 {
     public class AddShipmentCommandModel : IRequest
     {

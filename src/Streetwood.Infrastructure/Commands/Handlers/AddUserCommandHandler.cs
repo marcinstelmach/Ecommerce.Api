@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models.User;
+using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.User
+namespace Streetwood.Infrastructure.Commands.Handlers
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommandModel, Unit>
     {
