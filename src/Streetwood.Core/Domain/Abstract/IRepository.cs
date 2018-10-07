@@ -12,9 +12,9 @@ namespace Streetwood.Core.Domain.Abstract
 
         Task<T> GetAndEnsureExist(Guid id);
 
-        Task Update(T entity);
+        Task UpdateAsync(T entity);
 
-        Task Delete(T entity);
+        Task DeleteAsync(T entity);
 
         Task SaveChangesAsync();
     }

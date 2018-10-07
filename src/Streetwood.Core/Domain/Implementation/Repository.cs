@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
@@ -36,10 +35,10 @@ namespace Streetwood.Core.Domain.Implementation
             return result;
         }
 
-        public async Task Update(T entity)
+        public async Task UpdateAsync(T entity)
             => await Task.FromResult(dbSet.Update(entity));
 
-        public async Task Delete(T entity)
+        public async Task DeleteAsync(T entity)
             => await Task.FromResult(dbSet.Remove(entity));
 
         public async Task SaveChangesAsync()
