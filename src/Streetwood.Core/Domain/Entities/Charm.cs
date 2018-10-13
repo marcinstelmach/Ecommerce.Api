@@ -26,7 +26,7 @@ namespace Streetwood.Core.Domain.Entities
             Id = Guid.NewGuid();
             SetName(name);
             SetNameEng(nameEng);
-            ImageUrl = imageUrl;
+            SetUrl(imageUrl);
             Price = price;
             SetStatus(CharmStatus.Avaible);
         }
@@ -43,5 +43,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetStatus(CharmStatus status)
             => Status = status;
+
+        public void SetUrl(string url)
+            => ImageUrl = url;
     }
 }

@@ -12,7 +12,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<Category> Categories { get; set; }
 
-        DbSet<Charm> Charms { set; get; }
+        DbSet<Charm> Charms { get; set; }
 
         DbSet<CharmCategory> CharmCategories { get; set; }
 
