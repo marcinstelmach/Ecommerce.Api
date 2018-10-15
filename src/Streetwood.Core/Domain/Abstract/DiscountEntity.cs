@@ -13,7 +13,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         public string DescriptionEng { get; protected set; }
 
-        public decimal PercentValue { get; protected set; }
+        public int PercentValue { get; protected set; }
 
         public bool IsActive { get; protected set; }
 
@@ -33,7 +33,7 @@ namespace Streetwood.Core.Domain.Abstract
         public void SetAvaibleFrom(DateTime dateTime)
             => AvaibleFrom = dateTime;
 
-        public DiscountEntity(string name, string nameEng, string description, string descriptionEng, decimal percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
+        public DiscountEntity(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -60,7 +60,7 @@ namespace Streetwood.Core.Domain.Abstract
             AvaibleTo = dateTime;
         }
 
-        public void SetPercentValue(decimal percentValue)
+        public void SetPercentValue(int percentValue)
             => PercentValue = percentValue;
     }
 }

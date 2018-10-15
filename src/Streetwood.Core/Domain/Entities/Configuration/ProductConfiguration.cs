@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Streetwood.Core.Constants;
 
 namespace Streetwood.Core.Domain.Entities.Configuration
 {
@@ -10,6 +11,9 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
+
+            builder.Property(s => s.Price)
+                .HasColumnType(ConstantValues.PriceDecimalType);
 
             builder.HasMany(s => s.Images)
                 .WithOne(s => s.Product)

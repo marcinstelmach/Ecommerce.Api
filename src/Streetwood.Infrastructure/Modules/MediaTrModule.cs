@@ -15,8 +15,9 @@ namespace Streetwood.Infrastructure.Modules
             }).InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(GetType().Assembly)
+                .Where(s => s.IsClosedTypeOf(typeof(IRequestHandler<,>)))
                 .Where(s => s.Name.EndsWith("Handler"))
-                .AsImplementedInterfaces();
+                .AsClosedTypesOf(typeof(IRequestHandler<,>));
         }
     }
 }

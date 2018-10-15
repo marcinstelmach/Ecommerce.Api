@@ -13,7 +13,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public ProductCategoryDiscount(string name, string nameEng, string description, string descriptionEng, decimal percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
+        public ProductCategoryDiscount(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
             : base(name, nameEng, description, descriptionEng, percentValue, isActive, avaibleFrom, avaibleTo)
         {
         }

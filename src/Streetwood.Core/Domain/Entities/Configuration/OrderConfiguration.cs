@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Streetwood.Core.Constants;
 
 namespace Streetwood.Core.Domain.Entities.Configuration
 {
@@ -8,6 +9,11 @@ namespace Streetwood.Core.Domain.Entities.Configuration
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasKey(s => s.Id);
+            builder.Property(s => s.Price)
+                .HasColumnType(ConstantValues.PriceDecimalType);
+            builder.Property(s => s.PriceWithShippment)
+                .HasColumnType(ConstantValues.PriceDecimalType);
+
             builder.HasMany(s => s.ProductOrders)
                 .WithOne(s => s.Order)
                 .OnDelete(DeleteBehavior.Cascade);

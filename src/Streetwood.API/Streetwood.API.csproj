@@ -7,6 +7,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>../streetwood.ruleset</CodeAnalysisRuleSet>
+    <UserSecretsId>d443cdba-57aa-4b3c-830f-edb49b39056c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,7 +42,7 @@
     <Content Update="nlog.Production.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="nlog.Stagging.config">
+    <Content Update="nlog.Staging.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
