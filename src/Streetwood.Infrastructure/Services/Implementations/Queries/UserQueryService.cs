@@ -34,7 +34,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<UserDto> GetByIdAsync(Guid id)
         {
-            var user = await userRepository.GetAndEnsureExist(id);
+            var user = await userRepository.GetAndEnsureExistAsync(id);
             return mapper.Map<UserDto>(user);
         }
 
@@ -57,7 +57,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<TokenModel> RefreshToken(string jwtToken, string refreshToken)
         {
             var userId = tokenManager.GetUserIdFromExpiredToken(jwtToken);
-            var user = await userRepository.GetAndEnsureExist(userId);
+            var user = await userRepository.GetAndEnsureExistAsync(userId);
             if (refreshToken != user.RefreshToken)
             {
                 throw new StreetwoodException(ErrorCode.InvalidRefreshToken);

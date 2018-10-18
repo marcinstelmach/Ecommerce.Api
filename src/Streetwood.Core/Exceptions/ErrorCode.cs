@@ -36,5 +36,7 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode InvalidRefreshToken => new ErrorCode(nameof(InvalidRefreshToken));
 
         public static ErrorCode ProductNotFound => new ErrorCode(nameof(ProductNotFound));
+
+        public static ErrorCode UnableToSavePhoto => new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
     }
 }

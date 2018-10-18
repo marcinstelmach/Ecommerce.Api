@@ -5,6 +5,6 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {
-        Task<Product> GetAsync(int id);
+        Task<Product> GetAndEnsureExistAsync(int id);
     }
 }

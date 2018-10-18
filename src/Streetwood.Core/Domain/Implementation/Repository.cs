@@ -24,7 +24,7 @@ namespace Streetwood.Core.Domain.Implementation
         public async Task<T> GetAsync(Guid id)
             => await dbSet.FindAsync(id);
 
-        public async Task<T> GetAndEnsureExist(Guid id)
+        public async Task<T> GetAndEnsureExistAsync(Guid id)
         {
             var result = await dbSet.FindAsync(id);
             if (result == null)

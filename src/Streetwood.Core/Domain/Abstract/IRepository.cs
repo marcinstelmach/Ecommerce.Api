@@ -10,7 +10,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         Task<T> GetAsync(Guid id);
 
-        Task<T> GetAndEnsureExist(Guid id);
+        Task<T> GetAndEnsureExistAsync(Guid id);
 
         Task UpdateAsync(T entity);
 

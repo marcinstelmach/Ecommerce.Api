@@ -18,7 +18,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<Product> GetAsync(int id)
+        public async Task<Product> GetAndEnsureExistAsync(int id)
         {
             var product = await dbContext
                 .Products

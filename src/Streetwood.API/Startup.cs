@@ -77,6 +77,7 @@ namespace Streetwood.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseStaticFiles();
             app.UseMvc();
 
             applicationLifetime.ApplicationStopped.Register(() => Container.Dispose());

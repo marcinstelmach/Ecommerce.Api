@@ -29,13 +29,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<ProductDto> GetAsync(int id)
         {
-            var product = await productRepository.GetAsync(id);
+            var product = await productRepository.GetAndEnsureExistAsync(id);
             return mapper.Map<ProductDto>(product);
         }
 
         public async Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id)
         {
-            var category = await productCategoryRepository.GetAndEnsureExist(id);
+            var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
             return mapper.Map<IList<ProductDto>>(category.Products);
         }
     }

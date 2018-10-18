@@ -22,7 +22,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<CharmDto>> GetByCategoryId(Guid id)
         {
-            var category = await charmCategoryRepository.GetAndEnsureExist(id);
+            var category = await charmCategoryRepository.GetAndEnsureExistAsync(id);
             var charms = category.Charms.ToList();
             return mapper.Map<IList<CharmDto>>(charms);
         }

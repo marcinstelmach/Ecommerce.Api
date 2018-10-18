@@ -24,7 +24,7 @@ namespace Streetwood.Infrastructure.Tests.Services
 
             //asert
             productCategoryRepository.Verify(s => s.AddAsync(It.IsAny<ProductCategory>()), Times.Once);
-            productCategoryRepository.Verify(s => s.GetAndEnsureExist(It.IsAny<Guid>()), Times.Never);
+            productCategoryRepository.Verify(s => s.GetAndEnsureExistAsync(It.IsAny<Guid>()), Times.Never);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Streetwood.Infrastructure.Tests.Services
 
             //assert
             productCategoryRepository.Verify(s => s.AddAsync(It.IsAny<ProductCategory>()), Times.Never);
-            productCategoryRepository.Verify(s => s.GetAndEnsureExist(It.IsAny<Guid>()), Times.Once);
+            productCategoryRepository.Verify(s => s.GetAndEnsureExistAsync(It.IsAny<Guid>()), Times.Once);
         }
     }
 }

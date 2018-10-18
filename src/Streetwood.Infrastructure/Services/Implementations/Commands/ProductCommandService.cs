@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
         public async Task AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng, bool acceptCharms, string sizes, Guid productCategoryId)
         {
-            var category = await productCategoryRepository.GetAndEnsureExist(productCategoryId);
+            var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
             category.AddProduct(new Product(name, nameEng, price, description, descriptionEng, acceptCharms, sizes));
             await productCategoryRepository.SaveChangesAsync();
         }

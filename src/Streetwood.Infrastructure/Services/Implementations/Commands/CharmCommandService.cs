@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
         public async Task AddAsync(string name, string nameEng, decimal price, Guid charmCategoryId)
         {
-            var category = await charmCategoryRepository.GetAndEnsureExist(charmCategoryId);
+            var category = await charmCategoryRepository.GetAndEnsureExistAsync(charmCategoryId);
             category.AddCharm(new Charm(name, nameEng, null, price));
 
             await charmCategoryRepository.SaveChangesAsync();
