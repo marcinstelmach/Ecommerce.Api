@@ -9,5 +9,7 @@
         string GetProductImagesPath(string category, string product);
 
         string GetProductImagesPath(string category, string product, string imageName);
+
+        string GetPhysicalPath(string path);
     }
 }

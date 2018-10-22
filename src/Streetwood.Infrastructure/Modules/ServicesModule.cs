@@ -26,6 +26,7 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<ProductQueryService>().As<IProductQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<CharmCategoryCommandService>().As<ICharmCategoryCommandService>().InstancePerLifetimeScope();
+            builder.RegisterType<CharmCategoryQueryService>().As<ICharmCategoryQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<CharmCommandService>().As<ICharmCommandService>().InstancePerLifetimeScope();
             builder.RegisterType<CharmQueryService>().As<ICharmQueryService>().InstancePerLifetimeScope();

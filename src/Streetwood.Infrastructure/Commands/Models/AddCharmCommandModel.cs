@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models
 {
-    public class AddCharmCommandModel : IRequest
+    public class AddCharmCommandModel : IRequest<Guid>
     {
         public string Name { get; set; }
 

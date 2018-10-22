@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Streetwood.Infrastructure.Commands.Models;
 
 namespace Streetwood.API.Controllers
 {
-    [Route("api/products/{id}/images")]
+    [Route("api/images")]
     [ApiController]
     public class ImagesController : ControllerBase
     {
@@ -17,13 +18,7 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
-//        [HttpPost]
-//        public async Task<IActionResult> Post(IFormFile file)
-//        {
-//            return Accepted();
-//        }
-
-        [HttpPost("{isMain}")]
+        [HttpPost("{id}/{isMain}")]
         public async Task<IActionResult> Post(IFormFile file, [FromRoute] int id, [FromRoute] bool isMain)
         {
             if (file == null)
@@ -32,6 +27,13 @@ namespace Streetwood.API.Controllers
             }
 
             await mediator.Send(new AddProductImageCommandModel(id, file, isMain));
+            return Accepted();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            await mediator.Send(new DeleteImageCommandModel(id));
             return Accepted();
         }
     }

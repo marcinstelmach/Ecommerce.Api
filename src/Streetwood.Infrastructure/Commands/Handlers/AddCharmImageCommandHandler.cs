@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -7,16 +9,18 @@ using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers
 {
-    public class AddCharmCommandHandler : IRequestHandler<AddCharmCommandModel, Guid>
+    public class AddCharmImageCommandHandler : IRequestHandler<AddCharmImageCommandModel, Unit>
     {
         private readonly ICharmCommandService charmCommandService;
 
-        public AddCharmCommandHandler(ICharmCommandService charmCommandService)
+        public AddCharmImageCommandHandler(ICharmCommandService charmCommandService)
         {
             this.charmCommandService = charmCommandService;
         }
 
-        public async Task<Guid> Handle(AddCharmCommandModel request, CancellationToken cancellationToken)
-             => await charmCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.CharmCategoryId);
+        public async Task<Unit> Handle(AddCharmImageCommandModel request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

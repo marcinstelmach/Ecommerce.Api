@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Streetwood.Infrastructure.Commands.Models.CharmCategory
+namespace Streetwood.Infrastructure.Commands.Models
 {
     public class AddCharmCategoryCommandModel : IRequest
     {

@@ -10,13 +10,14 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     internal class FileManager : IFileManager
     {
-        public async Task MoveFile(IFormFile file, string directoryPath, string imagePath)
+        public async Task MoveFile(IFormFile file, string directoryPath, string uniqueFileName)
         {
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
+            var imagePath = Path.Combine(directoryPath, uniqueFileName);
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
                 try

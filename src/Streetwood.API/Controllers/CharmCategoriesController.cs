@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models.CharmCategory;
+using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Queries.Models.CharmCategory;
 
 namespace Streetwood.API.Controllers
 {
@@ -15,6 +17,14 @@ namespace Streetwood.API.Controllers
         {
             this.mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+            => Ok(await mediator.Send(new GetCharmCategoriesWithCharmsQueryModel()));
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
+            => Ok(await mediator.Send(new GetCharmCategoryWithCharmsQueryModel(id)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddCharmCategoryCommandModel model)

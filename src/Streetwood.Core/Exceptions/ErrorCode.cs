@@ -38,5 +38,7 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode ProductNotFound => new ErrorCode(nameof(ProductNotFound));
 
         public static ErrorCode UnableToSavePhoto => new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
+
+        public static ErrorCode UnableToDeletePhoto => new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
     }
 }

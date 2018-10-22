@@ -16,7 +16,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string GetCharmImagePath(string category, string charm)
         {
-            var path = Path.Combine(hostingEnvironment.WebRootPath, "Images", "Charms", category.AppendRandom(5), charm.AppendRandom(5));
+            var path = Path.Combine("Images", "Charms", category.AppendRandom(5), charm.AppendRandom(5));
             return path;
         }
 
@@ -27,13 +27,18 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string GetProductImagesPath(string category, string product)
         {
-            var path = Path.Combine(hostingEnvironment.WebRootPath, "Images", "Products", category.AppendRandom(5), product.AppendRandom(5));
+            var path = Path.Combine("Images", "Products", category.AppendRandom(5), product.AppendRandom(5));
             return path;
         }
 
         public string GetProductImagesPath(string category, string product, string imageName)
         {
             return Path.Combine(GetProductImagesPath(category, product), imageName.AppendRandom(5));
+        }
+
+        public string GetPhysicalPath(string path)
+        {
+            return Path.Combine(hostingEnvironment.ContentRootPath, path);
         }
     }
 }
