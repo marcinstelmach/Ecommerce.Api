@@ -17,10 +17,6 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.HasOne(s => s.ProductCategoryDiscount)
                 .WithMany(s => s.ProductCategories)
                 .HasForeignKey("ProductCategoryDiscountId");
-
-            builder.HasOne(s => s.Category)
-                .WithMany(s => s.ProductCategories)
-                .HasForeignKey("CategoryId");
         }
     }
 }

@@ -10,8 +10,6 @@ namespace Streetwood.Core.Domain.Abstract
     {
         DbSet<Address> Addresses { get; set; }
 
-        DbSet<Category> Categories { get; set; }
-
         DbSet<Charm> Charms { get; set; }
 
         DbSet<CharmCategory> CharmCategories { get; set; }

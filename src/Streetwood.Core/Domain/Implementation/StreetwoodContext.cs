@@ -9,8 +9,6 @@ namespace Streetwood.Core.Domain.Implementation
     {
         public DbSet<Address> Addresses { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
-
         public DbSet<Charm> Charms { get; set; }
 
         public DbSet<CharmCategory> CharmCategories { get; set; }
@@ -43,7 +41,6 @@ namespace Streetwood.Core.Domain.Implementation
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AddressConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new CharmCategoryConfiguration());
             builder.ApplyConfiguration(new CharmCategoryConfiguration());
             builder.ApplyConfiguration(new ImageConfiguration());

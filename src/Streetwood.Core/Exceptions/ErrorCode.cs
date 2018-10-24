@@ -23,6 +23,9 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
+        public new string ToString()
+             => $"{ErrorCodeName}: {StatusCode}, {Message}";
+
         public static ErrorCode GenericNotExist(Type type) => new ErrorCode($"{nameof(type)}NotExist");
 
         public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);

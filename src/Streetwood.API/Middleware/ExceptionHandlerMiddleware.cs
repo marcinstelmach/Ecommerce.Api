@@ -25,6 +25,11 @@ namespace Streetwood.API.Middleware
             {
                 await nextDelegate(context);
             }
+            catch (StreetwoodException exception)
+            {
+                logger.Error($"{exception.ErrorCode.ToString()}");
+                await HandleException(context, exception);
+            }
             catch (Exception exception)
             {
                 logger.Error(exception);
