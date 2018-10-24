@@ -33,5 +33,11 @@ namespace Streetwood.API.Controllers
             return Accepted();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            await mediator.Send(new DeleteCharmCategoryCommandModel(id));
+            return Accepted();
+        }
     }
 }

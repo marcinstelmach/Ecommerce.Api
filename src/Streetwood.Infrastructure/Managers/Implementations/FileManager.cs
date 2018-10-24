@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Exceptions;
@@ -43,6 +44,27 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
             var uniqueName = $"{oryginalName.Substring(0, index)}{random.AppendRandom(10)}{extension}";
             return uniqueName;
+        }
+
+        public void RemoveFile(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception exception)
+            {
+                throw new StreetwoodException(ErrorCode.UnableToDeletePhoto, exception.Message, exception);
+            }
+
+            var directoryPath = Path.GetDirectoryName(path);
+
+            var items = Directory.EnumerateDirectories(directoryPath).ToList();
+            items.AddRange(Directory.EnumerateFiles(directoryPath));
+            if (!items.Any())
+            {
+                Directory.Delete(directoryPath);
+            }
         }
     }
 }

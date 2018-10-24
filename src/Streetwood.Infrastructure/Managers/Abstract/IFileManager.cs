@@ -8,5 +8,7 @@ namespace Streetwood.Infrastructure.Managers.Abstract
         Task MoveFile(IFormFile file, string directoryPath, string uniqueFileName);
 
         string GetUniqueName(string name);
+
+        void RemoveFile(string path);
     }
 }
