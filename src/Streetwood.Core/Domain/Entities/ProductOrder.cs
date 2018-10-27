@@ -12,6 +12,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public decimal CurrentProductPrice { get; protected set; }
 
+        public decimal AgreedPrice { get; protected set; }
+
         public string Comment { get; protected set; }
 
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
@@ -35,6 +37,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetCurrentProductPrice(decimal price)
             => CurrentProductPrice = price;
+
+        public void SetAgreedPrice(decimal price)
+            => AgreedPrice = price;
 
         public void AddProductCategoryDiscount(ProductCategoryDiscount discount)
             => ProductCategoryDiscount = discount;

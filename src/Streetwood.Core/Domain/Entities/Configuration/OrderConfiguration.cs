@@ -9,16 +9,18 @@ namespace Streetwood.Core.Domain.Entities.Configuration
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasKey(s => s.Id);
-            builder.Property(s => s.Price)
+            builder.Property(s => s.BasePrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
-            builder.Property(s => s.PriceWithShippment)
+            builder.Property(s => s.ShipmentPrice)
+                .HasColumnType(ConstantValues.PriceDecimalType);
+            builder.Property(s => s.AgreedPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
 
             builder.HasMany(s => s.ProductOrders)
                 .WithOne(s => s.Order)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(s => s.Shippment)
+            builder.HasOne(s => s.Shipment)
                 .WithMany(s => s.Orders)
                 .HasForeignKey("ShippmentdId");
 

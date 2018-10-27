@@ -16,19 +16,21 @@ namespace Streetwood.Core.Domain.Entities
 
         public string Comment { get; protected set; }
 
-        public decimal Price { get; protected set; }
+        public decimal BasePrice { get; protected set; }
 
-        public decimal PriceWithShippment { get; protected set; }
+        public decimal ShipmentPrice { get; protected set; }
+
+        public decimal AgreedPrice { get; protected set; }
 
         public DateTime CreationDateTime { get; protected set; }
 
         public DateTime? PayedDateTime { get; protected set; }
 
-        public DateTime? ShippmentDateTime { get; protected set; }
+        public DateTime? ShipmentDateTime { get; protected set; }
 
         public DateTime? ClosedDateTime { get; protected set; }
 
-        public virtual Shipment Shippment { get; protected set; }
+        public virtual Shipment Shipment { get; protected set; }
 
         public virtual User User { get; protected set; }
 
@@ -36,16 +38,16 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(string comment, decimal price, Shipment shippment)
+        public Order(string comment, decimal basePrice, Shipment shipment)
         {
             Id = Guid.NewGuid();
             SetIsShipped(false);
             SetIsPayed(false);
             SetIsClosed(false);
             Comment = comment;
-            Price = price;
-            SetShippment(shippment);
-            PriceWithShippment = Price + shippment.Price;
+            BasePrice = basePrice;
+            SetShipment(shipment);
+            ShipmentPrice = BasePrice + shipment.Price;
             CreationDateTime = DateTime.UtcNow;
         }
 
@@ -65,14 +67,14 @@ namespace Streetwood.Core.Domain.Entities
         public void SetPayedDateTime(DateTime dateTime)
             => PayedDateTime = dateTime;
 
-        public void SetShippmentDateTime(DateTime dateTime)
-            => ShippmentDateTime = dateTime;
+        public void SetShipmentDateTime(DateTime dateTime)
+            => ShipmentDateTime = dateTime;
 
         public void SetClosedDate(DateTime dateTime)
             => ClosedDateTime = dateTime;
 
-        public void SetShippment(Shipment shippment)
-            => Shippment = shippment;
+        public void SetShipment(Shipment shipment)
+            => Shipment = shipment;
 
         public void SetDiscount(OrderDiscount discount)
             => OrderDiscount = discount;
@@ -80,7 +82,7 @@ namespace Streetwood.Core.Domain.Entities
         public void AddProductOrder(ProductOrder productOrder)
             => productOrders.Add(productOrder);
 
-        public void AddProductOrders(IEnumerable<ProductOrder> productOrderss)
-            => productOrders.AddRange(productOrderss);
+        public void AddProductOrders(IEnumerable<ProductOrder> productOrders)
+            => this.productOrders.AddRange(productOrders);
     }
 }

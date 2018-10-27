@@ -15,7 +15,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .HasColumnType(ConstantValues.PriceDecimalType);
 
             builder.HasMany(s => s.Orders)
-                .WithOne(s => s.Shippment);
+                .WithOne(s => s.Shipment);
         }
     }
 }
