@@ -74,6 +74,12 @@ namespace Streetwood.API
                 app.UseHsts();
             }
 
+            app.UseCors(s =>
+            {
+                s.AllowAnyOrigin();
+                s.AllowAnyHeader();
+                s.AllowAnyMethod();
+            });
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMiddleware<ExceptionHandlerMiddleware>();

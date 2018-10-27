@@ -23,16 +23,13 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
-        public new string ToString()
-             => $"{ErrorCodeName}: {StatusCode}, {Message}";
-
-        public static ErrorCode GenericNotExist(Type type) => new ErrorCode($"{nameof(type)}NotExist");
+        public static ErrorCode GenericNotExist(Type type, string message = null) => new ErrorCode($"{type.Name}NotExist", message);
 
         public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
 
         public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
 
-        public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials), HttpStatusCode.UnprocessableEntity);
+        public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials), "Invalid email or password", HttpStatusCode.UnprocessableEntity);
 
         public static ErrorCode InvalidUserClaimName => new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
 
@@ -43,5 +40,8 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode UnableToSavePhoto => new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
 
         public static ErrorCode UnableToDeletePhoto => new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
+
+        public new string ToString()
+            => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

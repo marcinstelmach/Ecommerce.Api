@@ -20,7 +20,6 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Post([FromBody] AuthUserQueryModel model)
             => Ok(await mediator.Send(model));
 
-
         [HttpPost("refresh")]
         public async Task<IActionResult> Post([FromBody] RefreshTokenQueryModel model)
             => Ok(await mediator.Send(model));
