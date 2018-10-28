@@ -9,5 +9,7 @@
         public static string ProductList => nameof(ProductList);
 
         public static string ProductsByCategory => nameof(ProductsByCategory);
+
+        public static string ProductCategoryDiscountList => nameof(ProductCategoryDiscountList);
     }
 }

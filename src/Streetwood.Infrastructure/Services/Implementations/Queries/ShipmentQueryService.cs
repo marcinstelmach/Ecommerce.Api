@@ -20,7 +20,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ShipmentDto>> GetAsync()
         {
-            var shipment = await shipmentRepository.GetAsync();
+            var shipment = await shipmentRepository.GetListAsync();
             return mapper.Map<IList<ShipmentDto>>(shipment);
         }
     }

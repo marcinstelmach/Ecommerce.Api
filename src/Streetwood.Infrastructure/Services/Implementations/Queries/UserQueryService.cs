@@ -28,7 +28,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<UserDto>> GetAsync()
         {
-            var users = await userRepository.GetAsync();
+            var users = await userRepository.GetListAsync();
             return mapper.Map<IList<UserDto>>(users);
         }
 

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Streetwood.Core.Domain.Abstract
 {
     public interface IRepository<T> where T : Entity
     {
-        Task<IList<T>> GetAsync();
+        Task<IList<T>> GetListAsync();
+
+        Task<IQueryable> GetAsync();
 
         Task<T> GetAsync(Guid id);
 

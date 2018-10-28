@@ -23,7 +23,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductListDto>> GetAsync()
         {
-            var products = await productRepository.GetAsync();
+            var products = await productRepository.GetListAsync();
             return mapper.Map<IList<ProductListDto>>(products);
         }
 

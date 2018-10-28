@@ -19,6 +19,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers
         {
             await productCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.Description,
                 request.DescriptionEng, request.AcceptCharms, request.Sizes, request.ProductCategoryId);
+
             return Unit.Value;
         }
     }
