@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
+using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.Product;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -24,11 +24,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Product
 
         public async Task<IList<ProductListDto>> Handle(GetProductsQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await cache.GetOrCreateAsync(CacheKey.ProductList, e =>
-            {
-                e.SlidingExpiration = TimeSpan.FromMinutes(2);
-                return productQueryService.GetAsync();
-            });
+            var result = await cache.GetOrAddAsync(CacheKey.ProductList, s => productQueryService.GetAsync());
             return result;
         }
     }

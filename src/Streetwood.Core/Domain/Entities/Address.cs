@@ -27,5 +27,17 @@ namespace Streetwood.Core.Domain.Entities
         protected Address()
         {
         }
+
+        public void SetCity(string city)
+            => City = city;
+
+        public void SetCountry(string country)
+            => Country = country;
+
+        public void SetStreet(string street)
+            => Street = street;
+
+        public void SetPostCode(string postCode)
+            => PostCode = postCode;
     }
 }

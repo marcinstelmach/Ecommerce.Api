@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
-using Streetwood.Infrastructure.Services.Abstract.Commands.Address;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 using Streetwood.Infrastructure.Services.Implementations.Commands;
 using Streetwood.Infrastructure.Services.Implementations.Queries;
