@@ -3,6 +3,8 @@
 
 src/Streetwood.API/appsettings.Staging.json
 src/Streetwood.API/appsettings.Production.json
+src/Streetwood.API/Properties/PublishProfiles/stagging.pubxml
+
 
 # User-specific files
 *.suo
