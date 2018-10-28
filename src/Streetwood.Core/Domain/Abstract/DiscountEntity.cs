@@ -17,9 +17,9 @@ namespace Streetwood.Core.Domain.Abstract
 
         public bool IsActive { get; protected set; }
 
-        public DateTime AvaibleFrom { get; protected set; }
+        public DateTime AvailableFrom { get; protected set; }
 
-        public DateTime AvaibleTo { get; protected set; }
+        public DateTime AvailableTo { get; protected set; }
 
         public void SetDescription(string description)
             => Description = description;
@@ -31,7 +31,7 @@ namespace Streetwood.Core.Domain.Abstract
             => IsActive = isActive;
 
         public void SetAvaibleFrom(DateTime dateTime)
-            => AvaibleFrom = dateTime;
+            => AvailableFrom = dateTime;
 
         public DiscountEntity(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
         {
@@ -52,12 +52,12 @@ namespace Streetwood.Core.Domain.Abstract
 
         public void SetAvaibleTo(DateTime dateTime)
         {
-            if (dateTime < AvaibleFrom)
+            if (dateTime < AvailableFrom)
             {
                 throw new StreetwoodException(ErrorCode.DiscountDateToIsLowerThanFrom);
             }
 
-            AvaibleTo = dateTime;
+            AvailableTo = dateTime;
         }
 
         public void SetPercentValue(int percentValue)

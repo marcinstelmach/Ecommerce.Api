@@ -32,6 +32,8 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<CharmQueryService>().As<ICharmQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<ImageCommandService>().As<IImageCommandService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<ProductCategoryDiscountCommandService>().As<IProductCategoryDiscountCommandService>().InstancePerLifetimeScope();
         }
     }
 }

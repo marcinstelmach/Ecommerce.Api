@@ -6,12 +6,9 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 {
     internal class CharmRepository : Repository<Charm>, ICharmRepository
     {
-        private readonly ICharmRepository charmRepository;
-
-        public CharmRepository(IDbContext dbContext, ICharmRepository charmRepository)
+        public CharmRepository(IDbContext dbContext)
             : base(dbContext)
         {
-            this.charmRepository = charmRepository;
         }
     }
 }

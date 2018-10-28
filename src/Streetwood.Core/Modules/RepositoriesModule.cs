@@ -15,6 +15,7 @@ namespace Streetwood.Core.Modules
             builder.RegisterType<ProductRespository>().As<IProductRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CharmCategoryRepository>().As<ICharmCategoryRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CharmRepository>().As<ICharmRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductCategoryDiscountRepository>().As<IProductCategoryDiscountRepository>().InstancePerLifetimeScope();
         }
     }
 }

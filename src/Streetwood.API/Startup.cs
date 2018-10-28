@@ -80,10 +80,10 @@ namespace Streetwood.API
                 s.AllowAnyHeader();
                 s.AllowAnyMethod();
             });
-            app.UseHttpsRedirection();
+//            app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseStaticFiles();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 
             applicationLifetime.ApplicationStopped.Register(() => Container.Dispose());
