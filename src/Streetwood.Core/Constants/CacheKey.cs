@@ -11,5 +11,7 @@
         public static string ProductsByCategory => nameof(ProductsByCategory);
 
         public static string ProductCategoryDiscountList => nameof(ProductCategoryDiscountList);
+
+        public static string CharmCategoriesList => nameof(CharmCategoriesList);
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
+using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.Shipment;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -24,11 +25,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Shipment
 
         public async Task<IList<ShipmentDto>> Handle(GetShipmentsQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await cache.GetOrCreateAsync(CacheKey.Shipments, s =>
-            {
-                s.SlidingExpiration = TimeSpan.FromMinutes(20);
-                return shipmentQueryService.GetAsync();
-            });
+            var result = await cache.GetOrAddAsync(CacheKey.Shipments, s => shipmentQueryService.GetAsync());
 
             return result;
         }

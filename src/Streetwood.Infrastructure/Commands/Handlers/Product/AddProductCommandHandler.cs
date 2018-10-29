@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models;
+using Microsoft.Extensions.Caching.Memory;
+using Streetwood.Core.Constants;
 using Streetwood.Infrastructure.Commands.Models.Product;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -10,16 +11,19 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Product
     public class AddProductCommandHandler : IRequestHandler<AddProductCommandModel, Unit>
     {
         private readonly IProductCommandService productCommandService;
+        private readonly IMemoryCache cache;
 
-        public AddProductCommandHandler(IProductCommandService productCommandService)
+        public AddProductCommandHandler(IProductCommandService productCommandService, IMemoryCache cache)
         {
             this.productCommandService = productCommandService;
+            this.cache = cache;
         }
 
         public async Task<Unit> Handle(AddProductCommandModel request, CancellationToken cancellationToken)
         {
             await productCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.Description,
                 request.DescriptionEng, request.AcceptCharms, request.Sizes, request.ProductCategoryId);
+            cache.Remove(CacheKey.ProductList);
 
             return Unit.Value;
         }

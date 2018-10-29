@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
+using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.ProductCategory;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -24,11 +25,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategory
 
         public async Task<IList<ProductCategoryDto>> Handle(GetProductCategoriesQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryTree, entry =>
-            {
-                entry.SlidingExpiration = TimeSpan.FromMinutes(2);
-                return productCategoryQueryService.GetAsync();
-            });
+            var result = await cache.GetOrAddAsync(CacheKey.ProductCategoryTree, entry => productCategoryQueryService.GetAsync());
 
             return result;
         }

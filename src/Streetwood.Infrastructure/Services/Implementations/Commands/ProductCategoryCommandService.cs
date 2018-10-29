@@ -30,5 +30,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             await productCategoryRepository.SaveChangesAsync();
         }
+
+        public async Task UpdateAsync(Guid id, string name, string nameEng)
+        {
+            var category = await productCategoryRepository.GetWithChildrenAsync(id);
+            category.SetName(name);
+            category.SetNameEng(nameEng);
+
+            await productCategoryRepository.SaveChangesAsync();
+        }
     }
 }
