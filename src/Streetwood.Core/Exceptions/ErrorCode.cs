@@ -41,7 +41,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode UnableToDeletePhoto => new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
 
-        public new string ToString()
-            => $"{ErrorCodeName}: {StatusCode}, {Message}";
+        public static ErrorCode ShipmentInUse => new ErrorCode(nameof(ShipmentInUse), "Cannot delete shipment, cause it is in use");
+
+        public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
+using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -18,6 +20,32 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task AddAsync(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShipmentType type)
         {
             await shipmentRepository.AddAsync(new Shipment(name, nameEng, description, descriptionEng, price, isActive, type));
+            await shipmentRepository.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, bool isActive, ShipmentType type)
+        {
+            var shipment = await shipmentRepository.GetAndEnsureExistAsync(id);
+            shipment.SetName(name);
+            shipment.SetEngName(nameEng);
+            shipment.SetDescription(description);
+            shipment.SetDescriptionEng(descriptionEng);
+            shipment.SetIsActive(isActive);
+            shipment.SetType(type);
+
+            await shipmentRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var shipment = await shipmentRepository.GetAndEnsureExistAsync(id);
+
+            if (shipment.Orders.Count > 0)
+            {
+                throw new StreetwoodException(ErrorCode.ShipmentInUse);
+            }
+
+            await shipmentRepository.DeleteAsync(shipment);
             await shipmentRepository.SaveChangesAsync();
         }
     }

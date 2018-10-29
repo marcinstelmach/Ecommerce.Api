@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Streetwood.Infrastructure.Commands.Handlers
+namespace Streetwood.Infrastructure.Commands.Models
 {
     public class EraseUserDataCommandModel : IRequest
     {

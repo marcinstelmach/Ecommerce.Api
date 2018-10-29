@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -22,6 +23,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var shipment = await shipmentRepository.GetListAsync();
             return mapper.Map<IList<ShipmentDto>>(shipment);
+        }
+
+        public async Task<ShipmentDto> GetAsync(Guid id)
+        {
+            var shipment = shipmentRepository.GetAndEnsureExistAsync(id);
+            return mapper.Map<ShipmentDto>(shipment);
         }
     }
 }
