@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Commands.Models.Charm;
 using Streetwood.Infrastructure.Queries.Models.Charm;
 
 namespace Streetwood.API.Controllers

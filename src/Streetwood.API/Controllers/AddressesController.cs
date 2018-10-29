@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Commands.Models.Address;
 
 namespace Streetwood.API.Controllers
 {

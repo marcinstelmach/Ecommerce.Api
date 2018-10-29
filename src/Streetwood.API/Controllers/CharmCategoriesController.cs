@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Commands.Models.CharmCategory;
 using Streetwood.Infrastructure.Queries.Models.CharmCategory;
 
 namespace Streetwood.API.Controllers

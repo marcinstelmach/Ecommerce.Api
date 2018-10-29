@@ -7,18 +7,18 @@ using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.Users
 {
-    public class EraseUserDataCommandHandler : IRequestHandler<EraseUserDataCommandModel>
+    public class AddUserCommandHandler : IRequestHandler<AddUserCommandModel, Unit>
     {
         private readonly IUserCommandService userCommandService;
 
-        public EraseUserDataCommandHandler(IUserCommandService userCommandService)
+        public AddUserCommandHandler(IUserCommandService userCommandService)
         {
             this.userCommandService = userCommandService;
         }
 
-        public async Task<Unit> Handle(EraseUserDataCommandModel request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddUserCommandModel request, CancellationToken cancellationToken)
         {
-            await userCommandService.EraseUserDataAsync(request.Id);
+            await userCommandService.AddUserAsync(request.Email, request.FirstName, request.LastName, request.Password, request.PhoneNumber);
             return Unit.Value;
         }
     }

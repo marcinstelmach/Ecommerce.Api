@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Commands.Models.Shipment;
 using Streetwood.Infrastructure.Queries.Models.Shipment;
 
 namespace Streetwood.API.Controllers

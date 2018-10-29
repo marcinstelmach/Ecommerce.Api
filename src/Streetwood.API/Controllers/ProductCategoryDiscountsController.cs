@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Queries.Models.ProductCategoryDiscount;
 
 namespace Streetwood.API.Controllers
