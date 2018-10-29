@@ -5,7 +5,7 @@ namespace Streetwood.Infrastructure.Managers.Abstract
 {
     public interface IFileManager
     {
-        Task MoveFile(IFormFile file, string directoryPath, string uniqueFileName);
+        Task MoveFileAsync(IFormFile file, string directoryPath, string uniqueFileName);
 
         string GetUniqueName(string name);
 

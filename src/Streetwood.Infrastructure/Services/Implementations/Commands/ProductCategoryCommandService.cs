@@ -24,8 +24,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             }
             else
             {
-                var rootproductCategory = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId.Value);
-                rootproductCategory.AddCategoryProduct(productCategory);
+                var rootProductCategory = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId.Value);
+                rootProductCategory.AddCategoryProduct(productCategory);
             }
 
             await productCategoryRepository.SaveChangesAsync();

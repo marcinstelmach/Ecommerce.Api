@@ -8,6 +8,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
         Task AddAsync(string name, string nameEng, string description, string descriptionEng, int percentValue,
             DateTime availableFrom, DateTime availableTo);
 
-        Task Update(Guid categoryId, Guid discountId);
+        Task UpdateAsync(Guid categoryId, Guid discountId);
     }
 }

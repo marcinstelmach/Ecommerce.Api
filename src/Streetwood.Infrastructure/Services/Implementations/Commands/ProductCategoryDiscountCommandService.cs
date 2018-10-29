@@ -27,7 +27,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await productCategoryDiscountRepository.SaveChangesAsync();
         }
 
-        public async Task Update(Guid categoryId, Guid discountId)
+        public async Task UpdateAsync(Guid categoryId, Guid discountId)
         {
             var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(discountId);
             var category = await productCategoryRepository.GetAndEnsureExistAsync(categoryId);

@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers
 
         public async Task<Unit> Handle(DeleteCharmCategoryCommandModel request, CancellationToken cancellationToken)
         {
-            await charmCategoryCommandService.Delete(request.Id);
+            await charmCategoryCommandService.DeleteAsync(request.Id);
             return Unit.Value;
         }
     }

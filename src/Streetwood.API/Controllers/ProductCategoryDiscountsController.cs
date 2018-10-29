@@ -21,6 +21,7 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get()
             => Ok(await mediator.Send(new GetProductCategoriesDiscountQueryModel()));
 
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryDiscountCommandModel model)
         {
             await mediator.Send(model);

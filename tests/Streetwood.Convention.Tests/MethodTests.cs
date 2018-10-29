@@ -30,8 +30,11 @@ namespace Streetwood.Convention.Tests
             var types = Assembly.GetAssembly(type).GetTypes();
 
             // act
-            var result = types.SelectMany(s => s.GetMethods())
-                .Where(s => s.ReturnType.IsAssignableFrom(typeof(Task<>)) && !s.Name.EndsWith("Async"))
+            var result = types
+                .SelectMany(s => s.GetMethods())
+                .Where(s => s.ReturnType.IsAssignableFrom(typeof(Task<>)))
+                .Where(s => !s.ReturnType.IsEquivalentTo(typeof(object))) // because of System methods
+                .Where(s => !s.Name.EndsWith("Async"))
                 .Where(s => s.DisplayName() != "DbContext.Find"); // because of EF method
 
             // assert

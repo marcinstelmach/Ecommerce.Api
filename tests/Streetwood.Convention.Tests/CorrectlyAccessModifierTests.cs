@@ -37,7 +37,7 @@ namespace Streetwood.Convention.Tests
         [Theory]
         [InlineData(typeof(StreetwoodException))]
         [InlineData(typeof(AutoMapperConfig))]
-        public void ServicesShouldImlementInterface(Type type)
+        public void ServicesShouldImplementInterface(Type type)
         {
             //arrange
             var services = Assembly.GetAssembly(type)

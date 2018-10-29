@@ -22,7 +22,7 @@ namespace Streetwood.Infrastructure.Tests.Services
             //act
             await sut.AddAsync(name, nameEng, null);
 
-            //asert
+            //assert
             productCategoryRepository.Verify(s => s.AddAsync(It.IsAny<ProductCategory>()), Times.Once);
             productCategoryRepository.Verify(s => s.GetAndEnsureExistAsync(It.IsAny<Guid>()), Times.Never);
         }
@@ -34,6 +34,7 @@ namespace Streetwood.Infrastructure.Tests.Services
             var productCategoryRepository = new Mock<IProductCategoryRepository>();
             var name = "Name";
             var nameEng = "nameEng";
+            productCategoryRepository.Setup(s => s.GetAndEnsureExistAsync(It.IsAny<Guid>())).ReturnsAsync(new ProductCategory(name, nameEng));
             var sut = new ProductCategoryCommandService(productCategoryRepository.Object);
 
             //act

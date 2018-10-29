@@ -11,7 +11,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     internal class FileManager : IFileManager
     {
-        public async Task MoveFile(IFormFile file, string directoryPath, string uniqueFileName)
+        public async Task MoveFileAsync(IFormFile file, string directoryPath, string uniqueFileName)
         {
             if (!Directory.Exists(directoryPath))
             {

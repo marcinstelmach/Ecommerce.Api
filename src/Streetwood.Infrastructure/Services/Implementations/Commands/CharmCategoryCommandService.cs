@@ -8,7 +8,7 @@ using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
-    public class CharmCategoryCommandService : ICharmCategoryCommandService
+    internal class CharmCategoryCommandService : ICharmCategoryCommandService
     {
         private readonly ICharmCategoryRepository charmCategoryRepository;
         private readonly IFileManager fileManager;
@@ -25,7 +25,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await charmCategoryRepository.SaveChangesAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var charmCategory = await charmCategoryRepository.GetAndEnsureExistAsync(id);
             var charms = charmCategory.Charms.ToList();

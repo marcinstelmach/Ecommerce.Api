@@ -37,7 +37,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await productRepository.SaveChangesAsync();
 
             var physicalPath = pathManager.GetPhysicalPath(directoryPath);
-            await fileManager.MoveFile(file, physicalPath, imageName);
+            await fileManager.MoveFileAsync(file, physicalPath, imageName);
         }
 
         public async Task DeleteAsync(Guid id)
