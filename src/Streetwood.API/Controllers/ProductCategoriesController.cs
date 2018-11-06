@@ -39,5 +39,11 @@ namespace Streetwood.API.Controllers
             await mediator.Send(model.SetId(id));
             return Accepted();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return Ok();
+        }
     }
 }

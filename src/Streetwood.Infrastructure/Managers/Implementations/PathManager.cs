@@ -14,26 +14,16 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public string GetCharmImagePath(string category, string charm)
+        public string GetCharmImagePath(string categoryUnique, string charmUnique)
         {
-            var path = Path.Combine("Images", "Charms", category.AppendRandom(5), charm.AppendRandom(5));
+            var path = Path.Combine("wwwroot", "Images", "Charms", categoryUnique.AppendRandom(5), charmUnique.GetUniqueFileName());
             return path;
         }
 
-        public string GetCharmImagePath(string category, string charm, string imageName)
+        public string GetProductImagesPath(string categoryUnique, string productUnique)
         {
-            return Path.Combine(GetCharmImagePath(category, charm), imageName.AppendRandom(5));
-        }
-
-        public string GetProductImagesPath(string category, string product)
-        {
-            var path = Path.Combine("Images", "Products", category.AppendRandom(5), product.AppendRandom(5));
+            var path = Path.Combine("wwwroot", "Images", "Products", categoryUnique, productUnique);
             return path;
-        }
-
-        public string GetProductImagesPath(string category, string product, string imageName)
-        {
-            return Path.Combine(GetProductImagesPath(category, product), imageName.AppendRandom(5));
         }
 
         public string GetPhysicalPath(string path)

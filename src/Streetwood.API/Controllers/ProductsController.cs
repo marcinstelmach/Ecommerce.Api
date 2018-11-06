@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Commands.Models.Product;
 using Streetwood.Infrastructure.Queries.Models.Product;
 
@@ -34,8 +32,7 @@ namespace Streetwood.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
         {
-            await mediator.Send(model);
-            return Accepted();
+            return Ok(await mediator.Send(model));
         }
     }
 }

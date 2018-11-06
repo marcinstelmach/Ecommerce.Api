@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Streetwood.Core.Domain.Implementation;
 
 namespace Streetwood.Core.Migrations
 {
     [DbContext(typeof(StreetwoodContext))]
-    partial class StreetwoodContextModelSnapshot : ModelSnapshot
+    [Migration("20181103221826_ParentsForCategories")]
+    partial class ParentsForCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,8 +187,6 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<string>("DescriptionEng");
 
-                    b.Property<string>("ImagesPath");
-
                     b.Property<string>("Name")
                         .HasMaxLength(50);
 
@@ -223,8 +223,6 @@ namespace Streetwood.Core.Migrations
                     b.Property<Guid?>("ParentId");
 
                     b.Property<Guid?>("ProductCategoryDiscountId");
-
-                    b.Property<string>("UniqueName");
 
                     b.HasKey("Id");
 

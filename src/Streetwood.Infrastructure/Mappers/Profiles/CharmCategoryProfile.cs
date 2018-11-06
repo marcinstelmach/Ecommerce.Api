@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Mappers.Profiles
@@ -8,7 +9,7 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
         public CharmCategoryProfile()
             : base("CharmCategory")
         {
-            CreateMap<CharmCategoryProfile, CharmCategoryDto>();
+            CreateMap<CharmCategory, CharmCategoryDto>();
         }
     }
 }

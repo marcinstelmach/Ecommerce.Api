@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -8,7 +9,7 @@ using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.Product
 {
-    public class AddProductCommandHandler : IRequestHandler<AddProductCommandModel, Unit>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommandModel, int>
     {
         private readonly IProductCommandService productCommandService;
         private readonly IMemoryCache cache;
@@ -19,13 +20,13 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Product
             this.cache = cache;
         }
 
-        public async Task<Unit> Handle(AddProductCommandModel request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddProductCommandModel request, CancellationToken cancellationToken)
         {
-            await productCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.Description,
+            var productId = await productCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.Description,
                 request.DescriptionEng, request.AcceptCharms, request.Sizes, request.ProductCategoryId);
             cache.Remove(CacheKey.ProductList);
 
-            return Unit.Value;
+            return productId;
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Exceptions;
-using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -30,20 +29,6 @@ namespace Streetwood.Infrastructure.Managers.Implementations
                     throw new StreetwoodException(ErrorCode.UnableToSavePhoto, e.Message, e);
                 }
             }
-        }
-
-        public string GetUniqueName(string oryginalName)
-        {
-            var random = string.Empty;
-            var index = oryginalName.LastIndexOf('.');
-            var extension = string.Empty;
-            if (index > -1)
-            {
-                extension = oryginalName.Substring(index);
-            }
-
-            var uniqueName = $"{oryginalName.Substring(0, index)}{random.AppendRandom(10)}{extension}";
-            return uniqueName;
         }
 
         public void RemoveFile(string path)

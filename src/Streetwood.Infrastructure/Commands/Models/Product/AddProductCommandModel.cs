@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models.Product
 {
-    public class AddProductCommandModel : IRequest
+    public class AddProductCommandModel : IRequest<int>
     {
         [Required]
         public string Name { get; set; }
@@ -13,6 +13,7 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
         public string NameEng { get; set; }
 
         [Required]
+        [RegularExpression("^\\d{0,8}(\\.\\d{1,2})?$")]
         public decimal Price { get; set; }
 
         [Required]

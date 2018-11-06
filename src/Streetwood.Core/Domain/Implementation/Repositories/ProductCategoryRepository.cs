@@ -37,7 +37,8 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         {
             return await dbContext
                 .ProductCategories
-                .Where(s => s.ProductCategories.Any())
+                .Include(s => s.Parent)
+                .Where(s => s.Parent == null)
                 .Include(s => s.ProductCategories)
                 .ToListAsync();
         }

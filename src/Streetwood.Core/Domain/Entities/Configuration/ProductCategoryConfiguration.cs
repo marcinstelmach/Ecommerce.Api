@@ -14,6 +14,10 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .WithOne(s => s.ProductCategory)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(s => s.Parent)
+                .WithMany(s => s.ProductCategories)
+                .HasForeignKey("ParentId");
+
             builder.HasOne(s => s.ProductCategoryDiscount)
                 .WithMany(s => s.ProductCategories)
                 .HasForeignKey("ProductCategoryDiscountId");

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
+using Streetwood.Core.Exceptions;
 using Streetwood.Core.Managers;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -24,6 +25,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
         public async Task AddUserAsync(string email, string firstName, string lastName, string password, int phoneNumber)
         {
+            var existingUser = await userRepository.GetByEmailAsync(email);
+            if (existingUser != null)
+            {
+                throw new StreetwoodException(ErrorCode.EmailExistInDatabase);
+            }
+
             var user = new User(email, firstName, lastName, phoneNumber);
             user.SetPassword(password, encrypter);
             await userRepository.AddAsync(user);

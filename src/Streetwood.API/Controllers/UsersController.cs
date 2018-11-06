@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Handlers;
-using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Commands.Models.User;
 using Streetwood.Infrastructure.Queries.Models.User;
 

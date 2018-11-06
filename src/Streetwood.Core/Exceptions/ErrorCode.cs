@@ -43,6 +43,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode ShipmentInUse => new ErrorCode(nameof(ShipmentInUse), "Cannot delete shipment, cause it is in use");
 
+        public static ErrorCode EmailExistInDatabase => new ErrorCode(nameof(EmailExistInDatabase), "Email exist in database. Use different");
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }
