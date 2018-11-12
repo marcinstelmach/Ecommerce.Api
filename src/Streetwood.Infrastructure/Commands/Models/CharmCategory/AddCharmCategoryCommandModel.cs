@@ -7,5 +7,8 @@ namespace Streetwood.Infrastructure.Commands.Models.CharmCategory
     {
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public string NameEng { get; set; }
     }
 }

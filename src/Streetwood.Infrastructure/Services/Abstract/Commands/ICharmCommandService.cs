@@ -9,5 +9,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
         Task<Guid> AddAsync(string name, string nameEng, decimal price, Guid charmCategoryId);
 
         Task AddPhotoAsync(Guid id, IFormFile file);
+
+        Task DeleteAsync(Guid id);
     }
 }

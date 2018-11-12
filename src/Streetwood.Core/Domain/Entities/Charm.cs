@@ -11,24 +11,24 @@ namespace Streetwood.Core.Domain.Entities
 
         public string NameEng { get; protected set; }
 
-        public string ImageUrl { get; protected set; }
+        public string ImagePath { get; protected set; }
 
         public decimal Price { get; protected set; }
 
-        public CharmStatus Status { get; protected set; }
+        public ItemStatus Status { get; protected set; }
 
         public virtual CharmCategory CharmCategory { get; protected set; }
 
         public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms { get; }
 
-        public Charm(string name, string nameEng, string imageUrl, decimal price)
+        public Charm(string name, string nameEng, string imagePath, decimal price)
         {
             Id = Guid.NewGuid();
             SetName(name);
             SetNameEng(nameEng);
-            SetUrl(imageUrl);
+            SetUrl(imagePath);
             Price = price;
-            SetStatus(CharmStatus.Avaible);
+            SetStatus(ItemStatus.Available);
         }
 
         protected Charm()
@@ -41,10 +41,10 @@ namespace Streetwood.Core.Domain.Entities
         public void SetNameEng(string name)
             => NameEng = name;
 
-        public void SetStatus(CharmStatus status)
+        public void SetStatus(ItemStatus status)
             => Status = status;
 
-        public void SetUrl(string url)
-            => ImageUrl = url;
+        public void SetUrl(string path)
+            => ImagePath = path;
     }
 }

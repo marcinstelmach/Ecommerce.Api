@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -14,9 +13,9 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public string GetCharmImagePath(string categoryUnique, string charmUnique)
+        public string GetCharmImagePath(string categoryUnique)
         {
-            var path = Path.Combine("wwwroot", "Images", "Charms", categoryUnique.AppendRandom(5), charmUnique.GetUniqueFileName());
+            var path = Path.Combine("wwwroot", "Images", "Charms", categoryUnique);
             return path;
         }
 

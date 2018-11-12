@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
-using Streetwood.Infrastructure.Managers.Abstract;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -11,17 +11,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
     internal class CharmCategoryCommandService : ICharmCategoryCommandService
     {
         private readonly ICharmCategoryRepository charmCategoryRepository;
-        private readonly IFileManager fileManager;
 
-        public CharmCategoryCommandService(ICharmCategoryRepository charmCategoryRepository, IFileManager fileManager)
+        public CharmCategoryCommandService(ICharmCategoryRepository charmCategoryRepository)
         {
             this.charmCategoryRepository = charmCategoryRepository;
-            this.fileManager = fileManager;
         }
 
-        public async Task AddAsync(string name)
+        public async Task AddAsync(string name, string nameEng)
         {
-            await charmCategoryRepository.AddAsync(new CharmCategory(name));
+            await charmCategoryRepository.AddAsync(new CharmCategory(name, nameEng));
             await charmCategoryRepository.SaveChangesAsync();
         }
 
@@ -30,10 +28,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             var charmCategory = await charmCategoryRepository.GetAndEnsureExistAsync(id);
             var charms = charmCategory.Charms.ToList();
 
-            await charmCategoryRepository.DeleteAsync(charmCategory);
+            charms.ForEach(s => s.SetStatus(ItemStatus.Deleted));
+            charmCategory.SetStatus(ItemStatus.Deleted);
             await charmCategoryRepository.SaveChangesAsync();
-
-            charms.ForEach(s => fileManager.RemoveFile(s.ImageUrl));
         }
     }
 }

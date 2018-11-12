@@ -2,7 +2,7 @@
 {
     public interface IPathManager
     {
-        string GetCharmImagePath(string categoryUnique, string charmUnique);
+        string GetCharmImagePath(string categoryUnique);
 
         string GetProductImagesPath(string categoryUnique, string productUnique);
 

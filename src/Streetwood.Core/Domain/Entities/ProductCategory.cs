@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Extensions;
 
 namespace Streetwood.Core.Domain.Entities
@@ -16,6 +17,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public string UniqueName { get; protected set; }
 
+        public ItemStatus Status { get; protected set; }
+
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
         public virtual IReadOnlyCollection<ProductCategory> ProductCategories => productCategories;
@@ -30,6 +33,7 @@ namespace Streetwood.Core.Domain.Entities
             SetName(name);
             SetNameEng(nameEng);
             UniqueName = name.AppendRandom(5);
+            SetStatus(ItemStatus.Available);
         }
 
         protected ProductCategory()
@@ -41,6 +45,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetNameEng(string name)
             => NameEng = name;
+
+        public void SetStatus(ItemStatus status)
+            => Status = status;
 
         public void AddProduct(Product product)
             => products.Add(product);

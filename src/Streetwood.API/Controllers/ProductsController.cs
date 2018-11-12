@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Product;
@@ -25,14 +26,16 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get(int id)
             => Ok(await mediator.Send(new GetProductByIdQueryModel(id)));
 
-//        [HttpGet("{categoryId}")]
-//        public async Task<IActionResult> Get(Guid categoryId)
-//            => Ok(await mediator.Send(new GetProductsByCategoryIdQueryModel(categoryId)));
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> Get(Guid categoryId)
+            => Ok(await mediator.Send(new GetProductsByCategoryIdQueryModel(categoryId)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
-        {
-            return Ok(await mediator.Send(model));
-        }
+            => Ok(await mediator.Send(model));
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+            => Accepted(await mediator.Send(new DeleteProductCommandModel(id)));
     }
 }

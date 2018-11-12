@@ -8,10 +8,10 @@ namespace Streetwood.Infrastructure.Dto
 
         public string NameEng { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImagePath { get; set; }
 
         public decimal Price { get; set; }
 
-        public CharmStatus Status { get; set; }
+        public ItemStatus Status { get; set; }
     }
 }

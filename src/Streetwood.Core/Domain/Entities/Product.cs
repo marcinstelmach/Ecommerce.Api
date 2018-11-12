@@ -15,19 +15,19 @@ namespace Streetwood.Core.Domain.Entities
 
         public string NameEng { get; protected set; }
 
-        public decimal Price { get; protected set; }
-
-        public ProductStatus Status { get; protected set; }
-
         public string Description { get; protected set; }
 
         public string DescriptionEng { get; protected set; }
+
+        public decimal Price { get; protected set; }
 
         public bool AcceptCharms { get; protected set; }
 
         public string Sizes { get; protected set; }
 
         public string ImagesPath { get; protected set; }
+
+        public ItemStatus Status { get; protected set; }
 
         public virtual ProductCategory ProductCategory { get; protected set; }
 
@@ -45,7 +45,7 @@ namespace Streetwood.Core.Domain.Entities
             SetDescriptionEng(descriptionEng);
             AcceptCharms = acceptCharms;
             SetSizes(sizes);
-            Status = ProductStatus.Avaible;
+            SetStatus(ItemStatus.Available);
             ImagesPath = imagesPath;
         }
 
@@ -70,6 +70,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetSizes(string sizes)
             => Sizes = sizes;
+
+        public void SetStatus(ItemStatus status)
+            => Status = status;
 
         public void AddImage(Image image)
             => images.Add(image);

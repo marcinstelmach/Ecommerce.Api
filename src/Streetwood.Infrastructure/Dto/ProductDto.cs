@@ -13,7 +13,7 @@ namespace Streetwood.Infrastructure.Dto
 
         public decimal Price { get; set; }
 
-        public ProductStatus Status { get; set; }
+        public ItemStatus Status { get; set; }
 
         public string Description { get; set; }
 

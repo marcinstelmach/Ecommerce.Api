@@ -1,9 +1,9 @@
 ﻿namespace Streetwood.Core.Domain.Enums
 {
-    public enum ProductStatus
+    public enum ItemStatus
     {
-        Avaible,
-        Unavaible,
+        Available,
+        Unavailable,
         Deleted
     }
 }

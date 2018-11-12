@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.CharmCategory
 
         public async Task<Unit> Handle(AddCharmCategoryCommandModel request, CancellationToken cancellationToken)
         {
-            await charmCategoryCommandService.AddAsync(request.Name);
+            await charmCategoryCommandService.AddAsync(request.Name, request.NameEng);
             cache.Remove(CacheKey.CharmCategoriesList);
             return Unit.Value;
         }
