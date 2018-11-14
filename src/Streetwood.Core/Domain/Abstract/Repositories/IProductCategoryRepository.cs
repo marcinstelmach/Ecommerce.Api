@@ -11,6 +11,6 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
 
         Task<ProductCategory> GetWithChildrenAsync(Guid id);
 
-        Task<IList<ProductCategory>> GetTreeAsync();
+        Task<IList<ProductCategory>> GetAvailableTreeAsync();
     }
 }

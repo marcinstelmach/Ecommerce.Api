@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Core.Domain.Implementation.Repositories
 {
@@ -30,17 +31,27 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .ProductCategories
                 .Where(s => s.Id == id)
                 .Include(s => s.ProductCategories)
-                .FirstOrDefaultAsync();
+                .SingleOrDefaultAsync();
         }
 
-        public async Task<IList<ProductCategory>> GetTreeAsync()
+        public async Task<IList<ProductCategory>> GetAvailableTreeAsync()
         {
-            return await dbContext
+            var categories = await dbContext
                 .ProductCategories
+                .Where(s => s.Status == ItemStatus.Available)
                 .Include(s => s.Parent)
                 .Where(s => s.Parent == null)
                 .Include(s => s.ProductCategories)
                 .ToListAsync();
+
+            foreach (var category in categories)
+            {
+                var subCategories = category.ProductCategories.Where(s => s.Status == ItemStatus.Available).ToList();
+                category.ProductCategories.Clear();
+                category.ProductCategories.AddRange(subCategories);
+            }
+
+            return categories;
         }
     }
 }

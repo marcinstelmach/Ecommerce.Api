@@ -27,7 +27,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductCategoryDto>> GetAsync()
         {
-            var productCategories = await productCategoryRepository.GetTreeAsync();
+            var productCategories = await productCategoryRepository.GetAvailableTreeAsync();
             return mapper.Map<IList<ProductCategoryDto>>(productCategories);
         }
     }

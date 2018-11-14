@@ -13,6 +13,12 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategory
         private readonly IProductCategoryCommandService productCategoryCommandService;
         private readonly IMemoryCache cache;
 
+        public DeleteProductCategoryCommandHandler(IProductCategoryCommandService productCategoryCommandService, IMemoryCache cache)
+        {
+            this.productCategoryCommandService = productCategoryCommandService;
+            this.cache = cache;
+        }
+
         public async Task<Unit> Handle(DeleteProductCategoryCommandModel request, CancellationToken cancellationToken)
         {
             await productCategoryCommandService.DeleteAsync(request.Id);

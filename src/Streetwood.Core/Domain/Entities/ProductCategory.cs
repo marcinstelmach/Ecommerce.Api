@@ -21,7 +21,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
-        public virtual IReadOnlyCollection<ProductCategory> ProductCategories => productCategories;
+        public virtual List<ProductCategory> ProductCategories => productCategories;
 
         public virtual IReadOnlyCollection<Product> Products => products;
 

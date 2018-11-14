@@ -22,7 +22,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategory
         public async Task<Unit> Handle(UpdateProductCategoryCommandModel request, CancellationToken cancellationToken)
         {
             await service.UpdateAsync(request.Id, request.Name, request.NameEng);
-            cache.Remove(CacheKey.CharmCategoriesList);
+            cache.Remove(CacheKey.ProductCategoryTree);
 
             return Unit.Value;
         }
