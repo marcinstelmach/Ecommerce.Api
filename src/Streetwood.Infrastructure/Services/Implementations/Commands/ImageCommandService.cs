@@ -35,7 +35,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             var uniqueFileName = file.FileName.GetUniqueFileName();
 
             var imagePath = Path.Combine(product.ImagesPath, uniqueFileName);
-            var image = new Image(imagePath, isMain);
+            var imagePathForGet = imagePath.Substring(8); // to remove wwwroot
+            var image = new Image(imagePathForGet, isMain);
             product.AddImage(image);
             await productRepository.SaveChangesAsync();
 

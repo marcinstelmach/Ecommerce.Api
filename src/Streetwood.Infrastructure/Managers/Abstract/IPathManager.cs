@@ -6,6 +6,8 @@
 
         string GetProductImagesPath(string categoryUnique, string productUnique);
 
+        string GetProductPath(string categoryUnique, string productUnique);
+
         string GetPhysicalPath(string path);
     }
 }

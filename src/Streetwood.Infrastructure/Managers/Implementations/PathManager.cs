@@ -15,15 +15,22 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string GetCharmImagePath(string categoryUnique)
         {
-            var path = Path.Combine("wwwroot", "Images", "Charms", categoryUnique);
+            var path = Path.Combine("Images", "Charms", categoryUnique);
             return path;
         }
 
         public string GetProductImagesPath(string categoryUnique, string productUnique)
         {
+            var path = Path.Combine("Images", "Products", categoryUnique, productUnique);
+            return path;
+        }
+
+        public string GetProductPath(string categoryUnique, string productUnique)
+        {
             var path = Path.Combine("wwwroot", "Images", "Products", categoryUnique, productUnique);
             return path;
         }
+
 
         public string GetPhysicalPath(string path)
         {

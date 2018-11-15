@@ -25,7 +25,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng, bool acceptCharms, string sizes, Guid productCategoryId)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
-            var imagesPath = pathManager.GetProductImagesPath(category.UniqueName, name.AppendRandom(5));
+            var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
             var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, sizes, imagesPath);
 
             category.AddProduct(product);

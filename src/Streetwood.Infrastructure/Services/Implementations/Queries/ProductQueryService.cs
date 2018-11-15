@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
@@ -36,7 +38,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
-            return mapper.Map<IList<ProductDto>>(category.Products);
+            var availableProducts = category.Products.Where(s => s.Status == ItemStatus.Available);
+            return mapper.Map<IList<ProductDto>>(availableProducts);
         }
     }
 }
