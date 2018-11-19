@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
 using Streetwood.Infrastructure.Commands.Models.ProductCategory;
+using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategory
@@ -11,9 +11,9 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategory
     public class DeleteProductCategoryCommandHandler : IRequestHandler<DeleteProductCategoryCommandModel, Unit>
     {
         private readonly IProductCategoryCommandService productCategoryCommandService;
-        private readonly IMemoryCache cache;
+        private readonly ICache cache;
 
-        public DeleteProductCategoryCommandHandler(IProductCategoryCommandService productCategoryCommandService, IMemoryCache cache)
+        public DeleteProductCategoryCommandHandler(IProductCategoryCommandService productCategoryCommandService, ICache cache)
         {
             this.productCategoryCommandService = productCategoryCommandService;
             this.cache = cache;

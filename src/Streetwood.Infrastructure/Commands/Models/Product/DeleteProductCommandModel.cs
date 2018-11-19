@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models.Product
 {
@@ -6,9 +7,12 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
     {
         public int Id { get; protected set; }
 
-        public DeleteProductCommandModel(int id)
+        public Guid CategoryId { get; protected set; }
+
+        public DeleteProductCommandModel(int id, Guid categoryId)
         {
             Id = id;
+            CategoryId = categoryId;
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
             => Ok(await mediator.Send(model));
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-            => Accepted(await mediator.Send(new DeleteProductCommandModel(id)));
+        [HttpDelete("{id}/{categoryId}")]
+        public async Task<IActionResult> Delete(int id, Guid categoryId)
+            => Accepted(await mediator.Send(new DeleteProductCommandModel(id, categoryId)));
     }
 }

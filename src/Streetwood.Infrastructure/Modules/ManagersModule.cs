@@ -14,6 +14,7 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<TokenManager>().As<ITokenManager>().InstancePerLifetimeScope();
             builder.RegisterType<PathManager>().As<IPathManager>().InstancePerLifetimeScope();
             builder.RegisterType<FileManager>().As<IFileManager>().InstancePerLifetimeScope();
+            builder.RegisterType<MemoryCache>().As<ICache>().SingleInstance();
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
-using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Queries.Models.ProductCategory;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
@@ -15,9 +13,9 @@ namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategory
     public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQueryModel, IList<ProductCategoryDto>>
     {
         private readonly IProductCategoryQueryService productCategoryQueryService;
-        private readonly IMemoryCache cache;
+        private readonly ICache cache;
 
-        public GetProductCategoriesQueryHandler(IProductCategoryQueryService productCategoryQueryService, IMemoryCache cache)
+        public GetProductCategoriesQueryHandler(IProductCategoryQueryService productCategoryQueryService, ICache cache)
         {
             this.productCategoryQueryService = productCategoryQueryService;
             this.cache = cache;
@@ -25,7 +23,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategory
 
         public async Task<IList<ProductCategoryDto>> Handle(GetProductCategoriesQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await cache.GetOrAddAsync(CacheKey.ProductCategoryTree, entry => productCategoryQueryService.GetAsync());
+            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryTree, entry => productCategoryQueryService.GetAsync());
 
             return result;
         }
