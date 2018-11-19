@@ -22,7 +22,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             this.options = options.Value;
         }
 
-        public TokenModel GetToken(Guid userId, string email)
+        public TokenModel GetToken(Guid userId, string email, string role)
         {
             var now = DateTime.UtcNow;
             var claims = new Claim[]
@@ -30,7 +30,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
                 new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimeStamp().ToString())
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimeStamp().ToString()),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var signingCredentials =

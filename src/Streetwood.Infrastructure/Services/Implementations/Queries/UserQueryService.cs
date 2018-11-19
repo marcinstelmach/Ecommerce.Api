@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Exceptions;
+using Streetwood.Core.Extensions;
 using Streetwood.Core.Managers;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
@@ -47,7 +48,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 throw new StreetwoodException(ErrorCode.InvalidUserCredentials);
             }
 
-            var token = tokenManager.GetToken(user.Id, user.Email);
+            var token = tokenManager.GetToken(user.Id, user.Email, user.Type.GetName());
             user.SetRefreshToken(token.RefreshToken);
             await userRepository.SaveChangesAsync();
 
@@ -63,7 +64,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 throw new StreetwoodException(ErrorCode.InvalidRefreshToken);
             }
 
-            var token = tokenManager.GetToken(userId, user.Email);
+            var token = tokenManager.GetToken(userId, user.Email, user.Type.GetName());
             user.SetRefreshToken(token.RefreshToken);
             await userRepository.SaveChangesAsync();
 
