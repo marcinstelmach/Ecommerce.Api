@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Streetwood.Core.Constants;
+using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.API.Controllers
 {
@@ -9,9 +10,9 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class CacheController : ControllerBase
     {
-        private readonly IMemoryCache cache;
+        private readonly ICache cache;
 
-        public CacheController(IMemoryCache cache)
+        public CacheController(ICache cache)
         {
             this.cache = cache;
         }
@@ -19,9 +20,7 @@ namespace Streetwood.API.Controllers
         [HttpGet]
         public IActionResult CleanCache()
         {
-            var keys = typeof(CacheKey).GetProperties().Select(s => s.Name).ToList();
-
-            keys.ForEach(s => cache.Remove(s));
+            cache.ClearCache();
             return Ok();
         }
     }
