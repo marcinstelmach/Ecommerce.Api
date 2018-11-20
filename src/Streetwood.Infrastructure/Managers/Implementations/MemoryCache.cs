@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -14,9 +15,14 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             this.cache = cache;
         }
 
-        public async Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory, int timeInMinutes = 20)
+        public async Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory, UserType userType, int timeInMinutes = 20)
         {
-            if (!cache.TryGetValue(key, out object obj))
+            object obj = default;
+            if (userType == UserType.Admin)
+            {
+                obj = (object)await factory(null);
+            }
+            else if (!cache.TryGetValue(key, out obj))
             {
                 var entry = cache.CreateEntry(key);
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(timeInMinutes);

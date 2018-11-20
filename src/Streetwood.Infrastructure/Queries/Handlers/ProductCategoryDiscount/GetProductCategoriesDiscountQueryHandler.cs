@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Constants;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
@@ -15,17 +15,20 @@ namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategoryDiscount
     public class GetProductCategoriesDiscountQueryHandler : IRequestHandler<GetProductCategoriesDiscountQueryModel, IList<ProductCategoryDiscountDto>>
     {
         private readonly IProductCategoryDiscountQueryService service;
+        private readonly IHttpContextAccessor contextAccessor;
         private readonly ICache cache;
 
-        public GetProductCategoriesDiscountQueryHandler(IProductCategoryDiscountQueryService service, ICache cache)
+        public GetProductCategoriesDiscountQueryHandler(IProductCategoryDiscountQueryService service, IHttpContextAccessor contextAccessor, ICache cache)
         {
             this.service = service;
+            this.contextAccessor = contextAccessor;
             this.cache = cache;
         }
 
         public async Task<IList<ProductCategoryDiscountDto>> Handle(GetProductCategoriesDiscountQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryDiscountList, s => service.GetAsync());
+            var userType = contextAccessor.HttpContext.User.GetUserType();
+            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryDiscountList, s => service.GetAsync(), userType);
             return result;
         }
     }

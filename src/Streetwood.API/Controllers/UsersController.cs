@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.User;
 using Streetwood.Infrastructure.Queries.Models.User;
@@ -34,6 +35,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("erase/{id}")]
+        [Authorize]
         public async Task<IActionResult> Put(Guid id)
         {
             await mediator.Send(new EraseUserDataCommandModel(id));

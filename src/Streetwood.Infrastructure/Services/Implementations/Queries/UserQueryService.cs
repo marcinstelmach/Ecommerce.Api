@@ -41,7 +41,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<TokenModel> GetTokenAsync(string email, string password)
         {
-            var user = await userRepository.GetByEmailAsync(email);
+            var user = await userRepository.GetByEmailAndEnsureExistAsync(email);
             var hash = encrypter.GetHash(password, user.Salt);
             if (hash != user.PasswordHash)
             {
