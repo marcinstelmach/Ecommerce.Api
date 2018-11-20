@@ -1,13 +1,12 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Streetwood.Core.Constants;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.API.Controllers
 {
     [Route("api/Cache")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CacheController : ControllerBase
     {
         private readonly ICache cache;
