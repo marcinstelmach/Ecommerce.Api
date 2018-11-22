@@ -34,6 +34,22 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             return product.Id;
         }
 
+        public async Task UpdateAsync(int id, string name, string nameEng, decimal price, string description, string descriptionEng,
+            bool acceptCharms, string sizes)
+        {
+            var product = await productRepository.GetAndEnsureExistAsync(id);
+
+            product.SetName(name);
+            product.SetNameEng(name);
+            product.SetPrice(price);
+            product.SetDescription(description);
+            product.SetDescriptionEng(descriptionEng);
+            product.SetAcceptCharms(acceptCharms);
+            product.SetSizes(sizes);
+
+            await productRepository.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(int id)
         {
             var product = await productRepository.GetAndEnsureExistAsync(id);

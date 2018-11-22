@@ -74,6 +74,9 @@ namespace Streetwood.Core.Domain.Entities
         public void SetStatus(ItemStatus status)
             => Status = status;
 
+        public void SetAcceptCharms(bool acceptCharms)
+            => AcceptCharms = acceptCharms;
+
         public void AddImage(Image image)
             => images.Add(image);
     }
