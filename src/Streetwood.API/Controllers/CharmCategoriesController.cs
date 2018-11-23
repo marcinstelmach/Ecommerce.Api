@@ -33,6 +33,13 @@ namespace Streetwood.API.Controllers
             return Accepted();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateCharmCategoryCommandModel model)
+        {
+            await mediator.Send(model.SetId(id));
+            return Accepted();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {

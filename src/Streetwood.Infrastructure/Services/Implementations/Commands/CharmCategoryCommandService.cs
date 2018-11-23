@@ -23,6 +23,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await charmCategoryRepository.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(Guid id, string name, string nameEng)
+        {
+            var category = await charmCategoryRepository.GetAndEnsureExistAsync(id);
+            category.SetName(name);
+            category.SetEngName(nameEng);
+
+            await charmCategoryRepository.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(Guid id)
         {
             var charmCategory = await charmCategoryRepository.GetAndEnsureExistAsync(id);

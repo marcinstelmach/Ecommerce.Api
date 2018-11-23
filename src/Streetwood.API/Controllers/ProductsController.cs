@@ -32,11 +32,17 @@ namespace Streetwood.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
-            => Ok(await mediator.Send(model));
+        {
+            await mediator.Send(model);
+            return Accepted();
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateProductCommandModel model)
-            => Ok(await mediator.Send(model.SetId(id)));
+        {
+            await mediator.Send(model.SetId(id));
+            return Accepted();
+        }
 
         [HttpDelete("{id}/{categoryId}")]
         public async Task<IActionResult> Delete(int id, Guid categoryId)

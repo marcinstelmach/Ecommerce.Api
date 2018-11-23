@@ -7,6 +7,8 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
     {
         Task AddAsync(string name, string nameEng);
 
+        Task UpdateAsync(Guid id, string name, string nameEng);
+
         Task DeleteAsync(Guid id);
     }
 }

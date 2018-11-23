@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Core.Domain.Implementation.Repositories
 {
@@ -27,6 +29,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         {
             var categories = await dbContext
                 .CharmCategories
+                .Where(s => s.Status == ItemStatus.Available)
                 .Include(s => s.Charms)
                 .ToListAsync();
             return categories;
@@ -36,6 +39,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         {
             var category = await dbContext
                 .CharmCategories
+                .Where(s => s.Status == ItemStatus.Available)
                 .Include(s => s.Charms)
                 .SingleAsync(s => s.Id == id);
 
