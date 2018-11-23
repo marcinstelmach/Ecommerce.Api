@@ -11,13 +11,6 @@ namespace Streetwood.Infrastructure.Commands.Models.Charm
 
         public decimal Price { get; set; }
 
-        public Guid CharmCategoryId { get; private set; }
-
-        public AddCharmCommandModel AddCategoryId(Guid guid)
-        {
-            CharmCategoryId = guid;
-            return this;
-        }
-
+        public Guid CharmCategoryId { get; set; }
     }
 }

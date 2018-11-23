@@ -24,11 +24,8 @@ namespace Streetwood.API.Controllers
             => Ok(await mediator.Send(new GetCharmsByCategoryIdQueryModel(id)));
 
         [HttpPost]
-        public async Task<IActionResult> Post(Guid id, [FromBody] AddCharmCommandModel model)
-        {
-            await mediator.Send(model.AddCategoryId(id));
-            return Accepted();
-        }
+        public async Task<IActionResult> Post([FromBody] AddCharmCommandModel model)
+            => Ok(await mediator.Send(model));
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute]Guid id, IFormFile file)

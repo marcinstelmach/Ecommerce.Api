@@ -44,8 +44,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             var charm = await charmRepository.GetAndEnsureExistAsync(id);
             var imageUniqueName = file.FileName.GetUniqueFileName();
             var path = pathManager.GetCharmImagePath(charm.CharmCategory.UniqueName);
+            var pathToSave = Path.Combine("wwwroot", path);
 
-            await fileManager.MoveFileAsync(file, pathManager.GetPhysicalPath(path), imageUniqueName);
+            await fileManager.MoveFileAsync(file, pathToSave, imageUniqueName);
             charm.SetUrl(Path.Combine(path, imageUniqueName));
 
             await charmRepository.SaveChangesAsync();
