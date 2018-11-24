@@ -52,6 +52,16 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await charmRepository.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(Guid id, string name, string nameEng, decimal price)
+        {
+            var charm = await charmRepository.GetAndEnsureExistAsync(id);
+            charm.SetName(name);
+            charm.SetNameEng(nameEng);
+            charm.SetPrice(price);
+
+            await charmRepository.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(Guid id)
         {
             var charm = await charmRepository.GetAndEnsureExistAsync(id);

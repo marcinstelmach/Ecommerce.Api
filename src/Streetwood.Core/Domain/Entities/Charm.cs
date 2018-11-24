@@ -44,6 +44,9 @@ namespace Streetwood.Core.Domain.Entities
         public void SetStatus(ItemStatus status)
             => Status = status;
 
+        public void SetPrice(decimal price)
+            => Price = price;
+
         public void SetUrl(string path)
             => ImagePath = path;
     }

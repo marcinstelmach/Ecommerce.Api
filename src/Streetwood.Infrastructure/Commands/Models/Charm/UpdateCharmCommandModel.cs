@@ -4,8 +4,10 @@ using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models.Charm
 {
-    public class AddCharmCommandModel : IRequest<Guid>
+    public class UpdateCharmCommandModel : IRequest
     {
+        public Guid Id { get; protected set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -16,7 +18,10 @@ namespace Streetwood.Infrastructure.Commands.Models.Charm
         [RegularExpression("^\\d{0,8}(\\.\\d{1,2})?$")]
         public decimal Price { get; set; }
 
-        [Required]
-        public Guid CharmCategoryId { get; set; }
+        public UpdateCharmCommandModel SetId(Guid id)
+        {
+            Id = id;
+            return this;
+        }
     }
 }

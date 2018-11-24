@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.Infrastructure.Commands.Handlers.Charm;
 using Streetwood.Infrastructure.Commands.Models.Charm;
 using Streetwood.Infrastructure.Queries.Models.Charm;
 
@@ -19,18 +20,25 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await mediator.Send(new GetCharmsByCategoryIdQueryModel(id)));
+            => Ok(await mediator.Send(new GetCharmByIdQueryModel(id)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddCharmCommandModel model)
             => Ok(await mediator.Send(model));
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute]Guid id, IFormFile file)
+        [HttpPost("{id}/image/")]
+        public async Task<IActionResult> Post([FromRoute]Guid id, IFormFile file)
         {
             await mediator.Send(new AddCharmImageCommandModel(id, file));
+            return Accepted();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCharmCommandModel model)
+        {
+            await mediator.Send(model.SetId(id));
             return Accepted();
         }
 

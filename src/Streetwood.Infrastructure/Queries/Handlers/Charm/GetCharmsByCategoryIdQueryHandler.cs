@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Streetwood.Infrastructure.Dto;
@@ -8,7 +7,7 @@ using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Queries.Handlers.Charm
 {
-    public class GetCharmsByCategoryIdQueryHandler : IRequestHandler<GetCharmsByCategoryIdQueryModel, IList<CharmDto>>
+    public class GetCharmsByCategoryIdQueryHandler : IRequestHandler<GetCharmByIdQueryModel, CharmDto>
     {
         private readonly ICharmQueryService charmQueryService;
 
@@ -17,7 +16,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Charm
             this.charmQueryService = charmQueryService;
         }
 
-        public async Task<IList<CharmDto>> Handle(GetCharmsByCategoryIdQueryModel request, CancellationToken cancellationToken)
-            => await charmQueryService.GetByCategoryId(request.Id);
+        public async Task<CharmDto> Handle(GetCharmByIdQueryModel request, CancellationToken cancellationToken)
+            => await charmQueryService.GetAsync(request.Id);
     }
 }

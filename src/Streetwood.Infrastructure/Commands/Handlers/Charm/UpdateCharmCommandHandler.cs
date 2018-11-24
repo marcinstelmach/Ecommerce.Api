@@ -6,18 +6,18 @@ using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.Charm
 {
-    public class AddCharmImageCommandHandler : IRequestHandler<AddCharmImageCommandModel, Unit>
+    public class UpdateCharmCommandHandler : IRequestHandler<UpdateCharmCommandModel, Unit>
     {
         private readonly ICharmCommandService charmCommandService;
 
-        public AddCharmImageCommandHandler(ICharmCommandService charmCommandService)
+        public UpdateCharmCommandHandler(ICharmCommandService charmCommandService)
         {
             this.charmCommandService = charmCommandService;
         }
 
-        public async Task<Unit> Handle(AddCharmImageCommandModel request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCharmCommandModel request, CancellationToken cancellationToken)
         {
-            await charmCommandService.AddPhotoAsync(request.Id, request.File);
+            await charmCommandService.UpdateAsync(request.Id, request.Name, request.NameEng, request.Price);
             return Unit.Value;
         }
     }

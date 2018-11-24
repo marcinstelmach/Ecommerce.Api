@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -20,11 +18,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             this.mapper = mapper;
         }
 
-        public async Task<IList<CharmDto>> GetByCategoryId(Guid id)
+
+        public async Task<CharmDto> GetAsync(Guid id)
         {
-            var category = await charmCategoryRepository.GetAndEnsureExistAsync(id);
-            var charms = category.Charms.ToList();
-            return mapper.Map<IList<CharmDto>>(charms);
+            var charm = await charmCategoryRepository.GetAndEnsureExistAsync(id);
+            return mapper.Map<CharmDto>(charm);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public ItemStatus Status { get; protected set; }
 
-        public virtual IReadOnlyCollection<Charm> Charms => charms;
+        public virtual List<Charm> Charms => charms;
 
         public CharmCategory(string name, string nameEng)
         {

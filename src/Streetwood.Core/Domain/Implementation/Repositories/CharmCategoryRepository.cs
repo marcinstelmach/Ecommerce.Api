@@ -32,6 +32,14 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Where(s => s.Status == ItemStatus.Available)
                 .Include(s => s.Charms)
                 .ToListAsync();
+
+            foreach (var category in categories)
+            {
+                var charms = category.Charms.Where(s => s.Status == ItemStatus.Available).ToList();
+                category.Charms.Clear();
+                category.Charms.AddRange(charms);
+            }
+
             return categories;
         }
 
