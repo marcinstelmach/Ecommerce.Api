@@ -17,9 +17,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.shipmentRepository = shipmentRepository;
         }
 
-        public async Task AddAsync(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShipmentType type)
+        public async Task AddAsync(string name, string nameEng, string description, string descriptionEng, decimal price, ShipmentType type)
         {
-            await shipmentRepository.AddAsync(new Shipment(name, nameEng, description, descriptionEng, price, isActive, type));
+            await shipmentRepository.AddAsync(new Shipment(name, nameEng, description, descriptionEng, price, type));
             await shipmentRepository.SaveChangesAsync();
         }
 

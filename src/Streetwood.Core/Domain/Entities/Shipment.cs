@@ -25,7 +25,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
-        public Shipment(string name, string nameEng, string description, string descriptionEng, decimal price, bool isActive, ShipmentType type)
+        public Shipment(string name, string nameEng, string description, string descriptionEng, decimal price, ShipmentType type)
         {
             Id = Guid.NewGuid();
             SetName(name);
@@ -33,7 +33,7 @@ namespace Streetwood.Core.Domain.Entities
             SetDescription(description);
             SetDescriptionEng(descriptionEng);
             Price = price;
-            SetIsActive(isActive);
+            SetIsActive(true);
             SetType(type);
         }
 

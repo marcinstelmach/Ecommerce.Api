@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Shipment
         public async Task<Unit> Handle(AddShipmentCommandModel request, CancellationToken cancellationToken)
         {
             await shipmentCommandService.AddAsync(request.Name, request.NameEng, request.Description,
-                request.DescriptionEng, request.Price, request.IsActive, request.Type);
+                request.DescriptionEng, request.Price, request.Type);
             return Unit.Value;
         }
     }
