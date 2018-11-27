@@ -32,7 +32,7 @@ namespace Streetwood.Core.Domain.Entities
             SetEngName(nameEng);
             SetDescription(description);
             SetDescriptionEng(descriptionEng);
-            Price = price;
+            SetPrice(price);
             SetIsActive(true);
             SetType(type);
         }
@@ -58,5 +58,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetIsActive(bool isActive)
             => IsActive = isActive;
+
+        public void SetPrice(decimal price)
+            => Price = price;
     }
 }

@@ -8,7 +8,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
     {
         Task AddAsync(string name, string nameEng, string description, string descriptionEng, decimal price, ShipmentType type);
 
-        Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, bool isActive, ShipmentType type);
+        Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, bool isActive, decimal price, ShipmentType type);
 
         Task DeleteAsync(Guid id);
     }

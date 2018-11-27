@@ -23,7 +23,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await shipmentRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, bool isActive, ShipmentType type)
+        public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, bool isActive, decimal price, ShipmentType type)
         {
             var shipment = await shipmentRepository.GetAndEnsureExistAsync(id);
             shipment.SetName(name);
@@ -31,6 +31,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             shipment.SetDescription(description);
             shipment.SetDescriptionEng(descriptionEng);
             shipment.SetIsActive(isActive);
+            shipment.SetPrice(price);
             shipment.SetType(type);
 
             await shipmentRepository.SaveChangesAsync();

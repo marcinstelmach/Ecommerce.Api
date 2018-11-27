@@ -1,9 +1,12 @@
-﻿using Streetwood.Core.Domain.Enums;
+﻿using System;
+using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Infrastructure.Dto
 {
     public class ShipmentDto
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         public string NameEng { get; set; }

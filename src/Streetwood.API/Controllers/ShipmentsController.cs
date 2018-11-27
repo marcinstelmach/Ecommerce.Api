@@ -35,7 +35,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromRoute] UpdateShipmentCommandModel model)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateShipmentCommandModel model)
         {
             await mediator.Send(model.SetId(id));
             return Accepted();

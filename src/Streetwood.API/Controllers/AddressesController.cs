@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Address;
+using Streetwood.Infrastructure.Queries.Models.Address;
 
 namespace Streetwood.API.Controllers
 {
@@ -16,6 +17,10 @@ namespace Streetwood.API.Controllers
         {
             this.mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(Guid userId)
+            => Ok(await mediator.Send(new GetUserAddressesQueryModel(userId)));
 
         [HttpPost]
         public async Task<IActionResult> Post(Guid userId, [FromBody] AddAddressCommandModel model)
