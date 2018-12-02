@@ -28,7 +28,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await productCategoryDiscountRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(IEnumerable<Guid> categoryIds, Guid discountId)
+        public async Task UpdateCategoriesAsync(IEnumerable<Guid> categoryIds, Guid discountId)
         {
 //            var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(discountId);
 //            var categories = await productCategoryRepository.GetByIdsAsync(categoryIds);
@@ -36,6 +36,22 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 //            discount.ProductCategories.Clear();
 //            discount.AddProductCategory(categories);
 //            await productCategoryDiscountRepository.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, int percentValue,
+            DateTime availableFrom, DateTime availableTo)
+        {
+            var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(id);
+
+            discount.SetDescription(description);
+            discount.SetDescriptionEng(descriptionEng);
+            discount.SetPercentValue(percentValue);
+            discount.SetAvaibleFrom(availableFrom);
+            discount.SetAvaibleTo(availableTo);
+            discount.SetName(name);
+            discount.SetNameEng(nameEng);
+
+            await productCategoryDiscountRepository.SaveChangesAsync();
         }
     }
 }

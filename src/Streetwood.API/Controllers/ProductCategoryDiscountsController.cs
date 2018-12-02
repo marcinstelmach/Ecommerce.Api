@@ -44,10 +44,17 @@ namespace Streetwood.API.Controllers
             return Accepted();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] AddProductCategoryToDiscountCommandModel model)
+//        [HttpPut]
+//        public async Task<IActionResult> Put([FromBody] AddProductCategoryToDiscountCommandModel model)
+//        {
+//            await mediator.Send(model);
+//            return Accepted();
+//        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateProductCategoryDiscountCommandModel model)
         {
-            await mediator.Send(model);
+            await mediator.Send(model.SetId(id));
             return Accepted();
         }
     }

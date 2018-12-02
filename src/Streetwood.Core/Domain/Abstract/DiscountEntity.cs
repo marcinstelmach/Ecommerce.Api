@@ -36,8 +36,8 @@ namespace Streetwood.Core.Domain.Abstract
         public DiscountEntity(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
         {
             Id = Guid.NewGuid();
-            Name = name;
-            NameEng = nameEng;
+            SetName(name);
+            SetNameEng(nameEng);
             SetDescription(description);
             SetDescriptionEng(descriptionEng);
             PercentValue = percentValue;
@@ -62,5 +62,11 @@ namespace Streetwood.Core.Domain.Abstract
 
         public void SetPercentValue(int percentValue)
             => PercentValue = percentValue;
+
+        public void SetName(string name)
+            => Name = name;
+
+        public void SetNameEng(string name)
+            => NameEng = name;
     }
 }
