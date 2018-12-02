@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
@@ -27,12 +28,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             await productCategoryDiscountRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid categoryId, Guid discountId)
+        public async Task UpdateAsync(IEnumerable<Guid> categoryIds, Guid discountId)
         {
             var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(discountId);
-            var category = await productCategoryRepository.GetAndEnsureExistAsync(categoryId);
+            var categories = await productCategoryRepository.GetByIdsAsync(categoryIds);
 
-            discount.AddProductCategory(category);
+            discount.ProductCategories.Clear();
+            discount.AddProductCategory(categories);
             await productCategoryDiscountRepository.SaveChangesAsync();
         }
     }

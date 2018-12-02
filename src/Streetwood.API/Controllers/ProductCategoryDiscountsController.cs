@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models;
+using Streetwood.Core.Constants;
 using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Queries.Models.ProductCategoryDiscount;
 
@@ -22,9 +23,23 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get()
             => Ok(await mediator.Send(new GetProductCategoriesDiscountQueryModel()));
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+            => Ok(await mediator.Send(new GetProductCategoryDiscountQueryModel(id)));
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryDiscountCommandModel model)
         {
+            if (model.AvailableTo <= model.AvailableFrom)
+            {
+                ModelState.AddModelError(ConstantValues.InvalidDateRangesKey, "Invalid date range");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await mediator.Send(model);
             return Accepted();
         }

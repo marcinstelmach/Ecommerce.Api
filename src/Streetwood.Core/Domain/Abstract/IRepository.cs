@@ -9,7 +9,7 @@ namespace Streetwood.Core.Domain.Abstract
     {
         Task<IList<T>> GetListAsync();
 
-        Task<IQueryable> GetAsync();
+        IQueryable<T> GetQueryable();
 
         Task<T> GetAsync(Guid id);
 

@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -18,7 +17,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductDiscount
 
         public async Task<Unit> Handle(AddProductCategoryToDiscountCommandModel request, CancellationToken cancellationToken)
         {
-            await service.UpdateAsync(request.CategoryId, request.DiscountId);
+            await service.UpdateAsync(request.CategoryIds, request.DiscountId);
             return Unit.Value;
         }
     }

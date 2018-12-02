@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductDiscount
         public async Task<Unit> Handle(AddProductCategoryDiscountCommandModel request, CancellationToken cancellationToken)
         {
             await service.AddAsync(request.Name, request.NameEng, request.Description, request.DescriptionEng,
-                request.PercentValue, request.AvailableFrom, request.AvailableTo);
+                request.PercentValue, request.AvailableFrom.Date, request.AvailableTo.Date);
             return Unit.Value;
         }
     }

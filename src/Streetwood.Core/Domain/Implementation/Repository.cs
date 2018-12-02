@@ -22,8 +22,8 @@ namespace Streetwood.Core.Domain.Implementation
         public async Task<IList<T>> GetListAsync()
             => await dbSet.ToListAsync();
 
-        public async Task<IQueryable> GetAsync()
-            => await Task.FromResult(dbSet.AsQueryable());
+        public IQueryable<T> GetQueryable()
+            => dbSet.AsQueryable();
 
         public async Task<T> GetAsync(Guid id)
             => await dbSet.FindAsync(id);

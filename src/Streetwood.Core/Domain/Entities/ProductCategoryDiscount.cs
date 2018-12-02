@@ -9,7 +9,7 @@ namespace Streetwood.Core.Domain.Entities
         private List<ProductCategory> productCategories = new List<ProductCategory>();
         private List<ProductOrder> productOrders = new List<ProductOrder>();
 
-        public virtual IReadOnlyCollection<ProductCategory> ProductCategories => productCategories;
+        public virtual IList<ProductCategory> ProductCategories => productCategories;
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
@@ -22,7 +22,8 @@ namespace Streetwood.Core.Domain.Entities
         {
         }
 
-        public void AddProductCategory(ProductCategory productCategory)
-            => productCategories.Add(productCategory);
+        public void AddProductCategory(IEnumerable<ProductCategory> productCategories)
+            => this.productCategories.AddRange(productCategories);
+
     }
 }
