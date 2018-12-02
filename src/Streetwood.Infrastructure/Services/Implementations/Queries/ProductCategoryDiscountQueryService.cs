@@ -31,11 +31,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<ProductCategoryDiscountWithDataDto> GetWithDataAsync(Guid id)
         {
-            var discount = await discountRepository.GetAndEnsureExistAsync(id);
-            var discountCategories = discount.ProductCategories;
-            var categories = await productCategoryRepository.GetListAsync();
-
-            var mappedCategories = MapCategories(categories, discountCategories);
+//            var discount = await discountRepository.GetAndEnsureExistAsync(id);
+//            var discountCategories = discount.ProductCategories;
+//            var categories = await productCategoryRepository.GetListAsync();
+//
+//            var mappedCategories = MapCategories(categories, discountCategories);
 
             return null;
         }

@@ -9,7 +9,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
         {
             builder.HasKey(s => s.Id);
 
-            builder.HasMany(s => s.ProductCategories)
+            builder.HasMany(s => s.DiscountCategories)
                 .WithOne(s => s.ProductCategoryDiscount);
 
             builder.Property(s => s.Name).HasMaxLength(30);

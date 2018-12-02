@@ -10,6 +10,7 @@ namespace Streetwood.Core.Domain.Entities
     {
         private List<Product> products = new List<Product>();
         private List<ProductCategory> productCategories = new List<ProductCategory>();
+        private List<DiscountCategory> discountCategories = new List<DiscountCategory>();
 
         public string Name { get; protected set; }
 
@@ -19,7 +20,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public ItemStatus Status { get; protected set; }
 
-        public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
+        public virtual List<DiscountCategory> DiscountCategories => discountCategories;
 
         public virtual List<ProductCategory> ProductCategories => productCategories;
 

@@ -30,12 +30,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
         public async Task UpdateAsync(IEnumerable<Guid> categoryIds, Guid discountId)
         {
-            var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(discountId);
-            var categories = await productCategoryRepository.GetByIdsAsync(categoryIds);
-
-            discount.ProductCategories.Clear();
-            discount.AddProductCategory(categories);
-            await productCategoryDiscountRepository.SaveChangesAsync();
+//            var discount = await productCategoryDiscountRepository.GetAndEnsureExistAsync(discountId);
+//            var categories = await productCategoryRepository.GetByIdsAsync(categoryIds);
+//
+//            discount.ProductCategories.Clear();
+//            discount.AddProductCategory(categories);
+//            await productCategoryDiscountRepository.SaveChangesAsync();
         }
     }
 }

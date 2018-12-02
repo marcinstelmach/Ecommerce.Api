@@ -6,10 +6,10 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class ProductCategoryDiscount : DiscountEntity
     {
-        private List<ProductCategory> productCategories = new List<ProductCategory>();
+        private List<DiscountCategory> discountCategories = new List<DiscountCategory>();
         private List<ProductOrder> productOrders = new List<ProductOrder>();
 
-        public virtual IList<ProductCategory> ProductCategories => productCategories;
+        public virtual IList<DiscountCategory> DiscountCategories => discountCategories;
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
@@ -22,8 +22,8 @@ namespace Streetwood.Core.Domain.Entities
         {
         }
 
-        public void AddProductCategory(IEnumerable<ProductCategory> productCategories)
-            => this.productCategories.AddRange(productCategories);
+        public void AddProductCategory(IEnumerable<DiscountCategory> discountCategories)
+            => this.discountCategories.AddRange(discountCategories);
 
     }
 }

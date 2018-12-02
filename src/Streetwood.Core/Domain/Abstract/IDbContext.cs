@@ -24,6 +24,8 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<ProductCategory> ProductCategories { get; set; }
 
+        DbSet<DiscountCategory> DiscountCategories { get; set; }
+
         DbSet<ProductCategoryDiscount> ProductCategoryDiscounts { get; set; }
 
         DbSet<ProductOrder> ProductOrders { get; set; }
