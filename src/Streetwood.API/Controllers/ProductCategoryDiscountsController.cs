@@ -23,9 +23,9 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get()
             => Ok(await mediator.Send(new GetProductCategoriesDiscountQueryModel()));
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-            => Ok(await mediator.Send(new GetProductCategoryDiscountQueryModel(id)));
+        [HttpGet("{id}/categories")]
+        public async Task<IActionResult> GetCategories(Guid id)
+            => Ok(await mediator.Send(new GetCategoriesForDiscountQueryModel(id)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryDiscountCommandModel model)
@@ -44,15 +44,15 @@ namespace Streetwood.API.Controllers
             return Accepted();
         }
 
-//        [HttpPut]
-//        public async Task<IActionResult> Put([FromBody] AddProductCategoryToDiscountCommandModel model)
-//        {
-//            await mediator.Send(model);
-//            return Accepted();
-//        }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateProductCategoryDiscountCommandModel model)
+        {
+            await mediator.Send(model.SetId(id));
+            return Accepted();
+        }
+
+        [HttpPut("{id}/categories")]
+        public async Task<IActionResult> PutCategories(Guid id, [FromBody] AddProductCategoryToDiscountCommandModel model)
         {
             await mediator.Send(model.SetId(id));
             return Accepted();

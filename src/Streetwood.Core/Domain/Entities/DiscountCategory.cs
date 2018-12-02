@@ -13,5 +13,15 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetDiscount(ProductCategoryDiscount discount)
             => ProductCategoryDiscount = discount;
+
+        public DiscountCategory(ProductCategory productCategory, ProductCategoryDiscount productCategoryDiscount)
+        {
+            ProductCategory = productCategory;
+            ProductCategoryDiscount = productCategoryDiscount;
+        }
+
+        protected DiscountCategory()
+        {
+        }
     }
 }

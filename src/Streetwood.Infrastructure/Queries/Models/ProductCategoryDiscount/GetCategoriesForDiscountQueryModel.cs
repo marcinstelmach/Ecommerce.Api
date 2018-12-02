@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using MediatR;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.ProductCategoryDiscount
 {
-    public class GetProductCategoryDiscountQueryModel : IRequest<ProductCategoryDiscountWithDataDto>
+    public class GetCategoriesForDiscountQueryModel : IRequest<IList<ProductsCategoriesForDiscountDto>>
     {
         public Guid Id { get; protected set; }
 
-        public GetProductCategoryDiscountQueryModel(Guid id)
+        public GetCategoriesForDiscountQueryModel(Guid id)
         {
             Id = id;
         }

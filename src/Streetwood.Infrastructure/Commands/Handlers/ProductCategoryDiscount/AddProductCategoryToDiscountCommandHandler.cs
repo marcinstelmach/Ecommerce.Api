@@ -4,7 +4,7 @@ using MediatR;
 using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.ProductDiscount
+namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategoryDiscount
 {
     public class AddProductCategoryToDiscountCommandHandler : IRequestHandler<AddProductCategoryToDiscountCommandModel, Unit>
     {
@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductDiscount
 
         public async Task<Unit> Handle(AddProductCategoryToDiscountCommandModel request, CancellationToken cancellationToken)
         {
-            await service.UpdateCategoriesAsync(request.CategoryIds, request.DiscountId);
+            await service.SetCategoriesAsync(request.DiscountId, request.CategoryIds);
             return Unit.Value;
         }
     }

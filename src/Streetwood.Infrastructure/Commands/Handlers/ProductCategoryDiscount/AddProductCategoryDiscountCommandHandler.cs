@@ -4,7 +4,7 @@ using MediatR;
 using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.ProductDiscount
+namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategoryDiscount
 {
     public class AddProductCategoryDiscountCommandHandler : IRequestHandler<AddProductCategoryDiscountCommandModel, Unit>
     {

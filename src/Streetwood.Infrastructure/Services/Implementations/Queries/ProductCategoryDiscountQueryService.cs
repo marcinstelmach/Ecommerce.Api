@@ -14,12 +14,17 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
     {
         private readonly IProductCategoryDiscountRepository discountRepository;
         private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IDiscountCategoryRepository discountCategoryRepository;
         private readonly IMapper mapper;
 
-        public ProductCategoryDiscountQueryService(IProductCategoryDiscountRepository discountRepository, IProductCategoryRepository productCategoryRepository, IMapper mapper)
+        public ProductCategoryDiscountQueryService(IProductCategoryDiscountRepository discountRepository,
+            IProductCategoryRepository productCategoryRepository,
+            IDiscountCategoryRepository discountCategoryRepository,
+            IMapper mapper)
         {
             this.discountRepository = discountRepository;
             this.productCategoryRepository = productCategoryRepository;
+            this.discountCategoryRepository = discountCategoryRepository;
             this.mapper = mapper;
         }
 
@@ -29,30 +34,26 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<IList<ProductCategoryDiscountDto>>(discounts);
         }
 
-        public async Task<ProductCategoryDiscountWithDataDto> GetWithDataAsync(Guid id)
+        public async Task<IList<ProductsCategoriesForDiscountDto>> GetCategoriesAsync(Guid id)
         {
-//            var discount = await discountRepository.GetAndEnsureExistAsync(id);
-//            var discountCategories = discount.ProductCategories;
-//            var categories = await productCategoryRepository.GetListAsync();
-//
-//            var mappedCategories = MapCategories(categories, discountCategories);
+            var discount = await discountRepository.GetAndEnsureExistAsync(id);
+            var discountCategories = await discountCategoryRepository.GetCategories(discount);
 
-            return null;
+            var categories = await productCategoryRepository.GetListAsync();
+            var mapped = MapCategories(categories, discountCategories);
+            return mapped;
         }
 
-        private IList<ProductCategoryDiscountWithDataDto> MapCategories(IList<ProductCategory> dbCategories,
+        private IList<ProductsCategoriesForDiscountDto> MapCategories(IEnumerable<ProductCategory> dbCategories,
             IList<ProductCategory> discountCategories)
         {
-            var mappedCategories = new List<ProductCategoryDiscountWithDataDto>();
+            var mappedCategories = new List<ProductsCategoriesForDiscountDto>();
             foreach (var dbCategory in dbCategories)
             {
                 var discountCategory = discountCategories.FirstOrDefault(s => s.Id == dbCategory.Id);
-                if (discountCategory != null)
-                {
-                    mappedCategories.Add(new ProductCategoryDiscountWithDataDto(dbCategory.Id, dbCategory.Name, true));
-                }
-
-                mappedCategories.Add(new ProductCategoryDiscountWithDataDto(dbCategory.Id, dbCategory.Name, false));
+                mappedCategories.Add(discountCategory != null
+                    ? new ProductsCategoriesForDiscountDto(dbCategory.Id, dbCategory.Name, true)
+                    : new ProductsCategoriesForDiscountDto(dbCategory.Id, dbCategory.Name, false));
             }
 
             return mappedCategories;
