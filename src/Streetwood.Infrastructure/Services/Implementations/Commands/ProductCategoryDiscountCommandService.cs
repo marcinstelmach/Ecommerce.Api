@@ -54,8 +54,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             discount.SetDescription(description);
             discount.SetDescriptionEng(descriptionEng);
             discount.SetPercentValue(percentValue);
-            discount.SetAvaibleFrom(availableFrom);
-            discount.SetAvaibleTo(availableTo);
+            discount.SetAvailableFrom(availableFrom);
+            discount.SetAvailableTo(availableTo);
             discount.SetName(name);
             discount.SetNameEng(nameEng);
 

@@ -30,10 +30,10 @@ namespace Streetwood.Core.Domain.Abstract
         public void SetIsActive(bool isActive)
             => IsActive = isActive;
 
-        public void SetAvaibleFrom(DateTime dateTime)
+        public void SetAvailableFrom(DateTime dateTime)
             => AvailableFrom = dateTime;
 
-        public DiscountEntity(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
+        protected DiscountEntity(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime availableFrom, DateTime avaibleTo)
         {
             Id = Guid.NewGuid();
             SetName(name);
@@ -42,15 +42,15 @@ namespace Streetwood.Core.Domain.Abstract
             SetDescriptionEng(descriptionEng);
             PercentValue = percentValue;
             SetIsActive(isActive);
-            SetAvaibleFrom(avaibleFrom);
-            SetAvaibleTo(avaibleTo);
+            SetAvailableFrom(availableFrom);
+            SetAvailableTo(avaibleTo);
         }
 
         protected DiscountEntity()
         {
         }
 
-        public void SetAvaibleTo(DateTime dateTime)
+        public void SetAvailableTo(DateTime dateTime)
         {
             if (dateTime < AvailableFrom)
             {

@@ -8,15 +8,21 @@ namespace Streetwood.Core.Domain.Entities
     {
         private List<Order> orders = new List<Order>();
 
+        public string Code { get; protected set; }
+
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
-        public OrderDiscount(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime avaibleFrom, DateTime avaibleTo)
-            : base(name, nameEng, description, descriptionEng, percentValue, isActive, avaibleFrom, avaibleTo)
+        public OrderDiscount(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime availableFrom, DateTime avaibleTo, string code)
+            : base(name, nameEng, description, descriptionEng, percentValue, isActive, availableFrom, avaibleTo)
         {
+            SetCode(code);
         }
 
         protected OrderDiscount()
         {
         }
+
+        public void SetCode(string code)
+            => Code = code;
     }
 }

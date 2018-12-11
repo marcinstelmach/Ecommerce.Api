@@ -30,16 +30,6 @@ namespace Streetwood.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryDiscountCommandModel model)
         {
-            if (model.AvailableTo <= model.AvailableFrom)
-            {
-                ModelState.AddModelError(ConstantValues.InvalidDateRangesKey, "Invalid date range");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             await mediator.Send(model);
             return Accepted();
         }

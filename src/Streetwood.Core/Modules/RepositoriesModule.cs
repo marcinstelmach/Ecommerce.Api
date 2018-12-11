@@ -18,6 +18,7 @@ namespace Streetwood.Core.Modules
             builder.RegisterType<ProductCategoryDiscountRepository>().As<IProductCategoryDiscountRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ImageRepository>().As<IImageRepository>().InstancePerLifetimeScope();
             builder.RegisterType<DiscountCategoryRepository>().As<IDiscountCategoryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderDiscountRepository>().As<IOrderDiscountRepository>().InstancePerLifetimeScope();
         }
     }
 }

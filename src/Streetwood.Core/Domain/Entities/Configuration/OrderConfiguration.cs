@@ -22,7 +22,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
 
             builder.HasOne(s => s.Shipment)
                 .WithMany(s => s.Orders)
-                .HasForeignKey("ShippmentdId");
+                .HasForeignKey("ShipmentId");
 
             builder.HasOne(s => s.OrderDiscount)
                 .WithMany(s => s.Orders)
