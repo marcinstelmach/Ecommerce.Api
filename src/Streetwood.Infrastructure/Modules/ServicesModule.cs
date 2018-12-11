@@ -14,6 +14,7 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<UserQueryService>().As<IUserQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<AddressCommandService>().As<IAddressCommandService>().InstancePerLifetimeScope();
+            builder.RegisterType<AddressQueryService>().As<IAddressQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<ShipmentCommandService>().As<IShipmentCommandService>().InstancePerLifetimeScope();
             builder.RegisterType<ShipmentQueryService>().As<IShipmentQueryService>().InstancePerLifetimeScope();
@@ -36,6 +37,7 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<ProductCategoryDiscountQueryService>().As<IProductCategoryDiscountQueryService>().InstancePerLifetimeScope();
 
             builder.RegisterType<OrderDiscountCommandService>().As<IOrderDiscountCommandService>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderDiscountQueryService>().As<IOrderDiscountQueryService>().InstancePerLifetimeScope();
         }
     }
 }

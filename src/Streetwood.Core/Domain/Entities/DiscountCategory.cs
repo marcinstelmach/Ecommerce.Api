@@ -2,6 +2,7 @@
 
 namespace Streetwood.Core.Domain.Entities
 {
+    // JoinTable
     public class DiscountCategory : Entity
     {
         public virtual ProductCategory ProductCategory { get; protected set; }
