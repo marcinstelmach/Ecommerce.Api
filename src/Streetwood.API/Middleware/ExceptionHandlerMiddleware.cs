@@ -52,7 +52,7 @@ namespace Streetwood.API.Middleware
             {
                 statusCode = streetwoodException.ErrorCode.StatusCode;
                 errorCodeName = streetwoodException.ErrorCode.ErrorCodeName;
-                message = streetwoodException.ErrorCode.Message;
+                message = string.IsNullOrEmpty(message) ? streetwoodException.ErrorCode.Message : message;
             }
 
             context.Response.ContentType = "application/json";

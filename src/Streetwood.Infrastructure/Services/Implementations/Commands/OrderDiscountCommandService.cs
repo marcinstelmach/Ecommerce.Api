@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -22,6 +24,28 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 availableFrom, availableTo, code);
 
             await orderDiscountRepository.AddAsync(discount);
+            await orderDiscountRepository.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, int percentValue,
+            DateTime availableFrom, DateTime availableTo, string code)
+        {
+            var discount = await orderDiscountRepository.GetAndEnsureExistAsync(id);
+
+            if (discount.Orders.Any())
+            {
+                throw new StreetwoodException(ErrorCode.OrderDiscountInUse);
+            }
+
+            discount.SetCode(code);
+            discount.SetName(name);
+            discount.SetNameEng(nameEng);
+            discount.SetDescription(description);
+            discount.SetDescriptionEng(descriptionEng);
+            discount.SetAvailableFrom(availableFrom);
+            discount.SetAvailableTo(availableTo);
+            discount.SetPercentValue(percentValue);
+
             await orderDiscountRepository.SaveChangesAsync();
         }
     }

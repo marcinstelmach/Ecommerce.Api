@@ -45,6 +45,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode EmailExistInDatabase => new ErrorCode(nameof(EmailExistInDatabase), "Email exist in database. Use different");
 
+        public static ErrorCode OrderDiscountInUse => new ErrorCode(nameof(OrderDiscountInUse));
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

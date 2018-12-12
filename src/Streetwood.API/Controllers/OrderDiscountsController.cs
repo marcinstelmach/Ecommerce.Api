@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models.CodeDiscount;
+using Streetwood.Infrastructure.Commands.Models.OrderDiscount;
 using Streetwood.Infrastructure.Queries.Models.OrderDiscount;
 
 namespace Streetwood.API.Controllers
@@ -25,6 +26,13 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Post([FromBody] AddOrderDiscountCommandModel model)
         {
             await mediator.Send(model);
+            return Accepted();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateOrderDiscountCommandModel model)
+        {
+            await mediator.Send(model.SetId(id));
             return Accepted();
         }
     }

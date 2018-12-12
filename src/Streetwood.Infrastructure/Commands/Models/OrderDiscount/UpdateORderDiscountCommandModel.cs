@@ -4,8 +4,10 @@ using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models.OrderDiscount
 {
-    public class AddOrderDiscountCommandModel : IRequest
+    public class UpdateOrderDiscountCommandModel : IRequest
     {
+        public Guid Id { get; protected set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -31,5 +33,11 @@ namespace Streetwood.Infrastructure.Commands.Models.OrderDiscount
 
         [Required]
         public DateTime AvailableTo { get; set; }
+
+        public UpdateOrderDiscountCommandModel SetId(Guid id)
+        {
+            Id = id;
+            return this;
+        }
     }
 }
