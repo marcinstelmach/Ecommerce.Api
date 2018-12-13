@@ -48,7 +48,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             await userRepository.SaveChangesAsync();
 
-            var addresses = user.Addresses.ToList();
+            var addresses = user.Orders.Select(s => s.Address);
             await addressCommandService.EraseDataAsync(addresses);
         }
     }

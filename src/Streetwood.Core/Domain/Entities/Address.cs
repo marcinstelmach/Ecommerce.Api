@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
 
 namespace Streetwood.Core.Domain.Entities
 {
     public class Address : Entity
     {
+        private readonly IList<Order> orders = new List<Order>();
+
         public string Street { get; protected set; }
 
         public string City { get; protected set; }
@@ -13,7 +16,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public string PostCode { get; protected set; }
 
-        public virtual User User { get; protected set; }
+        public virtual ICollection<Order> Orders => orders;
 
         public Address(string street, string city, string country, string postCode)
         {

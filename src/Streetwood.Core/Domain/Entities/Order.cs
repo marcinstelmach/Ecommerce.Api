@@ -36,6 +36,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual OrderDiscount OrderDiscount { get; protected set; }
 
+        public virtual Address Address { get; protected set; }
+
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
         public Order(string comment, decimal basePrice, Shipment shipment)
@@ -82,7 +84,7 @@ namespace Streetwood.Core.Domain.Entities
         public void AddProductOrder(ProductOrder productOrder)
             => productOrders.Add(productOrder);
 
-        public void AddProductOrders(IEnumerable<ProductOrder> productOrders)
-            => this.productOrders.AddRange(productOrders);
+        public void AddProductOrders(IEnumerable<ProductOrder> productOrderss)
+            => this.productOrders.AddRange(productOrderss);
     }
 }

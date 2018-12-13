@@ -22,12 +22,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         {
             var user = await userRepository.GetAsync(userId);
             var address = new Address(street, city, country, postCode);
-            user.AddAddress(address);
 
             await userRepository.SaveChangesAsync();
         }
 
-        public async Task EraseDataAsync(IList<Address> addresses)
+        public async Task EraseDataAsync(IEnumerable<Address> addresses)
         {
             foreach (var address in addresses)
             {

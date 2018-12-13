@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -22,7 +23,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<AddressDto>> GetByUserAsync(Guid userId)
         {
             var user = await userRepository.GetAndEnsureExistAsync(userId);
-            var addresses = user.Addresses;
+            var addresses = user.Orders.Select(s => s.Address);
 
             return mapper.Map<IList<AddressDto>>(addresses);
         }

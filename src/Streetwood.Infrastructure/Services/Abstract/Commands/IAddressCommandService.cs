@@ -9,6 +9,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
     {
         Task AddAsync(string city, string street, string postCode, int phoneNumber, string country, Guid userId);
 
-        Task EraseDataAsync(IList<Address> addresses);
+        Task EraseDataAsync(IEnumerable<Address> addresses);
     }
 }

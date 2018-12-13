@@ -9,7 +9,6 @@ namespace Streetwood.Core.Domain.Entities
     public class User : Entity
     {
         private readonly List<Order> orders = new List<Order>();
-        private readonly List<Address> addresses = new List<Address>();
 
         public string Email { get; protected set; }
 
@@ -32,8 +31,6 @@ namespace Streetwood.Core.Domain.Entities
         public UserStatus UserStatus { get; protected set; }
 
         public UserType Type { get; protected set; }
-
-        public virtual IReadOnlyCollection<Address> Addresses => addresses;
 
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
@@ -76,9 +73,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public void AddOrder(Order order)
             => orders.Add(order);
-
-        public void AddAddress(Address address)
-            => addresses.Add(address);
 
         public void SetUserStatus(UserStatus status)
             => UserStatus = status;

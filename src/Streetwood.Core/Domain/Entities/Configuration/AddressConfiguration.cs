@@ -12,9 +12,9 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.Property(s => s.Street).HasMaxLength(50);
             builder.Property(s => s.PostCode).HasMaxLength(8);
 
-            builder.HasOne(s => s.User)
-                .WithMany(s => s.Addresses)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(s => s.Orders)
+                .WithOne(s => s.Address)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

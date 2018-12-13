@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Handlers.Charm;
 using Streetwood.Infrastructure.Commands.Models.Charm;
 using Streetwood.Infrastructure.Queries.Models.Charm;
 
