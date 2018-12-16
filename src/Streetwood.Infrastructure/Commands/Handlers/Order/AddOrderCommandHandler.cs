@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -38,6 +39,8 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var codePromoValue = await orderDiscountQueryService.GetValueByCodeAsync(request.PromoCode);
 
             // Apply discounts to products
+            var productsWithDiscount =
+                productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
 
 
 

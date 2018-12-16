@@ -28,7 +28,7 @@ namespace Streetwood.Infrastructure.Tests.Services
         }
 
         [Fact]
-        public async Task AddAsync_ForSpecyficCategoryId_ShouldAddCategoryAsChild()
+        public async Task AddAsync_ForSpecificCategoryId_ShouldAddCategoryAsChild()
         {
             //arrange
             var productCategoryRepository = new Mock<IProductCategoryRepository>();
