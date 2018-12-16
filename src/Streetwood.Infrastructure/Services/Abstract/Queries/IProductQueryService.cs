@@ -12,5 +12,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
         Task<ProductDto> GetAsync(int id);
 
         Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id);
+
+        Task<IList<ProductDto>> GetProductsByIds(IList<int> ids);
     }
 }

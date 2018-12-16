@@ -44,6 +44,32 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapped;
         }
 
+        public async Task<IList<ProductCategoryDiscountDto>> GetEnabledAsync()
+        {
+            var enabledDiscounts = await discountRepository.GetEnabledAsync();
+
+            return mapper.Map<IList<ProductCategoryDiscountDto>>(enabledDiscounts);
+        }
+
+        public IList<Tuple<ProductDto, ProductCategoryDiscountDto>> ApplyDiscountsToProducts(IList<ProductDto> products,
+            IList<ProductCategoryDiscountDto> discounts)
+        {
+            if (!products.Any() || !discounts.Any())
+            {
+                return null;
+            }
+
+            var result = new List<Tuple<ProductDto, ProductCategoryDiscountDto>>();
+            foreach (var discount in discounts)
+            {
+                var discountProducts = products.Where(s => discount.CategoryIds.Contains(s.ProductCategoryId)).ToList();
+                discountProducts.ForEach(
+                    s => result.Add(new Tuple<ProductDto, ProductCategoryDiscountDto>(s, discount)));
+            }
+
+            return result;
+        }
+
         private IList<ProductsCategoriesForDiscountDto> MapCategories(IEnumerable<ProductCategory> dbCategories,
             IList<ProductCategory> discountCategories)
         {

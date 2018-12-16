@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Infrastructure.Dto
@@ -24,5 +25,7 @@ namespace Streetwood.Infrastructure.Dto
         public string Sizes { get; set; }
 
         public IList<ImageDto> Images { get; set; }
+
+        public Guid ProductCategoryId { get; set; }
     }
 }

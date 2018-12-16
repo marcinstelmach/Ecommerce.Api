@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Streetwood.Infrastructure.Dto
 {
@@ -21,5 +22,7 @@ namespace Streetwood.Infrastructure.Dto
         public DateTime AvailableFrom { get; set; }
 
         public DateTime AvailableTo { get; set; }
+
+        public IList<Guid> CategoryIds { get; set; }
     }
 }

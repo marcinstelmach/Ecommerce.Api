@@ -12,7 +12,7 @@ namespace Streetwood.Core.Modules
             builder.RegisterType<AddressRepository>().As<IAddressRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ShipmentRepository>().As<IShipmentRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProductCategoryRepository>().As<IProductCategoryRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<ProductRespository>().As<IProductRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CharmCategoryRepository>().As<ICharmCategoryRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CharmRepository>().As<ICharmRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProductCategoryDiscountRepository>().As<IProductCategoryDiscountRepository>().InstancePerLifetimeScope();

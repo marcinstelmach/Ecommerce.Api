@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
@@ -8,11 +10,11 @@ using Streetwood.Core.Exceptions;
 
 namespace Streetwood.Core.Domain.Implementation.Repositories
 {
-    public class ProductRespository : Repository<Product>, IProductRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly IDbContext dbContext;
 
-        public ProductRespository(IDbContext dbContext)
+        public ProductRepository(IDbContext dbContext)
             : base(dbContext)
         {
             this.dbContext = dbContext;
@@ -32,6 +34,17 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
             }
 
             return product;
+        }
+
+        public async Task<IList<Product>> GetByIdsAsync(IEnumerable<int> ids)
+        {
+            var products = await dbContext
+                .Products
+                .Where(s => ids.Contains(s.Id))
+                .Include(s => s.ProductCategory)
+                .ToListAsync();
+
+            return products;
         }
     }
 }

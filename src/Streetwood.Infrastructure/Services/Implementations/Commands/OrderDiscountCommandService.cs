@@ -20,6 +20,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task AddAsync(string name, string nameEng, string description, string descriptionEng, int percentValue,
             DateTime availableFrom, DateTime availableTo, string code)
         {
+            var existingDiscount = await orderDiscountRepository.GetByCodeAsync(code);
+            if (existingDiscount != null)
+            {
+                throw new StreetwoodException(ErrorCode.DiscountWithThisCodeExistAlready);
+            }
+
             var discount = new OrderDiscount(name, nameEng, description, descriptionEng, percentValue, true,
                 availableFrom, availableTo, code);
 

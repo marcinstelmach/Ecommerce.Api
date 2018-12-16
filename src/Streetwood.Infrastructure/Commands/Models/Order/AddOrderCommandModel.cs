@@ -19,5 +19,8 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
 
         public AddAddressCommandModel Address { get; set; }
 
+        public string Comment { get; set; }
+
+        public string PromoCode { get; set; }
     }
 }
