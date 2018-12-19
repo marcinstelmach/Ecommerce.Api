@@ -25,13 +25,15 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var user = await userQueryService.GetByIdAsync(request.UserId);
 
             // Get products by ids
-            var products = await productQueryService.GetProductsByIds(request.ProductsIds);
+            var productsIds = request.Products.Select(s => s.ProductId);
+            var products = await productQueryService.GetRawByIds(productsIds);
 
             // Get charms by ids
-            var charms = await charmQueryService.GetByIdsAsync(request.CharmsIds);
+            var charmsIds = request.Products.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
+            var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
 
             // Get enabled product category discounts
-            var enabledDiscounts = await productCategoryDiscountQueryService.GetEnabledAsync();
+            var enabledDiscounts = await productCategoryDiscountQueryService.GetRawEnabledAsync();
 
             // Get shipment
             var shipments = await shipmentQueryService.GetAsync(request.ShipmentId);

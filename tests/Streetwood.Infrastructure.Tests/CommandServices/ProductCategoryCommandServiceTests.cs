@@ -6,7 +6,7 @@ using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Services.Implementations.Commands;
 using Xunit;
 
-namespace Streetwood.Infrastructure.Tests.Services
+namespace Streetwood.Infrastructure.Tests.CommandServices
 {
     public class ProductCategoryCommandServiceTests
     {

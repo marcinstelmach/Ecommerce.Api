@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using MediatR;
 using Streetwood.Infrastructure.Commands.Models.Address;
+using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
 {
     public class AddOrderCommandModel : IRequest
     {
-        public IList<int> ProductsIds { get; set; }
+        public IList<ProductWithCharmsOrderDto> Products { get; set; }
 
         public IList<Guid> CharmsIds { get; set; }
 

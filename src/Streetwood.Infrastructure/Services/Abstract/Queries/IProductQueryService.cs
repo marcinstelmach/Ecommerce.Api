@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Services.Abstract.Queries
@@ -13,6 +14,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id);
 
-        Task<IList<ProductDto>> GetProductsByIds(IList<int> ids);
+        Task<IList<Product>> GetRawByIds(IEnumerable<int> ids);
     }
 }

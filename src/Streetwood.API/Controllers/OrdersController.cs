@@ -16,6 +16,7 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
             await mediator.Send(model);

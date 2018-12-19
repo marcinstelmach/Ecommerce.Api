@@ -8,12 +8,15 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual Charm Charm { get; protected set; }
 
+        public int Sequence { get; protected set; }
+
         public virtual ProductOrder ProductOrder { get; protected set; }
 
-        public ProductOrderCharm(Charm charm)
+        public ProductOrderCharm(Charm charm, int sequence)
         {
             CurrentPrice = charm.Price;
             AddCharm(charm);
+            Sequence = sequence;
         }
 
         protected ProductOrderCharm()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -29,11 +30,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<CharmDto>(charm);
         }
 
-        public async Task<IList<CharmDto>> GetByIdsAsync(IList<Guid> ids)
+        public async Task<IList<Charm>> GetRawByIdsAsync(IList<Guid> ids)
         {
             if (!ids.Any())
             {
-                return new List<CharmDto>();
+                return new List<Charm>();
             }
 
             var charms = await charmRepository.GetByIdsAsync(ids);
@@ -43,7 +44,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 throw new StreetwoodException(ErrorCode.OrderCharmsNotFound);
             }
 
-            return mapper.Map<IList<CharmDto>>(charms);
+            return charms;
         }
     }
 }

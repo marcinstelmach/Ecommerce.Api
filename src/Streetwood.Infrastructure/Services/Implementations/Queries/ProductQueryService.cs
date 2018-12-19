@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
@@ -17,7 +18,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         private readonly IProductCategoryRepository productCategoryRepository;
         private readonly IMapper mapper;
 
-        public ProductQueryService(IProductRepository productRepository, IProductCategoryRepository productCategoryRepository, IMapper mapper)
+        public ProductQueryService(IProductRepository productRepository,
+            IProductCategoryRepository productCategoryRepository, IMapper mapper)
         {
             this.productRepository = productRepository;
             this.productCategoryRepository = productCategoryRepository;
@@ -43,7 +45,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<IList<ProductDto>>(availableProducts);
         }
 
-        public async Task<IList<ProductDto>> GetProductsByIds(IList<int> ids)
+        public async Task<IList<Product>> GetRawByIds(IEnumerable<int> ids)
         {
             var products = await productRepository.GetByIdsAsync(ids);
 
@@ -52,7 +54,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 throw new StreetwoodException(ErrorCode.OrderProductsNotFound);
             }
 
-            return mapper.Map<IList<ProductDto>>(products);
+            return products;
         }
     }
 }

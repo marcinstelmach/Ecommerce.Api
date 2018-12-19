@@ -38,6 +38,8 @@ namespace Streetwood.Infrastructure.Modules
 
             builder.RegisterType<OrderDiscountCommandService>().As<IOrderDiscountCommandService>().InstancePerLifetimeScope();
             builder.RegisterType<OrderDiscountQueryService>().As<IOrderDiscountQueryService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<ProductOrderCharmCommandService>().As<IProductOrderCharmCommandService>().InstancePerLifetimeScope();
         }
     }
 }

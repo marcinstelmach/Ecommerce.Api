@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Services.Abstract.Queries
@@ -13,7 +14,9 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<IList<ProductCategoryDiscountDto>> GetEnabledAsync();
 
-        IList<Tuple<ProductDto, ProductCategoryDiscountDto>> ApplyDiscountsToProducts(IList<ProductDto> products,
-            IList<ProductCategoryDiscountDto> discounts);
+        Task<IList<ProductCategoryDiscount>> GetRawEnabledAsync();
+
+        IList<(Product, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
+            IList<ProductCategoryDiscount> discounts);
     }
 }

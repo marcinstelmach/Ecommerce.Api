@@ -46,26 +46,29 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductCategoryDiscountDto>> GetEnabledAsync()
         {
-            var enabledDiscounts = await discountRepository.GetEnabledAsync();
+            var enabledDiscounts = await GetRawEnabledAsync();
 
             return mapper.Map<IList<ProductCategoryDiscountDto>>(enabledDiscounts);
         }
 
-        public IList<Tuple<ProductDto, ProductCategoryDiscountDto>> ApplyDiscountsToProducts(IList<ProductDto> products,
-            IList<ProductCategoryDiscountDto> discounts)
+        public async Task<IList<ProductCategoryDiscount>> GetRawEnabledAsync()
+            => await discountRepository.GetEnabledAsync();
+
+        public IList<(Product, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
+            IList<ProductCategoryDiscount> discounts)
         {
             if (!products.Any() || !discounts.Any())
             {
                 return null;
             }
 
-            var result = new List<Tuple<ProductDto, ProductCategoryDiscountDto>>();
-            foreach (var discount in discounts)
-            {
-                var discountProducts = products.Where(s => discount.CategoryIds.Contains(s.ProductCategoryId)).ToList();
-                discountProducts.ForEach(
-                    s => result.Add(new Tuple<ProductDto, ProductCategoryDiscountDto>(s, discount)));
-            }
+            var result = new List<(Product, ProductCategoryDiscount)>();
+//            foreach (var discount in discounts)
+//            {
+//                var discountProducts = products.Where(s => discount.CategoryIds.Contains(s.ProductCategoryId)).ToList();
+//                discountProducts.ForEach(
+//                    s => result.Add((s, discount)));
+//            }
 
             return result;
         }
