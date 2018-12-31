@@ -63,12 +63,20 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             }
 
             var result = new List<(Product, ProductCategoryDiscount)>();
-//            foreach (var discount in discounts)
-//            {
-//                var discountProducts = products.Where(s => discount.CategoryIds.Contains(s.ProductCategoryId)).ToList();
-//                discountProducts.ForEach(
-//                    s => result.Add((s, discount)));
-//            }
+
+            foreach (var discount in discounts)
+            {
+                var productCategories = discount.DiscountCategories.Select(s => s.ProductCategory);
+                var discountProducts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
+                discountProducts.ForEach(s => result.Add((s, discount)));
+            }
+
+            var resultProducts = result.Select(s => s.Item1).ToList();
+            if (resultProducts.Any())
+            {
+                var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s)).ToList();
+                productsWithoutDiscount.ForEach(s => result.Add((s, null)));
+            }
 
             return result;
         }

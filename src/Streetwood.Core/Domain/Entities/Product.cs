@@ -6,8 +6,8 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Product : Entity
     {
-        private List<Image> images = new List<Image>();
-        private List<ProductOrder> productOrders = new List<ProductOrder>();
+        private readonly List<Image> images = new List<Image>();
+        private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
         public new int Id { get; protected set; }
 
@@ -76,6 +76,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetAcceptCharms(bool acceptCharms)
             => AcceptCharms = acceptCharms;
+
+        public void SetProductCategory(ProductCategory productCategory)
+            => ProductCategory = productCategory;
 
         public void AddImage(Image image)
             => images.Add(image);
