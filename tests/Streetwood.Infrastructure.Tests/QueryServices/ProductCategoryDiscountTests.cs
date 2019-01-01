@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Extensions;
-using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Implementations.Queries;
 using Xunit;
 
@@ -50,6 +49,47 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         public void ApplyDiscountToProducts_ReturnValidPairs()
         {
             // arrange
+            var (products, discounts) = PrepareTestData();
+
+            var expected = new List<(Product, ProductCategoryDiscount)>
+            {
+                (products[0], discounts[0]),
+                (products[1], discounts[0]),
+                (products[2], discounts[1]),
+                (products[3], null)
+            };
+
+            // act
+            var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
+                productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
+
+            var result = sut.ApplyDiscountsToProducts(products, discounts);
+
+            // assert
+            result.Count.Should().Be(products.Count);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void ApplyDiscountToProducts_ReturnProductsIfNoDiscounts()
+        {
+            // arrange
+            var data = PrepareTestData();
+            var products = data.Item1;
+            var discounts = data.Item2;
+
+            // act
+            var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
+                productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
+            var result = sut.ApplyDiscountsToProducts(products, discounts);
+            var productsWithoutDiscounts = result.Where(s => s.Item2 == null);
+
+            // assert
+            productsWithoutDiscounts.Count().Should().Be(1);
+        }
+
+        private (List<Product>, List<ProductCategoryDiscount>) PrepareTestData()
+        {
             var product1 = new Product("Test", "Test", 50, "Test", "Test", true, "", "");
             var product2 = new Product("Test2", "Test2", 40, "Test2", "Test2", true, "", "");
             var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, "", "");
@@ -68,86 +108,13 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var discountCategory1 = new DiscountCategory(category1, productCategoryDiscount1);
             var discountCategory2 = new DiscountCategory(category2, productCategoryDiscount2);
 
-            productCategoryDiscount1.AddProductCategory(new []{discountCategory1});
-            productCategoryDiscount2.AddProductCategory(new []{discountCategory2});
+            productCategoryDiscount1.AddProductCategory(new[] { discountCategory1 });
+            productCategoryDiscount2.AddProductCategory(new[] { discountCategory2 });
 
             var products = new List<Product>{product1, product2, product3, product4};
-            var discount = new List<ProductCategoryDiscount>{productCategoryDiscount1, productCategoryDiscount2};
+            var discounts = new List<ProductCategoryDiscount>{productCategoryDiscount1, productCategoryDiscount2};
 
-            // act
-            var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
-                productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
-
-            var result = sut.ApplyDiscountsToProducts(products, discount);
-
-            // assert
+            return (products, discounts);
         }
-
-        //        private List<(Product, List<ProductCategoryDiscount>)> PrepareTestData()
-        //        {
-        //            var categoryIds = new List<Guid>
-        //            {
-        //                Guid.NewGuid(),
-        //                Guid.NewGuid(),
-        //                Guid.NewGuid(),
-        //                Guid.NewGuid()
-        //            };
-        //
-        //            var products = new List<ProductDto>();
-        //            var discounts = new List<ProductCategoryDiscountDto>();
-        //
-        //            // we add 2 real products and last fake, not belong to any categories
-        //            foreach (var id in categoryIds)
-        //            {
-        //                products.Add(new ProductDto
-        //                {
-        //                    Id = 10.GetRandom(),
-        //                    ProductCategoryId = id
-        //                });
-        //                products.Add(new ProductDto
-        //                {
-        //                    Id = 10.GetRandom(),
-        //                    ProductCategoryId = id
-        //                });
-        //                products.Add(new ProductDto
-        //                {
-        //                    Id = 10.GetRandom(),
-        //                    ProductCategoryId = Guid.NewGuid()
-        //                });
-        //            }
-        //
-        //            // and here 2 real discounts and one fake 
-        //            discounts.Add(new ProductCategoryDiscountDto
-        //            {
-        //                Id = Guid.NewGuid(),
-        //                CategoryIds = new List<Guid>
-        //                {
-        //                    categoryIds[0],
-        //                    categoryIds[1]
-        //                }
-        //            });
-        //
-        //            discounts.Add(new ProductCategoryDiscountDto
-        //            {
-        //                Id = Guid.NewGuid(),
-        //                CategoryIds = new List<Guid>
-        //                {
-        //                    categoryIds[2],
-        //                    categoryIds[3]
-        //                }
-        //            });
-        //
-        //            discounts.Add(new ProductCategoryDiscountDto
-        //            {
-        //                Id = Guid.NewGuid(),
-        //                CategoryIds = new List<Guid>
-        //                {
-        //                    Guid.NewGuid(),
-        //                    Guid.NewGuid()
-        //                }
-        //            });
-        //
-        //            return (products, discounts);
-        //        }
     }
 }
