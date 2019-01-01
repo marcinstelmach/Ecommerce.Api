@@ -30,7 +30,8 @@ namespace Streetwood.API.Tests.IoCTests
                 .GetAssembly(typeof(ServicesModule))
                 .GetTypes()
                 .Where(s => s.IsInterface)
-                .Where(s => s.Name.EndsWith("Service"));
+                .Where(s => s.Name.EndsWith("Service"))
+                .ToList();
 
             var unregistered = new List<string>();
             var expected = 0;

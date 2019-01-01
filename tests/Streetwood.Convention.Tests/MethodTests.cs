@@ -49,22 +49,31 @@ namespace Streetwood.Convention.Tests
         [Theory]
         [InlineData(typeof(StreetwoodException))]
         [InlineData(typeof(AutoMapperConfig))]
-        public void AllServicesHasOwnInterface(Type type)
+        public void AllServicesImplementsInterface(Type type)
         {
             // arrange
             var types = Assembly.GetAssembly(type).GetTypes();
+            var expected = 0;
 
-            // act
             var services = types
                 .Where(s => s.Name.EndsWith("Service"))
-                .Where(s => s.IsClass);
+                .Where(s => s.IsClass)
+                .ToList();
 
-            var interfaces = types
-                .Where(s => s.Name.EndsWith("Service"))
-                .Where(s => s.IsInterface);
+            // act
+            var nakedServices = 0;
+            foreach (var service in services)
+            {
+                var interfaces = service.GetInterfaces();
+                if (!interfaces.Any())
+                {
+                    nakedServices++;
+                    output.WriteLine(service.DisplayName());
+                }
+            }
 
             //assert
-            services.Count().Should().Be(interfaces.Count());
+            nakedServices.Should().Be(expected);
         }
     }
 }
