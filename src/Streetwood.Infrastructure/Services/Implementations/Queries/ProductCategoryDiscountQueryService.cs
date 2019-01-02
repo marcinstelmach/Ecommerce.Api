@@ -54,7 +54,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscount>> GetRawEnabledAsync()
             => await discountRepository.GetEnabledAsync();
 
-        public IList<(Product, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
+        public IList<(int, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
             IList<ProductCategoryDiscount> discounts)
         {
             if (!products.Any() || !discounts.Any())
@@ -62,20 +62,20 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 return null;
             }
 
-            var result = new List<(Product, ProductCategoryDiscount)>();
+            var result = new List<(int, ProductCategoryDiscount)>();
 
             foreach (var discount in discounts)
             {
                 var productCategories = discount.DiscountCategories.Select(s => s.ProductCategory);
                 var discountProducts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
-                discountProducts.ForEach(s => result.Add((s, discount)));
+                discountProducts.ForEach(s => result.Add((s.Id, discount)));
             }
 
             var resultProducts = result.Select(s => s.Item1).ToList();
             if (resultProducts.Any())
             {
-                var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s)).ToList();
-                productsWithoutDiscount.ForEach(s => result.Add((s, null)));
+                var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s.Id)).ToList();
+                productsWithoutDiscount.ForEach(s => result.Add((s.Id, null)));
             }
 
             return result;

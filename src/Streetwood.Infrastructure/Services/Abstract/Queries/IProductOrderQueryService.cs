@@ -5,10 +5,8 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Services.Abstract.Queries
 {
-    public interface IOrderDiscountQueryService
+    public interface IProductOrderQueryService
     {
-        Task<OrderDiscount> GetRawByCodeAsync(string code);
-
-        Task<IList<OrderDiscountDto>> GetAsync();
+        Task<IList<ProductOrder>> CreateAsync(IList<ProductWithCharmsOrderDto> productsWithCharmsOrder);
     }
 }

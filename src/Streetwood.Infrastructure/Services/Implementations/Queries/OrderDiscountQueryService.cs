@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             this.mapper = mapper;
         }
 
-        public async Task<OrderDiscountDto> GetValueByCodeAsync(string code)
+        public async Task<OrderDiscount> GetRawByCodeAsync(string code)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -36,7 +36,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 throw new StreetwoodException(ErrorCode.GenericNotExist(typeof(OrderDiscount)));
             }
 
-            return mapper.Map<OrderDiscountDto>(discount);
+            return discount;
         }
 
         public async Task<IList<OrderDiscountDto>> GetAsync()

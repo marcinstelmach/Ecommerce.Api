@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Services.Abstract.Queries
@@ -10,5 +11,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
         Task<IList<ShipmentDto>> GetAsync();
 
         Task<ShipmentDto> GetAsync(Guid id);
+
+        Task<Shipment> GetRawAsync(Guid id);
     }
 }

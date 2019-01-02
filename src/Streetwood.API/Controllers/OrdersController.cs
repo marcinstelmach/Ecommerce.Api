@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.Order;
 
 namespace Streetwood.API.Controllers
@@ -19,7 +20,7 @@ namespace Streetwood.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
-            await mediator.Send(model);
+            await mediator.Send(model.SetUserId(User.Identity.GetUserId()));
             return Accepted();
         }
     }

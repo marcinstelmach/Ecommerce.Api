@@ -23,27 +23,35 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
-        public static ErrorCode GenericNotExist(Type type, string message = null) => new ErrorCode($"{type.Name}NotExist", message);
+        public static ErrorCode GenericNotExist(Type type, string message = null) =>
+            new ErrorCode($"{type.Name}NotExist", message);
 
-        public static ErrorCode CannotSaveDatabase => new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
+        public static ErrorCode CannotSaveDatabase =>
+            new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
 
         public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
 
-        public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials), "Invalid email or password", HttpStatusCode.UnprocessableEntity);
+        public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials),
+            "Invalid email or password", HttpStatusCode.UnprocessableEntity);
 
-        public static ErrorCode InvalidUserClaimName => new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
+        public static ErrorCode InvalidUserClaimName =>
+            new ErrorCode(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
 
         public static ErrorCode InvalidRefreshToken => new ErrorCode(nameof(InvalidRefreshToken));
 
         public static ErrorCode ProductNotFound => new ErrorCode(nameof(ProductNotFound));
 
-        public static ErrorCode UnableToSavePhoto => new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
+        public static ErrorCode UnableToSavePhoto =>
+            new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
 
-        public static ErrorCode UnableToDeletePhoto => new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
+        public static ErrorCode UnableToDeletePhoto =>
+            new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
 
-        public static ErrorCode ShipmentInUse => new ErrorCode(nameof(ShipmentInUse), "Cannot delete shipment, cause it is in use");
+        public static ErrorCode ShipmentInUse =>
+            new ErrorCode(nameof(ShipmentInUse), "Cannot delete shipment, cause it is in use");
 
-        public static ErrorCode EmailExistInDatabase => new ErrorCode(nameof(EmailExistInDatabase), "Email exist in database. Use different");
+        public static ErrorCode EmailExistInDatabase =>
+            new ErrorCode(nameof(EmailExistInDatabase), "Email exist in database. Use different");
 
         public static ErrorCode OrderDiscountInUse => new ErrorCode(nameof(OrderDiscountInUse));
 
@@ -51,7 +59,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderCharmsNotFound => new ErrorCode(nameof(OrderCharmsNotFound));
 
-        public static ErrorCode DiscountWithThisCodeExistAlready => new ErrorCode(nameof(DiscountWithThisCodeExistAlready));
+        public static ErrorCode DiscountWithThisCodeExistAlready =>
+            new ErrorCode(nameof(DiscountWithThisCodeExistAlready));
 
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }

@@ -10,11 +10,9 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
     {
         public IList<ProductWithCharmsOrderDto> Products { get; set; }
 
-        public IList<Guid> CharmsIds { get; set; }
-
         public Guid ShipmentId { get; set; }
 
-        public Guid UserId { get; set; }
+        public Guid UserId { get; protected set; }
 
         public Guid? OrderDiscountId { get; set; }
 
@@ -23,5 +21,11 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
         public string Comment { get; set; }
 
         public string PromoCode { get; set; }
+
+        public AddOrderCommandModel SetUserId(Guid id)
+        {
+            UserId = id;
+            return this;
+        }
     }
 }

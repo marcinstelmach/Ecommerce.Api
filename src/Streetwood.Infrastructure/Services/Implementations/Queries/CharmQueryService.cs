@@ -32,11 +32,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<Charm>> GetRawByIdsAsync(IList<Guid> ids)
         {
-            if (!ids.Any())
-            {
-                return new List<Charm>();
-            }
-
             var charms = await charmRepository.GetByIdsAsync(ids);
 
             if (!charms.Any())
