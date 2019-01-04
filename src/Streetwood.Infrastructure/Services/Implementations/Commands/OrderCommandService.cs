@@ -21,7 +21,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.orderRepository = orderRepository;
         }
 
-        public async Task<Guid> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment, OrderDiscount orderDiscount, string comment, Address address)
+        public async Task<Guid> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
+            OrderDiscount orderDiscount, string comment, Address address)
         {
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
             logger.Info($"Creating new order for products: {productNames}");
@@ -36,7 +37,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.OrderBasePriceBelowZero);
             }
 
-            var order = new Order(productOrders, orderDiscount, shipment, basePrice, comment, address);
+            var productPriceWithDiscount = productOrders.Sum(s => s.AgreedPrice);
+            var agreedPrice = basePrice;
+            if (orderDiscount != null)
+            {
+                agreedPrice = productPriceWithDiscount * (orderDiscount.PercentValue / 100M);
+            }
+
+            var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, agreedPrice, comment, address);
             logger.Info($"Trying add order {order.Id.ToString()},s with base price {basePrice}...");
 
             await orderRepository.AddAsync(order);

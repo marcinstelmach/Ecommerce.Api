@@ -1,8 +1,6 @@
-﻿using Autofac;
-using Streetwood.Infrastructure.Services.Abstract.Commands;
-using Streetwood.Infrastructure.Services.Abstract.Queries;
-using Streetwood.Infrastructure.Services.Implementations.Commands;
-using Streetwood.Infrastructure.Services.Implementations.Queries;
+﻿using System.Linq;
+using Autofac;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Streetwood.Infrastructure.Modules
 {
@@ -10,36 +8,12 @@ namespace Streetwood.Infrastructure.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserCommandService>().As<IUserCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<UserQueryService>().As<IUserQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<AddressCommandService>().As<IAddressCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<AddressQueryService>().As<IAddressQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ShipmentCommandService>().As<IShipmentCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<ShipmentQueryService>().As<IShipmentQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ProductCategoryCommandService>().As<IProductCategoryCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<ProductCategoryQueryService>().As<IProductCategoryQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ProductCommandService>().As<IProductCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<ProductQueryService>().As<IProductQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<CharmCategoryCommandService>().As<ICharmCategoryCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<CharmCategoryQueryService>().As<ICharmCategoryQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<CharmCommandService>().As<ICharmCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<CharmQueryService>().As<ICharmQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ImageCommandService>().As<IImageCommandService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ProductCategoryDiscountCommandService>().As<IProductCategoryDiscountCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<ProductCategoryDiscountQueryService>().As<IProductCategoryDiscountQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<OrderDiscountCommandService>().As<IOrderDiscountCommandService>().InstancePerLifetimeScope();
-            builder.RegisterType<OrderDiscountQueryService>().As<IOrderDiscountQueryService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<ProductOrderCharmCommandService>().As<IProductOrderCharmCommandService>().InstancePerLifetimeScope();
+            var services = ThisAssembly.GetTypes()
+                .Where(s => s.IsClass)
+                .Where(s => s.DisplayName().EndsWith("Service"))
+                .Select(s => s.UnderlyingSystemType)
+                .ToList();
+            services.ForEach(s => builder.RegisterType(s).AsImplementedInterfaces().InstancePerLifetimeScope());
         }
     }
 }

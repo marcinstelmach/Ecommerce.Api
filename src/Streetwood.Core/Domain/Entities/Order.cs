@@ -40,7 +40,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, string comment, Address address)
+        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, decimal agreedPrice, string comment, Address address)
         {
             Id = Guid.NewGuid();
             SetIsShipped(false);
@@ -54,6 +54,8 @@ namespace Streetwood.Core.Domain.Entities
             AddProductOrders(productOrders);
             SetDiscount(orderDiscount);
             SetAddress(address);
+            AgreedPrice = agreedPrice;
+            SetUser(user);
         }
 
         protected Order()
@@ -86,6 +88,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetAddress(Address address)
             => Address = address;
+
+        public void SetUser(User user)
+            => User = user;
 
         public void AddProductOrder(ProductOrder productOrder)
             => productOrders.Add(productOrder);
