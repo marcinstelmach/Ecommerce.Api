@@ -7,6 +7,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
 {
     public interface IOrderCommandService
     {
-        Task<Guid> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment, OrderDiscount orderDiscount, string comment);
+        Task<Guid> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
+            OrderDiscount orderDiscount, string comment, Address address);
     }
 }

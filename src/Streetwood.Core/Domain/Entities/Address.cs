@@ -16,15 +16,18 @@ namespace Streetwood.Core.Domain.Entities
 
         public string PostCode { get; protected set; }
 
+        public int PhoneNumber { get; protected set; }
+
         public virtual ICollection<Order> Orders => orders;
 
-        public Address(string street, string city, string country, string postCode)
+        public Address(string street, string city, string country, string postCode, int phoneNumber)
         {
             Id = Guid.NewGuid();
             Street = street;
             City = city;
             Country = country;
             PostCode = postCode;
+            PhoneNumber = phoneNumber;
         }
 
         protected Address()

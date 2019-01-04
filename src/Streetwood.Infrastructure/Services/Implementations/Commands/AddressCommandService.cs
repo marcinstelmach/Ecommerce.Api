@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task AddAsync(string city, string street, string postCode, int phoneNumber, string country, Guid userId)
         {
             var user = await userRepository.GetAsync(userId);
-            var address = new Address(street, city, country, postCode);
+            var address = new Address(street, city, country, postCode, phoneNumber);
 
             await userRepository.SaveChangesAsync();
         }

@@ -32,8 +32,10 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var productOrders = await productOrderQueryService.CreateAsync(request.Products);
             var shipment = await shipmentQueryService.GetRawAsync(request.ShipmentId);
             var orderDiscount = await orderDiscountQueryService.GetRawByCodeAsync(request.PromoCode);
+            var address = new Core.Domain.Entities.Address(request.Address.Street, request.Address.City,
+                request.Address.Country, request.Address.PostCode, request.Address.PhoneNumber);
 
-            var orderId = await orderCommandService.AddOrderAsync(user, productOrders, shipment, orderDiscount, request.Comment);
+            var orderId = await orderCommandService.AddOrderAsync(user, productOrders, shipment, orderDiscount, request.Comment, address);
             return orderId;
         }
     }

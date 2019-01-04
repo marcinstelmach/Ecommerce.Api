@@ -20,7 +20,6 @@ namespace Streetwood.Infrastructure.Commands.Models.Address
         [Required]
         public string Country { get; set; }
 
-        [Required]
         public Guid UserId { get; protected set; }
 
         public AddAddressCommandModel SetUserId(Guid userId)
