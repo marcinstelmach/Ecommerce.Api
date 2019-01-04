@@ -51,12 +51,12 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             // arrange
             var (products, discounts) = PrepareTestData();
 
-            var expected = new List<(Product, ProductCategoryDiscount)>
+            var expected = new List<(int, ProductCategoryDiscount)>
             {
-                (products[0], discounts[0]),
-                (products[1], discounts[0]),
-                (products[2], discounts[1]),
-                (products[3], null)
+                (products[0].Id, discounts[0]),
+                (products[1].Id, discounts[0]),
+                (products[2].Id, discounts[1]),
+                (products[3].Id, null)
             };
 
             // act

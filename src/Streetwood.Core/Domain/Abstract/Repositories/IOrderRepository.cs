@@ -1,0 +1,10 @@
+﻿using System.Threading.Tasks;
+using Streetwood.Core.Domain.Entities;
+
+namespace Streetwood.Core.Domain.Abstract.Repositories
+{
+    public interface IOrderRepository : IRepository<Order>
+    {
+        Task AddAsync(Order order);
+    }
+}

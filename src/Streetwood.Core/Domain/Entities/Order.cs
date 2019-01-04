@@ -6,7 +6,7 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Order : Entity
     {
-        private List<ProductOrder> productOrders = new List<ProductOrder>();
+        private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
         public bool IsShipped { get; protected set; }
 
@@ -40,7 +40,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(string comment, decimal basePrice, Shipment shipment)
+        public Order(IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, string comment)
         {
             Id = Guid.NewGuid();
             SetIsShipped(false);
@@ -49,8 +49,10 @@ namespace Streetwood.Core.Domain.Entities
             Comment = comment;
             BasePrice = basePrice;
             SetShipment(shipment);
-            ShipmentPrice = BasePrice + shipment.Price;
+            ShipmentPrice = shipment.Price;
             CreationDateTime = DateTime.UtcNow;
+            AddProductOrders(productOrders);
+            SetDiscount(orderDiscount);
         }
 
         protected Order()

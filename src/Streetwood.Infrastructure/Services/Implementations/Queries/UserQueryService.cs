@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
 using Streetwood.Core.Managers;
@@ -38,6 +39,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var user = await userRepository.GetAndEnsureExistAsync(id);
             return mapper.Map<UserDto>(user);
         }
+
+        public async Task<User> GetRawByIdAsync(Guid id)
+            => await userRepository.GetAndEnsureExistAsync(id);
 
         public async Task<TokenModel> GetTokenAsync(string email, string password)
         {
