@@ -27,7 +27,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var charmsIds = productsWithCharmsOrder.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
             var products = await productQueryService.GetRawByIds(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
-            var enabledDiscounts = await productCategoryDiscountQueryService.GetRawEnabledAsync();
+            var enabledDiscounts = await productCategoryDiscountQueryService.GetRawActiveAsync();
             var productsDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
             var productOrders = new List<ProductOrder>();
 
@@ -61,7 +61,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                         productOrder.SetCharmsPrice(charmsPrice);
                         if (discount != null)
                         {
-                            finalPrice = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
+                            var discountValue = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
+                            finalPrice -= discountValue;
                         }
                         else
                         {
@@ -71,7 +72,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 }
                 else if (discount != null)
                 {
-                    finalPrice *= discount.PercentValue / 100.0M;
+                    var discountValue = finalPrice * (discount.PercentValue / 100.0M);
+                    finalPrice -= discountValue;
                 }
 
                 productOrder.SetCurrentProductPrice(product.Price);

@@ -37,15 +37,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.OrderBasePriceBelowZero);
             }
 
-            var productPriceWithDiscount = productOrders.Sum(s => s.FinalPrice);
-            var agreedPrice = basePrice;
+            var finalPrice = productOrders.Sum(s => s.FinalPrice);
             if (orderDiscount != null)
             {
-                agreedPrice = productPriceWithDiscount * (orderDiscount.PercentValue / 100M);
+                var discountValue = (orderDiscount.PercentValue / 100M) * finalPrice;
+                finalPrice -= discountValue;
             }
 
-            var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, agreedPrice, comment, address);
-            logger.Info($"Trying add order {order.Id.ToString()},s with base price {basePrice}...");
+            var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, finalPrice, comment, address);
+            logger.Info($"Trying add order {order.Id.ToString()}, with base price {basePrice}...");
 
             await orderRepository.AddAsync(order);
             await orderRepository.SaveChangesAsync();

@@ -26,12 +26,10 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .AddAsync(productCategoryDiscount);
         }
 
-        public async Task<IList<ProductCategoryDiscount>> GetEnabledAsync()
+        public async Task<IList<ProductCategoryDiscount>> GetActiveAsync()
         {
-            var dateNow = DateTime.Now;
             var enabledDiscounts = await dbContext.ProductCategoryDiscounts
                 .Where(s => s.IsActive)
-                .Where(s => s.AvailableTo < dateNow)
                 .Include(s => s.DiscountCategories)
                 .ToListAsync();
 

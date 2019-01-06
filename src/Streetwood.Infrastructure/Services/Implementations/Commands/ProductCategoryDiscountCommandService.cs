@@ -26,7 +26,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task AddAsync(string name, string nameEng, string description, string descriptionEng, int percentValue,
             DateTime availableFrom, DateTime availableTo)
         {
-            var discount = new ProductCategoryDiscount(name, nameEng, description, descriptionEng, percentValue, true,
+            var discount = new ProductCategoryDiscount(name, nameEng, description, descriptionEng, percentValue,
                 availableFrom, availableTo);
 
             await productCategoryDiscountRepository.AddAsync(discount);
@@ -43,7 +43,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             await discountCategoryRepository.AddRangeAsync(discountCategories);
             await discountCategoryRepository.SaveChangesAsync();
-
         }
 
         public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, int percentValue,

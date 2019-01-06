@@ -26,7 +26,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.DiscountWithThisCodeExistAlready);
             }
 
-            var discount = new OrderDiscount(name, nameEng, description, descriptionEng, percentValue, true,
+            var discount = new OrderDiscount(name, nameEng, description, descriptionEng, percentValue,
                 availableFrom, availableTo, code);
 
             await orderDiscountRepository.AddAsync(discount);

@@ -102,8 +102,8 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             product2.SetProductCategory(category1);
             product3.SetProductCategory(category2);
 
-            var productCategoryDiscount1 = new ProductCategoryDiscount("Test1", "Test1", "Test1", "Test1", 30, true, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
-            var productCategoryDiscount2 = new ProductCategoryDiscount("Test2", "Test2", "Test2", "Test2", 30, true, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+            var productCategoryDiscount1 = new ProductCategoryDiscount("Test1", "Test1", "Test1", "Test1", 30, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+            var productCategoryDiscount2 = new ProductCategoryDiscount("Test2", "Test2", "Test2", "Test2", 30, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
 
             var discountCategory1 = new DiscountCategory(category1, productCategoryDiscount1);
             var discountCategory2 = new DiscountCategory(category2, productCategoryDiscount2);

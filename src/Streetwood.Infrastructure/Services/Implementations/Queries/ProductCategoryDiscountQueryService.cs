@@ -31,7 +31,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscountDto>> GetAsync()
         {
             var discounts = await discountRepository.GetListAsync();
-            return mapper.Map<IList<ProductCategoryDiscountDto>>(discounts);
+            return mapper.Map<IList<ProductCategoryDiscountDto>>(discounts.OrderByDescending(s => s.IsActive).ThenBy(s => s.AvailableTo));
         }
 
         public async Task<IList<ProductsCategoriesForDiscountDto>> GetCategoriesAsync(Guid id)
@@ -46,13 +46,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductCategoryDiscountDto>> GetEnabledAsync()
         {
-            var enabledDiscounts = await GetRawEnabledAsync();
+            var enabledDiscounts = await GetRawActiveAsync();
 
             return mapper.Map<IList<ProductCategoryDiscountDto>>(enabledDiscounts);
         }
 
-        public async Task<IList<ProductCategoryDiscount>> GetRawEnabledAsync()
-            => await discountRepository.GetEnabledAsync();
+        public async Task<IList<ProductCategoryDiscount>> GetRawActiveAsync()
+            => await discountRepository.GetActiveAsync();
 
         public IList<(int, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
             IList<ProductCategoryDiscount> discounts)

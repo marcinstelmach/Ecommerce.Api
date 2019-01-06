@@ -8,6 +8,6 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
     {
         Task AddAsync(ProductCategoryDiscount productCategoryDiscount);
 
-        Task<IList<ProductCategoryDiscount>> GetEnabledAsync();
+        Task<IList<ProductCategoryDiscount>> GetActiveAsync();
     }
 }

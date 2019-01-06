@@ -6,15 +6,15 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class ProductCategoryDiscount : DiscountEntity
     {
-        private List<DiscountCategory> discountCategories = new List<DiscountCategory>();
-        private List<ProductOrder> productOrders = new List<ProductOrder>();
+        private readonly List<DiscountCategory> discountCategories = new List<DiscountCategory>();
+        private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
         public virtual IList<DiscountCategory> DiscountCategories => discountCategories;
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public ProductCategoryDiscount(string name, string nameEng, string description, string descriptionEng, int percentValue, bool isActive, DateTime availableFrom, DateTime avaibleTo)
-            : base(name, nameEng, description, descriptionEng, percentValue, isActive, availableFrom, avaibleTo)
+        public ProductCategoryDiscount(string name, string nameEng, string description, string descriptionEng, int percentValue, DateTime availableFrom, DateTime availableTo)
+            : base(name, nameEng, description, descriptionEng, percentValue, availableFrom, availableTo)
         {
         }
 
@@ -22,8 +22,8 @@ namespace Streetwood.Core.Domain.Entities
         {
         }
 
-        public void AddProductCategory(IEnumerable<DiscountCategory> discountCategories)
-            => this.discountCategories.AddRange(discountCategories);
+        public void AddProductCategory(IEnumerable<DiscountCategory> discountCategoriess)
+            => this.discountCategories.AddRange(discountCategoriess);
 
     }
 }
