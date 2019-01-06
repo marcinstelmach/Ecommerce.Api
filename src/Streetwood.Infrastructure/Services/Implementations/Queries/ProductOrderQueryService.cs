@@ -51,24 +51,28 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 if (productWithCharmsOrder.HaveCharms)
                 {
                     var productOrderCharms = CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
+                    var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice);
+
                     productOrder.AddProductOrderCharms(productOrderCharms);
 
                     // for 1 charm, we have the same price
                     if (productOrderCharms.Count > 1)
                     {
                         // we subtract one charm because first is free
-                        var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice) - productOrderCharms.First().CurrentPrice;
-                        productOrder.SetCharmsPrice(charmsPrice);
+                        charmsPrice -= productOrderCharms.First().CurrentPrice;
+
                         if (discount != null)
                         {
                             var discountValue = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
-                            finalPrice -= discountValue;
+                            finalPrice = (finalPrice + charmsPrice) - discountValue;
                         }
                         else
                         {
                             finalPrice += charmsPrice;
                         }
                     }
+
+                    productOrder.SetCharmsPrice(charmsPrice);
                 }
                 else if (discount != null)
                 {

@@ -31,13 +31,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.NoProductsForNewOrder);
             }
 
-            var basePrice = productOrders.Sum(s => s.CurrentProductPrice);
+            var basePrice = productOrders.Sum(s => (s.CurrentProductPrice + s.CharmsPrice) * s.Amount);
             if (basePrice <= 0)
             {
                 throw new StreetwoodException(ErrorCode.OrderBasePriceBelowZero);
             }
 
-            var finalPrice = productOrders.Sum(s => s.FinalPrice);
+            var finalPrice = productOrders.Sum(s => s.FinalPrice * s.Amount);
             if (orderDiscount != null)
             {
                 var discountValue = (orderDiscount.PercentValue / 100M) * finalPrice;
