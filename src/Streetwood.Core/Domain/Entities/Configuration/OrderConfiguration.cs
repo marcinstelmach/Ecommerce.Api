@@ -13,7 +13,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .HasColumnType(ConstantValues.PriceDecimalType);
             builder.Property(s => s.ShipmentPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
-            builder.Property(s => s.AgreedPrice)
+            builder.Property(s => s.FinalPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
 
             builder.HasMany(s => s.ProductOrders)

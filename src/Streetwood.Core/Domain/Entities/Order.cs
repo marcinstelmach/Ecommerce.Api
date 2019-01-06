@@ -20,7 +20,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public decimal ShipmentPrice { get; protected set; }
 
-        public decimal AgreedPrice { get; protected set; }
+        public decimal FinalPrice { get; protected set; }
 
         public DateTime CreationDateTime { get; protected set; }
 
@@ -40,7 +40,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, decimal agreedPrice, string comment, Address address)
+        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, decimal finalPrice, string comment, Address address)
         {
             Id = Guid.NewGuid();
             SetIsShipped(false);
@@ -54,7 +54,7 @@ namespace Streetwood.Core.Domain.Entities
             AddProductOrders(productOrders);
             SetDiscount(orderDiscount);
             SetAddress(address);
-            AgreedPrice = agreedPrice;
+            FinalPrice = finalPrice;
             SetUser(user);
         }
 

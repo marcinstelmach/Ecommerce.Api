@@ -37,7 +37,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.OrderBasePriceBelowZero);
             }
 
-            var productPriceWithDiscount = productOrders.Sum(s => s.AgreedPrice);
+            var productPriceWithDiscount = productOrders.Sum(s => s.FinalPrice);
             var agreedPrice = basePrice;
             if (orderDiscount != null)
             {

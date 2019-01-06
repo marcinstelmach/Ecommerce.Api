@@ -11,7 +11,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.HasKey(s => s.Id);
             builder.Property(s => s.CurrentProductPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
-            builder.Property(s => s.AgreedPrice)
+            builder.Property(s => s.FinalPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
 
             builder.HasMany(s => s.ProductOrderCharms)

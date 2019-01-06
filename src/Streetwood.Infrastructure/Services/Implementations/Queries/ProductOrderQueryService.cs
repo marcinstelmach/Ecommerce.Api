@@ -33,11 +33,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             foreach (var productWithCharmsOrder in productsWithCharmsOrder)
             {
-                var productOrderCharms = new List<ProductOrderCharm>();
-                if (productWithCharmsOrder.HaveCharms)
-                {
-                    productOrderCharms.AddRange(CreateProductOrderCharms(productWithCharmsOrder.Charms, charms));
-                }
+                var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
 
                 var product = products.SingleOrDefault(s => s.Id == productWithCharmsOrder.ProductId);
                 if (product == null)
@@ -45,19 +41,41 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     throw new StreetwoodException(ErrorCode.OrderProductsNotFound);
                 }
 
+                productOrder.AddProduct(product);
+
                 var discount = productsDiscounts.FirstOrDefault(s => s.Item1 == product.Id).Item2;
-                var agreedPrice = product.Price;
-                if (discount != null)
+                var finalPrice = product.Price;
+
+                productOrder.AddProductCategoryDiscount(discount);
+
+                if (productWithCharmsOrder.HaveCharms)
                 {
-                    agreedPrice = agreedPrice * (discount.PercentValue / 100.0M);
+                    var productOrderCharms = CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
+                    productOrder.AddProductOrderCharms(productOrderCharms);
+
+                    // for 1 charm, we have the same price
+                    if (productOrderCharms.Count > 1)
+                    {
+                        // we subtract one charm because first is free
+                        var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice) - productOrderCharms.First().CurrentPrice;
+                        productOrder.SetCharmsPrice(charmsPrice);
+                        if (discount != null)
+                        {
+                            finalPrice = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
+                        }
+                        else
+                        {
+                            finalPrice += charmsPrice;
+                        }
+                    }
+                }
+                else if (discount != null)
+                {
+                    finalPrice *= discount.PercentValue / 100.0M;
                 }
 
-                var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
-                productOrder.AddProduct(product);
-                productOrder.AddProductOrderCharms(productOrderCharms);
                 productOrder.SetCurrentProductPrice(product.Price);
-                productOrder.AddProductCategoryDiscount(discount);
-                productOrder.SetAgreedPrice(agreedPrice);
+                productOrder.SetFinalPrice(finalPrice);
 
                 productOrders.Add(productOrder);
             }
@@ -65,7 +83,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return productOrders;
         }
 
-        private IEnumerable<ProductOrderCharm> CreateProductOrderCharms(IEnumerable<CharmOrderDto> charmsOrderDto, IList<Charm> charms)
+        private List<ProductOrderCharm> CreateProductOrderCharms(IEnumerable<CharmOrderDto> charmsOrderDto, IList<Charm> charms)
         {
             var productOrderCharms = new List<ProductOrderCharm>();
             foreach (var charmOrder in charmsOrderDto)
@@ -80,7 +98,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 productOrderCharms.Add(productCharmOrder);
             }
 
-            return productOrderCharms;
+            return productOrderCharms.OrderBy(s => s.Sequence).ToList();
         }
     }
 }

@@ -6,15 +6,17 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class ProductOrder : Entity
     {
-        private List<ProductOrderCharm> productOrderCharms = new List<ProductOrderCharm>();
+        private readonly List<ProductOrderCharm> productOrderCharms = new List<ProductOrderCharm>();
 
         public int Amount { get; protected set; }
 
         public decimal CurrentProductPrice { get; protected set; }
 
-        public decimal AgreedPrice { get; protected set; }
+        public decimal FinalPrice { get; protected set; }
 
         public string Comment { get; protected set; }
+
+        public decimal CharmsPrice { get; protected set; }
 
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
@@ -38,8 +40,11 @@ namespace Streetwood.Core.Domain.Entities
         public void SetCurrentProductPrice(decimal price)
             => CurrentProductPrice = price;
 
-        public void SetAgreedPrice(decimal price)
-            => AgreedPrice = price;
+        public void SetFinalPrice(decimal price)
+            => FinalPrice = price;
+
+        public void SetCharmsPrice(decimal price)
+            => CharmsPrice = price;
 
         public void AddProductCategoryDiscount(ProductCategoryDiscount discount)
             => ProductCategoryDiscount = discount;
