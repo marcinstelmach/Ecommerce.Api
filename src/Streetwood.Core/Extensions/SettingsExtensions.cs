@@ -10,6 +10,7 @@ namespace Streetwood.Core.Extensions
         {
             services.Configure<DatabaseOptions>(configuration.GetSection("Database"));
             services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+            services.Configure<CacheOptions>(configuration.GetSection("Cache"));
         }
     }
 }
