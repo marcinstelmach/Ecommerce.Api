@@ -27,12 +27,31 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         }
 
         [Fact]
-        public void ApplyDiscountsToProducts_ForEmptyDiscounts_ReturnsNull()
+        public void ApplyDiscountsToProducts_ForEmptyProducts_NotReturnsNull()
+        {
+            // arrange
+            var products = new List<Product>();
+            var discounts = new List<ProductCategoryDiscount>
+            {
+                new ProductCategoryDiscount("Name", "", "", "", 35, DateTime.Now, DateTime.Now.AddDays(3))
+            };
+            var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
+                productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
+
+            // act
+            var result = sut.ApplyDiscountsToProducts(products, discounts);
+
+            // assert
+            result.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ApplyDiscountsToProducts_ForEmptyDiscounts_NotReturnsNull()
         {
             // arrange
             var products = new List<Product>
             {
-                new Product("", "", 30, "", "", true, "", "")
+                new Product("", "", 35, "", "", true, "", "")
             };
             var discounts = new List<ProductCategoryDiscount>();
             var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
@@ -42,14 +61,14 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var result = sut.ApplyDiscountsToProducts(products, discounts);
 
             // assert
-            result.Should().BeNull();
+            result.Should().NotBeNull();
         }
 
         [Fact]
-        public void ApplyDiscountToProducts_ReturnValidPairs()
+        public void ApplyDiscountToProducts_WhenAreDiscounts_ReturnValidPairs()
         {
             // arrange
-            var (products, discounts) = PrepareTestData();
+            var (products, discounts) = PrepareProductsWithDiscounts();
 
             var expected = new List<(int, ProductCategoryDiscount)>
             {
@@ -71,10 +90,12 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         }
 
         [Fact]
-        public void ApplyDiscountToProducts_ReturnProductsIfNoDiscounts()
+        public void ApplyDiscountToProducts_ReturnProductsIfDifferentDiscount()
         {
             // arrange
-            var data = PrepareTestData();
+            var data = PrepareProductsWithDiscounts();
+
+            // product and discount are not joined
             var products = data.Item1;
             var discounts = data.Item2;
 
@@ -88,12 +109,12 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productsWithoutDiscounts.Count().Should().Be(1);
         }
 
-        private (List<Product>, List<ProductCategoryDiscount>) PrepareTestData()
+        private (List<Product>, List<ProductCategoryDiscount>) PrepareProductsWithDiscounts()
         {
-            var product1 = new Product("Test", "Test", 50, "Test", "Test", true, "", "");
-            var product2 = new Product("Test2", "Test2", 40, "Test2", "Test2", true, "", "");
-            var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, "", "");
-            var product4 = new Product("Test4", "Test3", 30, "Test3", "Test3", true, "", "");
+            var product1 = new Product("Test", "Test", 50, "Test", "Test", true, "", "") { Id = 1 };
+            var product2 = new Product("Test2", "Test2", 40, "Test2", "Test2", true, "", "") { Id = 2 };
+            var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, "", "") { Id = 3 };
+            var product4 = new Product("Test4", "Test3", 30, "Test3", "Test3", true, "", "") { Id = 4 };
 
             var category1 = new ProductCategory("Test1", "Test1");
             var category2 = new ProductCategory("Test2", "Test2");
@@ -111,8 +132,8 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productCategoryDiscount1.AddProductCategory(new[] { discountCategory1 });
             productCategoryDiscount2.AddProductCategory(new[] { discountCategory2 });
 
-            var products = new List<Product>{product1, product2, product3, product4};
-            var discounts = new List<ProductCategoryDiscount>{productCategoryDiscount1, productCategoryDiscount2};
+            var products = new List<Product> { product1, product2, product3, product4 };
+            var discounts = new List<ProductCategoryDiscount> { productCategoryDiscount1, productCategoryDiscount2 };
 
             return (products, discounts);
         }

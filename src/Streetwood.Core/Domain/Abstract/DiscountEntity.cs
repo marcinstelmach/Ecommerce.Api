@@ -15,7 +15,7 @@ namespace Streetwood.Core.Domain.Abstract
 
         public int PercentValue { get; protected set; }
 
-        public bool IsActive => AvailableTo >= DateTime.Now;
+        public bool IsActive => AvailableFrom <= DateTime.Now && AvailableTo >= DateTime.Now;
 
         public DateTime AvailableFrom { get; protected set; }
 

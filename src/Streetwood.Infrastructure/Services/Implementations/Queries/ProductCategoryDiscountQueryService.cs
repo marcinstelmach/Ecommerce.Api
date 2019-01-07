@@ -31,7 +31,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscountDto>> GetAsync()
         {
             var discounts = await discountRepository.GetListAsync();
-            return mapper.Map<IList<ProductCategoryDiscountDto>>(discounts.OrderByDescending(s => s.IsActive).ThenBy(s => s.AvailableTo));
+            return mapper.Map<IList<ProductCategoryDiscountDto>>(discounts.OrderByDescending(s => s.IsActive)
+                .ThenBy(s => s.AvailableTo));
         }
 
         public async Task<IList<ProductsCategoriesForDiscountDto>> GetCategoriesAsync(Guid id)
@@ -59,7 +60,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             if (!products.Any() || !discounts.Any())
             {
-                return null;
+                return new List<(int, ProductCategoryDiscount)>();
             }
 
             var result = new List<(int, ProductCategoryDiscount)>();
@@ -71,6 +72,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 discountProducts.ForEach(s => result.Add((s.Id, discount)));
             }
 
+            // checking if there are some products without discount
             var resultProducts = result.Select(s => s.Item1).ToList();
             if (resultProducts.Any())
             {

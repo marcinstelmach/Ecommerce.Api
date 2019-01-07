@@ -9,7 +9,7 @@ namespace Streetwood.Core.Domain.Entities
         private readonly List<Image> images = new List<Image>();
         private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
-        public new int Id { get; protected set; }
+        public new int Id { get; set; }
 
         public string Name { get; protected set; }
 
