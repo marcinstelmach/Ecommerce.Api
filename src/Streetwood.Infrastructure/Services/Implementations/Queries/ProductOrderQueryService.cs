@@ -25,7 +25,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var productsIds = productsWithCharmsOrder.Select(s => s.ProductId);
             var charmsIds = productsWithCharmsOrder.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
-            var products = await productQueryService.GetRawByIds(productsIds);
+            var products = await productQueryService.GetRawByIdsAsync(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
             var enabledDiscounts = await productCategoryDiscountQueryService.GetRawActiveAsync();
             var productsDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
@@ -55,21 +55,17 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
                     productOrder.AddProductOrderCharms(productOrderCharms);
 
-                    // for 1 charm, we have the same price
-                    if (productOrderCharms.Count > 1)
-                    {
-                        // we subtract one charm because first is free
-                        charmsPrice -= productOrderCharms.First().CurrentPrice;
+                    // we subtract one charm because first is free
+                    charmsPrice -= productOrderCharms.First().CurrentPrice;
 
-                        if (discount != null)
-                        {
-                            var discountValue = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
-                            finalPrice = (finalPrice + charmsPrice) - discountValue;
-                        }
-                        else
-                        {
-                            finalPrice += charmsPrice;
-                        }
+                    if (discount != null)
+                    {
+                        var discountValue = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
+                        finalPrice = (finalPrice + charmsPrice) - discountValue;
+                    }
+                    else
+                    {
+                        finalPrice += charmsPrice;
                     }
 
                     productOrder.SetCharmsPrice(charmsPrice);

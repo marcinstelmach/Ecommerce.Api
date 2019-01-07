@@ -14,6 +14,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id);
 
-        Task<IList<Product>> GetRawByIds(IEnumerable<int> ids);
+        Task<IList<Product>> GetRawByIdsAsync(IEnumerable<int> ids);
     }
 }

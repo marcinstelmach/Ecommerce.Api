@@ -45,7 +45,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<IList<ProductDto>>(availableProducts);
         }
 
-        public async Task<IList<Product>> GetRawByIds(IEnumerable<int> ids)
+        public async Task<IList<Product>> GetRawByIdsAsync(IEnumerable<int> ids)
         {
             var products = await productRepository.GetByIdsAsync(ids);
 
