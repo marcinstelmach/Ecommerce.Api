@@ -24,7 +24,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual Product Product { get; protected set; }
 
-        public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms { get; protected set; }
+        public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms => productOrderCharms;
 
         public ProductOrder(int amount, string comment)
         {

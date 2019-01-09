@@ -19,7 +19,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual CharmCategory CharmCategory { get; protected set; }
 
-        public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms { get; }
+        public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms { get; protected set; }
 
         public Charm(string name, string nameEng, string imagePath, decimal price)
         {

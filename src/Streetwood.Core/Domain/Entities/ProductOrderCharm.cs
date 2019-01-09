@@ -1,4 +1,5 @@
-﻿using Streetwood.Core.Domain.Abstract;
+﻿using System;
+using Streetwood.Core.Domain.Abstract;
 
 namespace Streetwood.Core.Domain.Entities
 {
@@ -14,6 +15,7 @@ namespace Streetwood.Core.Domain.Entities
 
         public ProductOrderCharm(Charm charm, int sequence)
         {
+            Id = Guid.NewGuid();
             CurrentPrice = charm.Price;
             AddCharm(charm);
             Sequence = sequence;
