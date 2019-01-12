@@ -17,6 +17,7 @@ namespace Streetwood.Infrastructure.Mappers
                 cfg.AddProfile(new ProductCategoryDiscountProfile());
                 cfg.AddProfile(new AddressProfile());
                 cfg.AddProfile(new OrderDiscountProfile());
+                cfg.AddProfile(new OrderProfile());
             })
             .CreateMapper();
         }

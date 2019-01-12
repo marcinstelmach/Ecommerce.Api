@@ -20,7 +20,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.OrderDiscount
         {
             await orderDiscountCommandService.UpdateAsync(request.Id, request.Name, request.NameEng,
                 request.Description, request.DescriptionEng, request.PercentValue, request.AvailableFrom,
-                request.AvailableTo, request.Code);
+                request.AvailableTo);
 
             return Unit.Value;
         }

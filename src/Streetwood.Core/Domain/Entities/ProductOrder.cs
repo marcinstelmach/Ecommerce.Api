@@ -20,6 +20,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
+        public int? DiscountValue { get; protected set; }
+
         public virtual Order Order { get; protected set; }
 
         public virtual Product Product { get; protected set; }
@@ -47,7 +49,10 @@ namespace Streetwood.Core.Domain.Entities
             => CharmsPrice = price;
 
         public void AddProductCategoryDiscount(ProductCategoryDiscount discount)
-            => ProductCategoryDiscount = discount;
+        {
+            ProductCategoryDiscount = discount;
+            DiscountValue = discount?.PercentValue;
+        }
 
         public void AddProduct(Product product)
             => Product = product;

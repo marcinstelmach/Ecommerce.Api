@@ -9,6 +9,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
             DateTime availableFrom, DateTime availableTo, string code);
 
         Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, int percentValue,
-            DateTime availableFrom, DateTime availableTo, string code);
+            DateTime availableFrom, DateTime availableTo);
     }
 }

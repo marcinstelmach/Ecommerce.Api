@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -42,7 +43,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<OrderDiscountDto>> GetAsync()
         {
             var discounts = await orderDiscountRepository.GetListAsync();
-            return mapper.Map<IList<OrderDiscountDto>>(discounts);
+            return mapper.Map<IList<OrderDiscountDto>>(discounts.OrderByDescending(s => s.IsActive));
         }
     }
 }

@@ -50,6 +50,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
                 if (productWithCharmsOrder.HaveCharms)
                 {
+                    if (!product.AcceptCharms)
+                    {
+                        throw new StreetwoodException(ErrorCode.ProductNotAcceptCharms);
+                    }
+
                     var productOrderCharms = CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
                     var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice);
 

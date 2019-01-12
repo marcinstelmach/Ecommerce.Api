@@ -25,10 +25,6 @@ namespace Streetwood.Infrastructure.Commands.Models.OrderDiscount
         public int PercentValue { get; set; }
 
         [Required]
-        [MaxLength(30)]
-        public string Code { get; set; }
-
-        [Required]
         public DateTime AvailableFrom { get; set; }
 
         [Required]

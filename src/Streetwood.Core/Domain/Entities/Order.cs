@@ -22,6 +22,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public decimal FinalPrice { get; protected set; }
 
+        public int? DiscountValue { get; protected set; }
+
         public DateTime CreationDateTime { get; protected set; }
 
         public DateTime? PayedDateTime { get; protected set; }
@@ -56,6 +58,7 @@ namespace Streetwood.Core.Domain.Entities
             SetAddress(address);
             FinalPrice = finalPrice;
             SetUser(user);
+            DiscountValue = orderDiscount?.PercentValue;
         }
 
         protected Order()

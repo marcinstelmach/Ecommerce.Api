@@ -66,6 +66,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderBasePriceBelowZero => new ErrorCode(nameof(OrderBasePriceBelowZero), HttpStatusCode.InternalServerError);
 
+        public static ErrorCode ProductNotAcceptCharms => new ErrorCode(nameof(ProductNotAcceptCharms));
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

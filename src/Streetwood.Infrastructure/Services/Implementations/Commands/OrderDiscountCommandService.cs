@@ -34,7 +34,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         }
 
         public async Task UpdateAsync(Guid id, string name, string nameEng, string description, string descriptionEng, int percentValue,
-            DateTime availableFrom, DateTime availableTo, string code)
+            DateTime availableFrom, DateTime availableTo)
         {
             var discount = await orderDiscountRepository.GetAndEnsureExistAsync(id);
 
@@ -43,7 +43,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.OrderDiscountInUse);
             }
 
-            discount.SetCode(code);
             discount.SetName(name);
             discount.SetNameEng(nameEng);
             discount.SetDescription(description);
