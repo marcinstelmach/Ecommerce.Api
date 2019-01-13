@@ -19,7 +19,9 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 
         public bool? IsClosed { get; set; }
 
-        public GetFilteredOrdersQueryModel(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed)
+        public int? Take { get; set; }
+
+        public GetFilteredOrdersQueryModel(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int take)
         {
             Id = id;
             DateFrom = dateFrom;
@@ -27,6 +29,7 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
             IsShipped = isShipped;
             IsPayed = isPayed;
             IsClosed = isClosed;
+            Take = take;
         }
     }
 }

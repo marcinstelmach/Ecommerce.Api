@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Filters;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Queries.Models.Order;
@@ -26,10 +27,17 @@ namespace Streetwood.API.Controllers
 
         // all for admin, and specific for user
         // get filtered
-        [HttpGet("{id}/{dateFrom}/{dateTo}/{isShipped}/{isPayed}/{isClosed}")]
+        // add pagination
+//        [HttpGet("{id}/{dateFrom}/{dateTo}/{isShipped}/{isPayed}/{isClosed}/{take}")]
+//        public async Task<IActionResult> Get(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped,
+//            bool? isPayed, bool? isClosed, int take)
+//            => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
+
+        [HttpGet]
+        [IgnoreValidation]
         public async Task<IActionResult> Get(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped,
-            bool? isPayed, bool? isClosed)
-            => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed)));
+            bool? isPayed, bool? isClosed, int take)
+            => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)

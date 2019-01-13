@@ -12,7 +12,7 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
             CreateMap<Order, OrderDto>();
 
             CreateMap<ProductOrder, ProductOrderDto>()
-                .ForMember(dest => dest.ProductOrderCharm, opt => opt.MapFrom(src => src.ProductOrderCharms));
+                .ForMember(dest => dest.ProductOrderCharms, opt => opt.MapFrom(src => src.ProductOrderCharms));
 
             CreateMap<ProductOrderCharm, ProductOrderCharmDto>();
         }

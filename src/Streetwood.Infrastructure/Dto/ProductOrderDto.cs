@@ -21,6 +21,6 @@ namespace Streetwood.Infrastructure.Dto
 
         public ProductDto Product { get; set; }
 
-        public IEnumerable<ProductOrderCharmDto> ProductOrderCharm { get; set; }
+        public IEnumerable<ProductOrderCharmDto> ProductOrderCharms { get; set; }
     }
 }
