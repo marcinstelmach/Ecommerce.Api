@@ -5,7 +5,7 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.Order
 {
-    public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrderDto>>
+    public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrdersList>>
     {
         public Guid? Id { get; set; }
 

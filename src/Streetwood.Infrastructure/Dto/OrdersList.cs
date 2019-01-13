@@ -27,5 +27,7 @@ namespace Streetwood.Infrastructure.Dto
         public DateTime? ShipmentDateTime { get; set; }
 
         public DateTime? ClosedDateTime { get; set; }
+
+        public UserDto User { get; set; }
     }
 }

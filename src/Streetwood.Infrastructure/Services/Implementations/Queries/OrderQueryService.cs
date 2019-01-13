@@ -27,17 +27,18 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var order = await orderRepository.GetFullAsync(id);
             var mapped = mapper.Map<OrderDto>(order);
+
             return mapped;
         }
 
-        public async Task<IList<OrderDto>> GetFilteredAsync(OrderQueryFilter filter)
+        public async Task<IList<OrdersList>> GetFilteredAsync(OrderQueryFilter filter)
         {
             var orders = orderRepository.GetQueryable();
 
             if (filter.Id.HasValue)
             {
                 var order = await orders.FirstOrDefaultAsync(s => s.Id == filter.Id.Value);
-                return mapper.Map<IList<OrderDto>>(new List<Order> {order});
+                return mapper.Map<IList<OrdersList>>(new List<Order> {order});
             }
 
             if (filter.DateFrom.HasValue)
@@ -71,9 +72,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             }
 
             var ordersList = await orders
+                .Include(s => s.User)
                 .OrderByDescending(s => s.CreationDateTime)
                 .ToListAsync();
-            return mapper.Map<IList<OrderDto>>(ordersList);
+            return mapper.Map<IList<OrdersList>>(ordersList);
         }
     }
 }

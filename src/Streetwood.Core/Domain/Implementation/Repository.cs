@@ -23,7 +23,8 @@ namespace Streetwood.Core.Domain.Implementation
             => await dbSet.ToListAsync();
 
         public IQueryable<T> GetQueryable()
-            => dbSet.AsQueryable();
+            => dbSet.AsQueryable()
+                .AsNoTracking();
 
         public async Task<T> GetAsync(Guid id)
             => await dbSet.FindAsync(id);
