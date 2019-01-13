@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract.Repositories;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Filters;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -29,7 +32,42 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<OrderDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
-            throw new NotImplementedException();
+            var orders = orderRepository.GetQueryable();
+
+            if (filter.Id.HasValue)
+            {
+                var order = await orders.FirstOrDefaultAsync(s => s.Id == filter.Id.Value);
+                return mapper.Map<IList<OrderDto>>(new List<Order> {order});
+            }
+
+            if (filter.DateFrom.HasValue)
+            {
+                orders = orders.Where(s => s.CreationDateTime <= filter.DateFrom);
+            }
+
+            if (filter.DateTo.HasValue)
+            {
+                orders = orders.Where(s => s.CreationDateTime <= filter.DateTo);
+            }
+
+            if (filter.IsClosed.HasValue)
+            {
+                orders = orders.Where(s => s.IsClosed == filter.IsClosed);
+            }
+
+            if (filter.IsPayed.HasValue)
+            {
+                orders = orders.Where(s => s.IsPayed == filter.IsPayed);
+            }
+
+            if (filter.IsShipped.HasValue)
+            {
+                orders = orders.Where(s => s.IsShipped == filter.IsShipped);
+            }
+
+            var ordersList = await orders.ToListAsync();
+
+            return mapper.Map<IList<OrderDto>>(ordersList);
         }
     }
 }
