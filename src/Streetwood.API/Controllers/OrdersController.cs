@@ -28,15 +28,10 @@ namespace Streetwood.API.Controllers
         // all for admin, and specific for user
         // get filtered
         // add pagination
-//        [HttpGet("{id}/{dateFrom}/{dateTo}/{isShipped}/{isPayed}/{isClosed}/{take}")]
-//        public async Task<IActionResult> Get(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped,
-//            bool? isPayed, bool? isClosed, int take)
-//            => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
-
         [HttpGet]
         [IgnoreValidation]
-        public async Task<IActionResult> Get(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped,
-            bool? isPayed, bool? isClosed, int take)
+        public async Task<IActionResult> Get([FromQuery] int take, [FromQuery] Guid? id, [FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
+            [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
             => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
 
         [HttpPost]

@@ -10,6 +10,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
     {
         Task<OrderDto> GetAsync(Guid id);
 
-        Task<IList<OrdersList>> GetFilteredAsync(OrderQueryFilter filter);
+        Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter);
     }
 }

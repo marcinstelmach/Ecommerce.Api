@@ -2,9 +2,11 @@
 
 namespace Streetwood.Infrastructure.Dto
 {
-    public class OrdersList
+    public class OrdersListDto
     {
         public Guid Id { get; set; }
+
+        public string Email { get; set; }
 
         public bool IsShipped { get; set; }
 
@@ -27,7 +29,5 @@ namespace Streetwood.Infrastructure.Dto
         public DateTime? ShipmentDateTime { get; set; }
 
         public DateTime? ClosedDateTime { get; set; }
-
-        public UserDto User { get; set; }
     }
 }

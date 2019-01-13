@@ -15,6 +15,9 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
                 .ForMember(dest => dest.ProductOrderCharms, opt => opt.MapFrom(src => src.ProductOrderCharms));
 
             CreateMap<ProductOrderCharm, ProductOrderCharmDto>();
+
+            CreateMap<Order, OrdersListDto>()
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email));
         }
     }
 }
