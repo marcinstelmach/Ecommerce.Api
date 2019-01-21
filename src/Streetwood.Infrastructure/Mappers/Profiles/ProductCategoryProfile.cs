@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
@@ -9,7 +10,10 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
         public ProductCategoryProfile()
             : base("ProductCategories")
         {
-            CreateMap<ProductCategory, ProductCategoryDto>();
+            CreateMap<ProductCategory, ProductCategoryDto>()
+                .ForMember(dest => dest.ProductCategoryDiscount,
+                    opt => opt.MapFrom(src =>
+                        src.DiscountCategories.FirstOrDefault(s => s.ProductCategoryDiscount.IsActive).ProductCategoryDiscount));
         }
     }
 }

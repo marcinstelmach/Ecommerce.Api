@@ -42,6 +42,8 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Include(s => s.Parent)
                 .Where(s => s.Parent == null)
                 .Include(s => s.ProductCategories)
+                .Include(s => s.DiscountCategories)
+                    .ThenInclude(s => s.ProductCategoryDiscount)
                 .ToListAsync();
 
             foreach (var category in categories)

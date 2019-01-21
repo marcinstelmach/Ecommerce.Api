@@ -29,7 +29,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Product
         {
             var userType = contextAccessor.HttpContext.User.GetUserType();
             var result = await cache.GetOrCreateAsync($"{CacheKey.ProductsByCategory}{request.CategoryId.ToString()}",
-                s => productQueryService.GetByCategoryIdAsync(request.CategoryId), userType);
+                s => productQueryService.GetAvailableByCategoryIdAsync(request.CategoryId), userType);
             return result;
         }
     }

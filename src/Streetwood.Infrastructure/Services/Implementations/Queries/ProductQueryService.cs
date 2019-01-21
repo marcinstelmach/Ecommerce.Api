@@ -38,7 +38,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<ProductDto>(product);
         }
 
-        public async Task<IList<ProductDto>> GetByCategoryIdAsync(Guid id)
+        public async Task<IList<ProductDto>> GetAvailableByCategoryIdAsync(Guid id)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
             var availableProducts = category.Products.Where(s => s.Status == ItemStatus.Available);

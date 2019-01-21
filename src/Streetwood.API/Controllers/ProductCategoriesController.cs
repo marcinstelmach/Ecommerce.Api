@@ -21,7 +21,7 @@ namespace Streetwood.API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetProductCategoriesQueryModel()));
+            => Ok(await mediator.Send(new GetAvailableProductCategoriesQueryModel()));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)

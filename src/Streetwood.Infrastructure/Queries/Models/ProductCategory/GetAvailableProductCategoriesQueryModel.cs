@@ -4,7 +4,7 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.ProductCategory
 {
-    public class GetProductCategoriesQueryModel : IRequest<IList<ProductCategoryDto>>
+    public class GetAvailableProductCategoriesQueryModel : IRequest<IList<ProductCategoryDto>>
     {
     }
 }

@@ -12,5 +12,7 @@ namespace Streetwood.Infrastructure.Dto
         public string NameEng { get; set; }
 
         public IEnumerable<ProductCategoryDto> ProductCategories { get; set; }
+
+        public ProductCategoryDiscountDto ProductCategoryDiscount { get; set; }
     }
 }

@@ -12,23 +12,23 @@ using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategory
 {
-    public class GetProductCategoriesQueryHandler : IRequestHandler<GetProductCategoriesQueryModel, IList<ProductCategoryDto>>
+    public class GetAvailableProductCategoriesQueryHandler : IRequestHandler<GetAvailableProductCategoriesQueryModel, IList<ProductCategoryDto>>
     {
         private readonly IProductCategoryQueryService productCategoryQueryService;
         private readonly IHttpContextAccessor contextAccessor;
         private readonly ICache cache;
 
-        public GetProductCategoriesQueryHandler(IProductCategoryQueryService productCategoryQueryService, IHttpContextAccessor contextAccessor, ICache cache)
+        public GetAvailableProductCategoriesQueryHandler(IProductCategoryQueryService productCategoryQueryService, IHttpContextAccessor contextAccessor, ICache cache)
         {
             this.productCategoryQueryService = productCategoryQueryService;
             this.contextAccessor = contextAccessor;
             this.cache = cache;
         }
 
-        public async Task<IList<ProductCategoryDto>> Handle(GetProductCategoriesQueryModel request, CancellationToken cancellationToken)
+        public async Task<IList<ProductCategoryDto>> Handle(GetAvailableProductCategoriesQueryModel request, CancellationToken cancellationToken)
         {
             var userType = contextAccessor.HttpContext.User.GetUserType();
-            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryTree, entry => productCategoryQueryService.GetAsync(), userType);
+            var result = await cache.GetOrCreateAsync(CacheKey.ProductCategoryTree, entry => productCategoryQueryService.GetAvailableAsync(), userType);
 
             return result;
         }
