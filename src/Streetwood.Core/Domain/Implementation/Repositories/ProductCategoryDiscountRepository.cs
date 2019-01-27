@@ -35,5 +35,16 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 
             return enabledDiscounts;
         }
+
+        public async Task<List<ProductCategoryDiscount>> GetActiveByCategoryId(Guid id)
+        {
+            var discounts = await dbContext.DiscountCategories
+                .Where(s => s.ProductCategory.Id == id)
+                .Where(s => s.ProductCategoryDiscount.IsActive)
+                .Select(s => s.ProductCategoryDiscount)
+                .ToListAsync();
+
+            return discounts;
+        }
     }
 }

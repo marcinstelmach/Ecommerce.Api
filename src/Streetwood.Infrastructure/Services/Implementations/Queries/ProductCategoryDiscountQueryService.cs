@@ -35,12 +35,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 .ThenBy(s => s.AvailableTo));
         }
 
-        public async Task<IList<ProductsCategoriesForDiscountDto>> GetCategoriesAsync(Guid id)
+        public async Task<IList<ProductsCategoriesForDiscountDto>> GetCategoriesForDiscountAsync(Guid id)
         {
             var discount = await discountRepository.GetAndEnsureExistAsync(id);
             var discountCategories = await discountCategoryRepository.GetCategories(discount);
 
-            var categories = await productCategoryRepository.GetListAsync();
+            var categories = await productCategoryRepository.GetChildrenAsync();
             var mapped = MapCategories(categories, discountCategories);
             return mapped;
         }

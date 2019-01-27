@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -21,7 +19,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.ProductCategoryDiscount
 
         public async Task<IList<ProductsCategoriesForDiscountDto>> Handle(GetCategoriesForDiscountQueryModel request, CancellationToken cancellationToken)
         {
-            var result = await discountQueryService.GetCategoriesAsync(request.Id);
+            var result = await discountQueryService.GetCategoriesForDiscountAsync(request.Id);
 
             return result;
         }

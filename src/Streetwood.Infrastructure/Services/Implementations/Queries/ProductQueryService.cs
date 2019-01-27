@@ -16,13 +16,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
     {
         private readonly IProductRepository productRepository;
         private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IProductCategoryDiscountRepository productCategoryDiscountRepository;
         private readonly IMapper mapper;
 
-        public ProductQueryService(IProductRepository productRepository,
-            IProductCategoryRepository productCategoryRepository, IMapper mapper)
+        public ProductQueryService(IProductRepository productRepository, IProductCategoryRepository productCategoryRepository,
+            IProductCategoryDiscountRepository productCategoryDiscountRepository, IMapper mapper)
         {
             this.productRepository = productRepository;
             this.productCategoryRepository = productCategoryRepository;
+            this.productCategoryDiscountRepository = productCategoryDiscountRepository;
             this.mapper = mapper;
         }
 
@@ -43,6 +45,19 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
             var availableProducts = category.Products.Where(s => s.Status == ItemStatus.Available);
             return mapper.Map<IList<ProductDto>>(availableProducts);
+        }
+
+        public async Task<IList<ProductWithDiscountDto>> GetAvailableWithDiscountByCategoryIdAsync(Guid id)
+        {
+            var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
+            var discounts = await productCategoryDiscountRepository.GetActiveByCategoryId(id);
+            var max = discounts.Max(s => s.PercentValue);
+            var higherDiscount = mapper.Map<ProductCategoryDiscountDto>(discounts.FirstOrDefault(s => s.PercentValue == max));
+            var products = category.Products;
+            var productsDto = mapper.Map<List<ProductWithDiscountDto>>(products);
+            productsDto.ForEach(s => s.Discount = higherDiscount);
+
+            return productsDto;
         }
 
         public async Task<IList<Product>> GetRawByIdsAsync(IEnumerable<int> ids)

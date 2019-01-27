@@ -64,5 +64,16 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 
             return categories;
         }
+
+        public async Task<IList<ProductCategory>> GetChildrenAsync()
+        {
+            var categories = await dbContext
+                .ProductCategories
+                .Include(s => s.Parent)
+                .Where(s => s.Parent != null)
+                .ToListAsync();
+
+            return categories;
+        }
     }
 }

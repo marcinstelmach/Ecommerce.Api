@@ -12,6 +12,7 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
             CreateMap<Product, ProductListDto>();
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.ProductCategoryId, opt => opt.MapFrom(src => src.ProductCategory.Id));
+            CreateMap<Product, ProductWithDiscountDto>();
         }
     }
 }

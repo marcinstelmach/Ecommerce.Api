@@ -26,9 +26,15 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Get(int id)
             => Ok(await mediator.Send(new GetProductByIdQueryModel(id)));
 
+        // For admin
         [HttpGet("category/{categoryId}")]
         public async Task<IActionResult> Get(Guid categoryId)
             => Ok(await mediator.Send(new GetProductsByCategoryIdQueryModel(categoryId)));
+
+        // For client
+        [HttpGet("list/{categoryId}")]
+        public async Task<IActionResult> GetList(Guid categoryId)
+            => Ok(await mediator.Send(new GetProductsWithDiscountByCategoryIdQueryModel(categoryId)));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)

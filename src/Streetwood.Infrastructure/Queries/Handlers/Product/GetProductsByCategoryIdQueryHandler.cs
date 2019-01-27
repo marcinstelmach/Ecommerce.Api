@@ -28,7 +28,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Product
         public async Task<IList<ProductDto>> Handle(GetProductsByCategoryIdQueryModel request, CancellationToken cancellationToken)
         {
             var userType = contextAccessor.HttpContext.User.GetUserType();
-            var result = await cache.GetOrCreateAsync($"{CacheKey.ProductsByCategory}{request.CategoryId.ToString()}",
+            var result = await cache.GetOrCreateAsync(CacheKey.ProductsByCategory(request.CategoryId),
                 s => productQueryService.GetAvailableByCategoryIdAsync(request.CategoryId), userType);
             return result;
         }
