@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
@@ -21,7 +20,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.orderRepository = orderRepository;
         }
 
-        public async Task<Guid> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
+        public async Task<int> AddOrderAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
             OrderDiscount orderDiscount, string comment, Address address)
         {
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
@@ -45,12 +44,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             }
 
             var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, finalPrice, comment, address);
-            logger.Info($"Trying add order {order.Id.ToString()}, with base price {basePrice}...");
+            logger.Info($"Trying add order {order.Id}, with base price {basePrice}...");
 
             await orderRepository.AddAsync(order);
             await orderRepository.SaveChangesAsync();
 
-            logger.Info($"Order id: {order.Id.ToString()} added successfully !!!");
+            logger.Info($"Order id: {order.Id} added successfully !!!");
 
             return order.Id;
         }

@@ -8,7 +8,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 {
     public interface IOrderQueryService
     {
-        Task<OrderDto> GetAsync(Guid id);
+        Task<OrderDto> GetAsync(int id);
 
         Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter);
     }

@@ -5,7 +5,7 @@ namespace Streetwood.Infrastructure.Filters
 {
     public class OrderQueryFilter
     {
-        public Guid? Id { get; set; }
+        public int? Id { get; set; }
 
         public DateTime? DateFrom { get; set; }
 

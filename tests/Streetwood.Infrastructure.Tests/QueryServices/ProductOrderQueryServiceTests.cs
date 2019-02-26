@@ -31,28 +31,33 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             // arrange
             var (productsWithCharmsOrderDto, products, charms, expected) = PrepareTestDataWithoutDiscount();
             productQueryService.Setup(s => s.GetRawByIdsAsync(It.IsAny<IEnumerable<int>>())).ReturnsAsync(products);
-            charmQueryService.Setup(s =>s.GetRawByIdsAsync(It.IsAny<List<Guid>>())).ReturnsAsync(charms);
-            productCategoryDiscountQueryService.Setup(s => s.GetRawActiveAsync()).ReturnsAsync(new List<ProductCategoryDiscount>());
-            productCategoryDiscountQueryService.Setup(s => s.ApplyDiscountsToProducts(It.IsAny<List<Product>>(), It.IsAny<List<ProductCategoryDiscount>>()))
+            charmQueryService.Setup(s => s.GetRawByIdsAsync(It.IsAny<List<Guid>>())).ReturnsAsync(charms);
+            productCategoryDiscountQueryService.Setup(s => s.GetRawActiveAsync())
+                .ReturnsAsync(new List<ProductCategoryDiscount>());
+            productCategoryDiscountQueryService.Setup(s =>
+                    s.ApplyDiscountsToProducts(It.IsAny<List<Product>>(), It.IsAny<List<ProductCategoryDiscount>>()))
                 .Returns(new List<(int, ProductCategoryDiscount)>());
 
-            var sut = new ProductOrderQueryService(productQueryService.Object, charmQueryService.Object, productCategoryDiscountQueryService.Object);
+            var sut = new ProductOrderQueryService(productQueryService.Object, charmQueryService.Object,
+                productCategoryDiscountQueryService.Object);
 
             // act
             var result = await sut.CreateAsync(productsWithCharmsOrderDto);
 
             // assert
-            result.OrderBy(s => s.Product.Id).ToList().Should().BeEquivalentTo(expected, s => s.Excluding(x => x.Id));
+            var orderedResult = result.OrderBy(s => s.Product.Id).ToList();
+            orderedResult.Should().BeEquivalentTo(expected, s => s.Excluding(x => x.Id));
         }
 
-        private (IList<ProductWithCharmsOrderDto>, IList<Product>, IList<Charm>, IList<ProductOrder>) PrepareTestDataWithoutDiscount()
+        private (IList<ProductWithCharmsOrderDto>, IList<Product>, IList<Charm>, IList<ProductOrder>)
+            PrepareTestDataWithoutDiscount()
         {
             var products = new List<Product>
             {
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") { Id = 1 },
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") { Id = 2 },
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") { Id = 3 },
-                new Product("Test", "Test", 100, "Test", "Test", false, "", "") { Id = 4 },
+                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 1},
+                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 2},
+                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 3},
+                new Product("Test", "Test", 100, "Test", "Test", false, "", "") {Id = 4},
             };
 
             var charms = new List<Charm>
@@ -108,25 +113,29 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 }
             };
 
-            var productOrder1 = new ProductOrder(productsWithCharmsOrderDto[0].Amount, productsWithCharmsOrderDto[0].Comment);
+            var productOrder1 =
+                new ProductOrder(productsWithCharmsOrderDto[0].Amount, productsWithCharmsOrderDto[0].Comment);
             productOrder1.SetCurrentProductPrice(50);
             productOrder1.SetFinalPrice(60);
             productOrder1.SetCharmsPrice(10);
             productOrder1.AddProduct(products[0]);
 
-            var productOrder2 = new ProductOrder(productsWithCharmsOrderDto[1].Amount, productsWithCharmsOrderDto[1].Comment);
+            var productOrder2 =
+                new ProductOrder(productsWithCharmsOrderDto[1].Amount, productsWithCharmsOrderDto[1].Comment);
             productOrder2.SetCurrentProductPrice(50);
             productOrder2.SetFinalPrice(55);
             productOrder2.SetCharmsPrice(5);
             productOrder2.AddProduct(products[1]);
 
-            var productOrder3 = new ProductOrder(productsWithCharmsOrderDto[2].Amount, productsWithCharmsOrderDto[2].Comment);
+            var productOrder3 =
+                new ProductOrder(productsWithCharmsOrderDto[2].Amount, productsWithCharmsOrderDto[2].Comment);
             productOrder3.SetCurrentProductPrice(50);
             productOrder3.SetFinalPrice(50);
             productOrder3.SetCharmsPrice(0);
             productOrder3.AddProduct(products[2]);
 
-            var productOrder4 = new ProductOrder(productsWithCharmsOrderDto[3].Amount, productsWithCharmsOrderDto[3].Comment);
+            var productOrder4 =
+                new ProductOrder(productsWithCharmsOrderDto[3].Amount, productsWithCharmsOrderDto[3].Comment);
             productOrder4.SetCurrentProductPrice(100);
             productOrder4.SetFinalPrice(100);
             productOrder4.SetCharmsPrice(0);
@@ -136,8 +145,6 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             {
                 productOrder1, productOrder2, productOrder3, productOrder4
             };
-
-            var sorted = expected.OrderBy(s => s.Product.Id);
 
             return (productsWithCharmsOrderDto, products, charms, expected.OrderBy(s => s.Product.Id).ToList());
         }

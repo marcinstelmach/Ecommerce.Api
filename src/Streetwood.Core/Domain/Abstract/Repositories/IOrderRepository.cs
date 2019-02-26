@@ -9,6 +9,6 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
     {
         Task AddAsync(Order order);
 
-        Task<Order> GetFullAsync(Guid id);
+        Task<Order> GetFullAsync(int id);
     }
 }

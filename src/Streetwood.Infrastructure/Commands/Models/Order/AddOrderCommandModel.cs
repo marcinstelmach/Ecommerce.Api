@@ -7,7 +7,7 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
 {
-    public class AddOrderCommandModel : IRequest<Guid>
+    public class AddOrderCommandModel : IRequest<int>
     {
         [Required]
         public IList<ProductWithCharmsOrderDto> Products { get; set; }

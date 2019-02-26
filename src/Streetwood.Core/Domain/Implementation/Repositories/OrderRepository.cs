@@ -22,7 +22,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         public async Task AddAsync(Order order)
             => await dbContext.Orders.AddAsync(order);
 
-        public async Task<Order> GetFullAsync(Guid id)
+        public async Task<Order> GetFullAsync(int id)
         {
             var order = await dbContext
                 .Orders

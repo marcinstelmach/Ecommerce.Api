@@ -6,9 +6,9 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 {
     public class GetOrderQueryModel : IRequest<OrderDto>
     {
-        public Guid Id { get; }
+        public int Id { get; }
 
-        public GetOrderQueryModel(Guid id)
+        public GetOrderQueryModel(int id)
         {
             Id = id;
         }

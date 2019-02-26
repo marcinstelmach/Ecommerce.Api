@@ -8,6 +8,8 @@ namespace Streetwood.Core.Domain.Entities
     {
         private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
+        public new int Id { get; set; }
+
         public bool IsShipped { get; protected set; }
 
         public bool IsPayed { get; protected set; }
@@ -44,7 +46,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, decimal finalPrice, string comment, Address address)
         {
-            Id = Guid.NewGuid();
             SetIsShipped(false);
             SetIsPayed(false);
             SetIsClosed(false);

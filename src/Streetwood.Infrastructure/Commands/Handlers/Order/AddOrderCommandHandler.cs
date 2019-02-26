@@ -8,7 +8,7 @@ using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Commands.Handlers.Order
 {
-    public class AddOrderCommandHandler : IRequestHandler<AddOrderCommandModel, Guid>
+    public class AddOrderCommandHandler : IRequestHandler<AddOrderCommandModel, int>
     {
         private readonly IUserQueryService userQueryService;
         private readonly IShipmentQueryService shipmentQueryService;
@@ -25,7 +25,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             this.orderCommandService = orderCommandService;
         }
 
-        public async Task<Guid> Handle(AddOrderCommandModel request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddOrderCommandModel request, CancellationToken cancellationToken)
         {
             // on this level we have everything validated and checked => no validation here
             var user = await userQueryService.GetRawByIdAsync(request.UserId);

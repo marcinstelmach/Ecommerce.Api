@@ -5,7 +5,7 @@ namespace Streetwood.Infrastructure.Dto
 {
     public class OrderDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public bool IsShipped { get; set; }
 

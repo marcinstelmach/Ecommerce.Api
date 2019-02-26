@@ -23,7 +23,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             this.mapper = mapper;
         }
 
-        public async Task<OrderDto> GetAsync(Guid id)
+        public async Task<OrderDto> GetAsync(int id)
         {
             var order = await orderRepository.GetFullAsync(id);
             var mapped = mapper.Map<OrderDto>(order);

@@ -7,7 +7,7 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 {
     public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrdersListDto>>
     {
-        public Guid? Id { get; set; }
+        public int? Id { get; set; }
 
         public DateTime? DateFrom { get; set; }
 
@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 
         public int? Take { get; set; }
 
-        public GetFilteredOrdersQueryModel(Guid? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int take)
+        public GetFilteredOrdersQueryModel(int? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int take)
         {
             Id = id;
             DateFrom = dateFrom;

@@ -22,7 +22,7 @@ namespace Streetwood.API.Controllers
 
         // only for admin
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(int id)
             => Ok(await mediator.Send(new GetOrderQueryModel(id)));
 
         // all for admin, and specific for user
@@ -30,7 +30,7 @@ namespace Streetwood.API.Controllers
         // add pagination
         [HttpGet]
         [IgnoreValidation]
-        public async Task<IActionResult> Get([FromQuery] int take, [FromQuery] Guid? id, [FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
+        public async Task<IActionResult> Get([FromQuery] int take, [FromQuery] int? id, [FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
             [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
             => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
 
