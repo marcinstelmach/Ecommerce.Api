@@ -10,14 +10,14 @@ using Streetwood.Core.Domain.Implementation;
 namespace Streetwood.Core.Migrations
 {
     [DbContext(typeof(StreetwoodContext))]
-    [Migration("20181004201712_UpdatdProuctCategory")]
-    partial class UpdatdProuctCategory
+    [Migration("20190226204814_Init_Migration")]
+    partial class Init_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -31,32 +31,17 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<string>("Country");
 
+                    b.Property<int>("PhoneNumber");
+
                     b.Property<string>("PostCode")
                         .HasMaxLength(8);
 
                     b.Property<string>("Street")
                         .HasMaxLength(50);
 
-                    b.Property<Guid?>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("Streetwood.Core.Domain.Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(20);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Charm", b =>
@@ -66,7 +51,7 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<Guid?>("CharmCategoryId");
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<string>("ImagePath");
 
                     b.Property<string>("Name");
 
@@ -90,9 +75,33 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("NameEng");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UniqueName");
+
                     b.HasKey("Id");
 
                     b.ToTable("CharmCategories");
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.DiscountCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("ProductCategoryDiscountId");
+
+                    b.Property<Guid?>("ProductCategoryId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryDiscountId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("DiscountCategories");
                 });
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Image", b =>
@@ -115,14 +124,25 @@ namespace Streetwood.Core.Migrations
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Order", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid?>("AddressId");
+
+                    b.Property<decimal>("BasePrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("ClosedDateTime");
 
                     b.Property<string>("Comment");
 
                     b.Property<DateTime>("CreationDateTime");
+
+                    b.Property<int?>("DiscountValue");
+
+                    b.Property<decimal>("FinalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsClosed");
 
@@ -134,21 +154,22 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<DateTime?>("PayedDateTime");
 
-                    b.Property<decimal>("Price");
+                    b.Property<DateTime?>("ShipmentDateTime");
 
-                    b.Property<decimal>("PriceWithShippment");
+                    b.Property<Guid?>("ShipmentId");
 
-                    b.Property<DateTime?>("ShippmentDateTime");
-
-                    b.Property<Guid?>("ShippmentdId");
+                    b.Property<decimal>("ShipmentPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("OrderDiscountId");
 
-                    b.HasIndex("ShippmentdId");
+                    b.HasIndex("ShipmentId");
 
                     b.HasIndex("UserId");
 
@@ -160,15 +181,17 @@ namespace Streetwood.Core.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("AvaibleFrom");
+                    b.Property<DateTime>("AvailableFrom");
 
-                    b.Property<DateTime>("AvaibleTo");
+                    b.Property<DateTime>("AvailableTo");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Description");
 
                     b.Property<string>("DescriptionEng");
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30);
@@ -176,9 +199,11 @@ namespace Streetwood.Core.Migrations
                     b.Property<string>("NameEng")
                         .HasMaxLength(30);
 
-                    b.Property<decimal>("PercentValue");
+                    b.Property<int>("PercentValue");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Code");
 
                     b.ToTable("OrderDiscounts");
                 });
@@ -195,13 +220,16 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<string>("DescriptionEng");
 
+                    b.Property<string>("ImagesPath");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50);
 
                     b.Property<string>("NameEng")
                         .HasMaxLength(50);
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("ProductCategoryId");
 
@@ -222,24 +250,20 @@ namespace Streetwood.Core.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("CategoryId");
-
                     b.Property<string>("Name")
                         .HasMaxLength(30);
 
                     b.Property<string>("NameEng");
 
-                    b.Property<Guid?>("ProductCategoryDiscountId");
+                    b.Property<Guid?>("ParentId");
 
-                    b.Property<Guid?>("ProductCategoryId");
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UniqueName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ProductCategoryDiscountId");
-
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("ProductCategories");
                 });
@@ -249,15 +273,13 @@ namespace Streetwood.Core.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("AvaibleFrom");
+                    b.Property<DateTime>("AvailableFrom");
 
-                    b.Property<DateTime>("AvaibleTo");
+                    b.Property<DateTime>("AvailableTo");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("DescriptionEng");
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30);
@@ -265,7 +287,7 @@ namespace Streetwood.Core.Migrations
                     b.Property<string>("NameEng")
                         .HasMaxLength(30);
 
-                    b.Property<decimal>("PercentValue");
+                    b.Property<int>("PercentValue");
 
                     b.HasKey("Id");
 
@@ -279,11 +301,19 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<decimal>("CharmsPrice");
+
                     b.Property<string>("Comment");
 
-                    b.Property<decimal>("CurrentProductPrice");
+                    b.Property<decimal>("CurrentProductPrice")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("OrderId");
+                    b.Property<int?>("DiscountValue");
+
+                    b.Property<decimal>("FinalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("OrderId");
 
                     b.Property<Guid?>("ProductCategoryDiscountId");
 
@@ -307,9 +337,12 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<Guid?>("CharmId");
 
-                    b.Property<decimal>("CurrentPrice");
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("ProductOrderId");
+
+                    b.Property<int>("Sequence");
 
                     b.HasKey("Id");
 
@@ -337,7 +370,8 @@ namespace Streetwood.Core.Migrations
                     b.Property<string>("NameEng")
                         .HasMaxLength(50);
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Type");
 
@@ -385,19 +419,23 @@ namespace Streetwood.Core.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Streetwood.Core.Domain.Entities.Address", b =>
-                {
-                    b.HasOne("Streetwood.Core.Domain.Entities.User", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Charm", b =>
                 {
                     b.HasOne("Streetwood.Core.Domain.Entities.CharmCategory", "CharmCategory")
                         .WithMany("Charms")
                         .HasForeignKey("CharmCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.DiscountCategory", b =>
+                {
+                    b.HasOne("Streetwood.Core.Domain.Entities.ProductCategoryDiscount", "ProductCategoryDiscount")
+                        .WithMany("DiscountCategories")
+                        .HasForeignKey("ProductCategoryDiscountId");
+
+                    b.HasOne("Streetwood.Core.Domain.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("DiscountCategories")
+                        .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -411,13 +449,18 @@ namespace Streetwood.Core.Migrations
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Order", b =>
                 {
+                    b.HasOne("Streetwood.Core.Domain.Entities.Address", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Streetwood.Core.Domain.Entities.OrderDiscount", "OrderDiscount")
                         .WithMany("Orders")
                         .HasForeignKey("OrderDiscountId");
 
-                    b.HasOne("Streetwood.Core.Domain.Entities.Shipment", "Shippment")
+                    b.HasOne("Streetwood.Core.Domain.Entities.Shipment", "Shipment")
                         .WithMany("Orders")
-                        .HasForeignKey("ShippmentdId");
+                        .HasForeignKey("ShipmentId");
 
                     b.HasOne("Streetwood.Core.Domain.Entities.User", "User")
                         .WithMany("Orders")
@@ -435,18 +478,9 @@ namespace Streetwood.Core.Migrations
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.ProductCategory", b =>
                 {
-                    b.HasOne("Streetwood.Core.Domain.Entities.Category", "Category")
+                    b.HasOne("Streetwood.Core.Domain.Entities.ProductCategory", "Parent")
                         .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Streetwood.Core.Domain.Entities.ProductCategoryDiscount", "ProductCategoryDiscount")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductCategoryDiscountId");
-
-                    b.HasOne("Streetwood.Core.Domain.Entities.ProductCategory")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductCategoryId");
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.ProductOrder", b =>
