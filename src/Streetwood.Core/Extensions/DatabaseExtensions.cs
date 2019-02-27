@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +24,16 @@ namespace Streetwood.Core.Extensions
             {
                 options.UseLazyLoadingProxies();
                 options.UseSqlServer(databaseOptions.ConnectionString);
+            });
+            services.AddScoped<IDbContext>(prov => prov.GetRequiredService<StreetwoodContext>());
+        }
+
+        public static void AddStreetwoodContextForTests(this IServiceCollection services, ServiceProvider serviceProvider)
+        {
+            services.AddDbContext<StreetwoodContext>(options =>
+            {
+                options.UseInMemoryDatabase("InMemoryDbForTesting");
+                options.UseInternalServiceProvider(serviceProvider);
             });
             services.AddScoped<IDbContext>(prov => prov.GetRequiredService<StreetwoodContext>());
         }

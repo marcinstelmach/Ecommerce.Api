@@ -38,6 +38,10 @@ namespace Streetwood.Core.Domain.Abstract
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
+        int SaveChanges();
+
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+        bool EnsureDatabaseCreated();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Entities.Configuration;
@@ -34,6 +35,9 @@ namespace Streetwood.Core.Domain.Implementation
         public DbSet<Shipment> Shipments { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public bool EnsureDatabaseCreated()
+            => Database.EnsureCreated();
 
         public StreetwoodContext(DbContextOptions<StreetwoodContext> options)
             : base(options)
