@@ -10,5 +10,7 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
         Task AddAsync(Order order);
 
         Task<Order> GetFullAsync(int id);
+
+        Task<Order> GetAndEnsureExistAsync(int id);
     }
 }

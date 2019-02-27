@@ -40,5 +40,12 @@ namespace Streetwood.API.Controllers
             var orderId = await mediator.Send(model.SetUserId(User.Identity.GetUserId()));
             return Ok(new { orderId });
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateOrderCommandModel model)
+        {
+            await mediator.Send(model.SetId(id));
+            return Accepted();
+        }
     }
 }

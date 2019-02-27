@@ -35,7 +35,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var address = new Core.Domain.Entities.Address(request.Address.Street, request.Address.City,
                 request.Address.Country, request.Address.PostCode, request.Address.PhoneNumber);
 
-            var orderId = await orderCommandService.AddOrderAsync(user, productOrders, shipment, orderDiscount, request.Comment, address);
+            var orderId = await orderCommandService.AddAsync(user, productOrders, shipment, orderDiscount, request.Comment, address);
             return orderId;
         }
     }

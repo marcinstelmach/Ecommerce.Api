@@ -48,5 +48,16 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 
             return order;
         }
+
+        public async Task<Order> GetAndEnsureExistAsync(int id)
+        {
+            var order = await dbContext.Orders.FindAsync(id);
+            if (order == null)
+            {
+                throw new StreetwoodException(ErrorCode.GenericNotExist(typeof(Order), "Order id: {id} not found"));
+            }
+
+            return order;
+        }
     }
 }
