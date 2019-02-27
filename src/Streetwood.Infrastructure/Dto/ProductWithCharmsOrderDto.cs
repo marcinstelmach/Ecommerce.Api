@@ -13,6 +13,6 @@ namespace Streetwood.Infrastructure.Dto
 
         public bool HaveCharms => Charms.Any();
 
-        public IList<CharmOrderDto> Charms { get; set; }
+        public IList<CharmOrderDto> Charms { get; set; } = new List<CharmOrderDto>();
     }
 }

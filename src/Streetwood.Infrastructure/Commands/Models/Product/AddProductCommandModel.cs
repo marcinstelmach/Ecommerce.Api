@@ -22,7 +22,6 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
         [Required]
         public string DescriptionEng { get; set; }
 
-        [Required]
         public bool AcceptCharms { get; set; }
 
         public string Sizes { get; set; }
