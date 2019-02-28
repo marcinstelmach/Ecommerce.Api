@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
 {
@@ -7,11 +6,11 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
     {
         public int Id { get; protected set; }
 
-        public DateTime? PayedDateTime { get; set; }
+        public bool Payed { get; set; }
 
-        public DateTime? ShipmentDateTime { get; set; }
+        public bool Shipped { get; set; }
 
-        public DateTime? ClosedDateTime { get; set; }
+        public bool Closed { get; set; }
 
         public UpdateOrderCommandModel SetId(int id)
         {

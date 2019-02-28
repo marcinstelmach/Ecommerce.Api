@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
@@ -55,23 +54,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             return order.Id;
         }
 
-        public async Task UpdateAsync(int id, DateTime? payedDateTime, DateTime? shipmentDateTime, DateTime? closedDateTime)
+        public async Task UpdateAsync(int id, bool payed, bool shipped, bool closed)
         {
             var order = await orderRepository.GetAndEnsureExistAsync(id);
-            if (payedDateTime.HasValue)
-            {
-                order.SetPayedDateTime(payedDateTime.Value);
-            }
-
-            if (shipmentDateTime.HasValue)
-            {
-                order.SetShipmentDateTime(shipmentDateTime.Value);
-            }
-
-            if (closedDateTime.HasValue)
-            {
-                order.SetClosedDate(closedDateTime.Value);
-            }
+            order.SetIsPayed(payed);
+            order.SetIsShipped(shipped);
+            order.SetIsClosed(closed);
 
             await orderRepository.SaveChangesAsync();
         }

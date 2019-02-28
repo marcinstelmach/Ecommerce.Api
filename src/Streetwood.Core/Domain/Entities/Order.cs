@@ -44,7 +44,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, decimal basePrice, decimal finalPrice, string comment, Address address)
+        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment,
+            decimal basePrice, decimal finalPrice, string comment, Address address)
         {
             SetIsShipped(false);
             SetIsPayed(false);
@@ -67,13 +68,22 @@ namespace Streetwood.Core.Domain.Entities
         }
 
         public void SetIsShipped(bool isShipped)
-            => IsShipped = isShipped;
+        {
+            IsShipped = isShipped;
+            SetShipmentDateTime(DateTime.UtcNow);
+        }
 
         public void SetIsPayed(bool isPayed)
-            => IsPayed = isPayed;
+        {
+            IsPayed = isPayed;
+            SetPayedDateTime(DateTime.UtcNow);
+        }
 
         public void SetIsClosed(bool isClosed)
-            => IsClosed = isClosed;
+        {
+            IsClosed = isClosed;
+            SetClosedDate(DateTime.UtcNow);
+        }
 
         public void SetPayedDateTime(DateTime dateTime)
             => PayedDateTime = dateTime;

@@ -17,8 +17,8 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
 
         public async Task<Unit> Handle(UpdateOrderCommandModel request, CancellationToken cancellationToken)
         {
-            await orderCommandService.UpdateAsync(request.Id, request.PayedDateTime, request.ShipmentDateTime,
-                request.ClosedDateTime);
+            await orderCommandService.UpdateAsync(request.Id, request.Payed, request.Shipped,
+                request.Closed);
 
             return Unit.Value;
         }
