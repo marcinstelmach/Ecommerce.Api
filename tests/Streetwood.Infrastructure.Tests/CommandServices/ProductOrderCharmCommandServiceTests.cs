@@ -91,7 +91,7 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
             var charms = new List<Charm>();
             for (int i = 0; i < count; i++)
             {
-                charms.Add(new Charm($"Charm{i}", "", "", 5));
+                charms.Add(new Charm($"Charm{i}", $"Charm{i}", "somePath", 5));
             }
 
             return charms;

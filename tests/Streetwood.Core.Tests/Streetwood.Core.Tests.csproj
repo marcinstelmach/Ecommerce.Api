@@ -14,4 +14,8 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Streetwood.Core\Streetwood.Core.csproj" />
+  </ItemGroup>
+
 </Project>
