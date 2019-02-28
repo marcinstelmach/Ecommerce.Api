@@ -23,7 +23,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.addressCommandService = addressCommandService;
         }
 
-        public async Task AddUserAsync(string email, string firstName, string lastName, string password, int phoneNumber)
+        public async Task AddUserAsync(string email, string firstName, string lastName, string password)
         {
             var existingUser = await userRepository.GetByEmailAsync(email);
             if (existingUser != null)
@@ -31,7 +31,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 throw new StreetwoodException(ErrorCode.EmailExistInDatabase);
             }
 
-            var user = new User(email, firstName, lastName, phoneNumber);
+            var user = new User(email, firstName, lastName);
             user.SetPassword(password, encrypter);
             await userRepository.AddAsync(user);
             await userRepository.SaveChangesAsync();
@@ -43,7 +43,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             user.SetEmail("erased");
             user.SetFirstName("erased");
             user.SetLastName("Erased");
-            user.SetPhoneNumber(000000000);
             user.SetUserStatus(UserStatus.Deactivated);
 
             await userRepository.SaveChangesAsync();

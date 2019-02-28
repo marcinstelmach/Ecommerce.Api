@@ -22,8 +22,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public DateTime CreationDateTime { get; protected set; }
 
-        public int PhoneNumber { get; protected set; }
-
         public string ChangePasswordToken { get; protected set; }
 
         public string RefreshToken { get; protected set; }
@@ -34,13 +32,12 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
-        public User(string email, string firstName, string lastName, int phoneNumber)
+        public User(string email, string firstName, string lastName)
         {
             Id = Guid.NewGuid();
             SetEmail(email.ToLowerInvariant());
             SetFirstName(firstName);
             SetLastName(lastName);
-            SetPhoneNumber(phoneNumber);
             CreationDateTime = DateTime.UtcNow;
             Type = UserType.Customer;
             UserStatus = UserStatus.Active;
@@ -64,9 +61,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetLastName(string lastName)
             => LastName = lastName;
-
-        public void SetPhoneNumber(int number)
-            => PhoneNumber = number;
 
         public void SetRefreshToken(string token)
             => RefreshToken = token;

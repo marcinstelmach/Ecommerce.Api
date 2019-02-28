@@ -21,7 +21,5 @@ namespace Streetwood.Infrastructure.Commands.Models.User
         [Required]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
-
-        public int PhoneNumber { get; set; }
     }
 }

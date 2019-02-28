@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Streetwood.Infrastructure.Dto
 {
@@ -15,5 +13,7 @@ namespace Streetwood.Infrastructure.Dto
         public string Country { get; set; }
 
         public string PostCode { get; set; }
+
+        public int PhoneNumber { get; set; }
     }
 }
