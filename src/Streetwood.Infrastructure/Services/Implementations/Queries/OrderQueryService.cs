@@ -33,7 +33,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
-            var orders = orderRepository.GetQueryable();
+            var orders = orderRepository.GetQueryable()
+                .AsTracking()
+                .Include(s => s.User)
+                .AsQueryable();
 
             if (filter.Id.HasValue)
             {
