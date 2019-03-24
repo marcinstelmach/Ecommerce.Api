@@ -3,14 +3,14 @@ using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Infrastructure.Managers.Abstract
 {
-    public interface IEmailManager
+    public interface IEmailTemplatesManager
     {
-        Task SendAsync(string receiver, string subject, string body);
-
         Task PrepareNewOrderEmailAsync(Order order);
 
         Task PrepareNewUserEmailAsync(User user);
 
         Task ForgottenPasswordEmailAsync(User user);
+
+        Task<string> ReadTemplateAsync(string templateName);
     }
 }

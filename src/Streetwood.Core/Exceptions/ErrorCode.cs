@@ -23,6 +23,8 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
+        public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
+
         public static ErrorCode GenericNotExist(Type type, string message = null) =>
             new ErrorCode($"{type.Name}NotExist", message);
 
@@ -68,6 +70,6 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode ProductNotAcceptCharms => new ErrorCode(nameof(ProductNotAcceptCharms));
 
-        public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
+        public static ErrorCode EmailTemplateNotExists(string name) => new ErrorCode($"{nameof(EmailTemplateNotExists)}_{name}");
     }
 }

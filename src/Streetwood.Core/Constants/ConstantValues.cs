@@ -7,5 +7,7 @@
         public static string IdentityRoleName => "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
         public static string InvalidDateRangesKey => "InvalidDateRanges";
+
+        public static string NewEmailOrderTemplate => "NewOrder";
     }
 }

@@ -9,5 +9,7 @@
         string GetProductPath(string categoryUnique, string productUnique);
 
         string GetPhysicalPath(string path);
+
+        string GetEmailTemplatePath(string templateName);
     }
 }

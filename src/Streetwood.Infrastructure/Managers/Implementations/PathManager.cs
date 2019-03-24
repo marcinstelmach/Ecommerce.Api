@@ -31,10 +31,14 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return path;
         }
 
-
         public string GetPhysicalPath(string path)
         {
             return Path.Combine(hostingEnvironment.ContentRootPath, path);
+        }
+
+        public string GetEmailTemplatePath(string templateName)
+        {
+            return Path.Combine("wwwroot", "EmailTemplates", templateName);
         }
     }
 }
