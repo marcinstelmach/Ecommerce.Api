@@ -23,7 +23,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Convention.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Integration.Tests", "tests\Streetwood.Integration.Tests\Streetwood.Integration.Tests.csproj", "{C96CC844-DD1A-4CB5-9D75-27E6D7370073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetwood.Test.Helpers", "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj", "{D3923820-3E00-44DC-9043-4DD5D8D52045}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Streetwood.Test.Helpers", "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj", "{D3923820-3E00-44DC-9043-4DD5D8D52045}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59D5A70E-4A24-45C1-B3B5-30051F6A4A0D}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

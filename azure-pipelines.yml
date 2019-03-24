@@ -1,5 +1,5 @@
-# Build ASP.NET Core project using Azure Pipelines
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
+trigger:
+- master
 
 pool:
   vmImage: 'Ubuntu 16.04'
@@ -10,12 +10,9 @@ variables:
 steps:
 - script: |
     dotnet build --configuration $(buildConfiguration)
-    dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
-    dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY
+
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: '*Tests/*.csproj'
+    projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
-
-- task: PublishBuildArtifacts@1
