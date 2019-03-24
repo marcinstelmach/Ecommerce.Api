@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Streetwood.Core\Streetwood.Core.csproj" />
+    <ProjectReference Include="..\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj" />
   </ItemGroup>
 
 </Project>
