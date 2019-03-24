@@ -48,7 +48,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var orderedResult = result.OrderBy(s => s.Product.Id).ToList();
             orderedResult.Should()
                 .BeEquivalentTo(expected, s => s.Excluding(x => x.Id)
-                .Excluding(x => (x.RuntimeType == typeof(List<ProductOrderCharm>)) && (x.SelectedMemberPath == "Id")));
+                .Excluding(x => x.RuntimeType == typeof(Guid)));
         }
 
         private (IList<ProductWithCharmsOrderDto>, IList<Product>, IList<Charm>, IList<ProductOrder>)
@@ -123,6 +123,19 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 new ProductOrderCharm(charms[2], 3)
             };
 
+            var productOrderCharms2 = new List<ProductOrderCharm>
+            {
+                new ProductOrderCharm(charms[3], 1),
+                new ProductOrderCharm(charms[4], 2)
+            };
+
+            var productOrderCharms3 = new List<ProductOrderCharm>
+            {
+                new ProductOrderCharm(charms[5], 1)
+            };
+
+            var productOrderCharms4 = new List<ProductOrderCharm>();
+
             var productOrder1 =
                 new ProductOrder(productsWithCharmsOrderDto[0].Amount, productsWithCharmsOrderDto[0].Comment);
             productOrder1.SetCurrentProductPrice(50);
@@ -137,6 +150,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productOrder2.SetFinalPrice(55);
             productOrder2.SetCharmsPrice(5);
             productOrder2.AddProduct(products[1]);
+            productOrder2.AddProductOrderCharms(productOrderCharms2);
 
             var productOrder3 =
                 new ProductOrder(productsWithCharmsOrderDto[2].Amount, productsWithCharmsOrderDto[2].Comment);
@@ -144,6 +158,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productOrder3.SetFinalPrice(50);
             productOrder3.SetCharmsPrice(0);
             productOrder3.AddProduct(products[2]);
+            productOrder3.AddProductOrderCharms(productOrderCharms3);
 
             var productOrder4 =
                 new ProductOrder(productsWithCharmsOrderDto[3].Amount, productsWithCharmsOrderDto[3].Comment);
@@ -151,6 +166,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productOrder4.SetFinalPrice(100);
             productOrder4.SetCharmsPrice(0);
             productOrder4.AddProduct(products[3]);
+            productOrder4.AddProductOrderCharms(productOrderCharms4);
 
             var expected = new List<ProductOrder>
             {
