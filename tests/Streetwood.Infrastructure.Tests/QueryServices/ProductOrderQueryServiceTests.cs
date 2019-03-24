@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentAssertions;
 using Moq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Mappers;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 using Streetwood.Infrastructure.Services.Implementations.Queries;
 using Xunit;
@@ -17,12 +19,14 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         private readonly Mock<IProductQueryService> productQueryService;
         private readonly Mock<ICharmQueryService> charmQueryService;
         private readonly Mock<IProductCategoryDiscountQueryService> productCategoryDiscountQueryService;
+        private readonly IMapper mapper;
 
         public ProductOrderQueryServiceTests()
         {
             productQueryService = new Mock<IProductQueryService>();
             charmQueryService = new Mock<ICharmQueryService>();
             productCategoryDiscountQueryService = new Mock<IProductCategoryDiscountQueryService>();
+            mapper = AutoMapperConfig.Initialize();
         }
 
         [Fact]
@@ -72,50 +76,6 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 new Charm("Charm6", "", "", 5),
             };
 
-            var productsWithCharmsOrderDto = new List<ProductWithCharmsOrderDto>
-            {
-                new ProductWithCharmsOrderDto
-                {
-                    ProductId = 1,
-                    Amount = 2,
-                    Comment = "With 3 charms",
-                    Charms = new List<CharmOrderDto>
-                    {
-                        new CharmOrderDto {CharmId = charms[0].Id, Sequence = 1},
-                        new CharmOrderDto {CharmId = charms[1].Id, Sequence = 2},
-                        new CharmOrderDto {CharmId = charms[2].Id, Sequence = 3}
-                    }
-                },
-                new ProductWithCharmsOrderDto
-                {
-                    ProductId = 2,
-                    Amount = 1,
-                    Comment = "With 2 charms",
-                    Charms = new List<CharmOrderDto>
-                    {
-                        new CharmOrderDto {CharmId = charms[3].Id, Sequence = 1},
-                        new CharmOrderDto {CharmId = charms[4].Id, Sequence = 2}
-                    }
-                },
-                new ProductWithCharmsOrderDto
-                {
-                    ProductId = 3,
-                    Amount = 2,
-                    Comment = "With 1 charm",
-                    Charms = new List<CharmOrderDto>
-                    {
-                        new CharmOrderDto {CharmId = charms[5].Id, Sequence = 1}
-                    }
-                },
-                new ProductWithCharmsOrderDto
-                {
-                    ProductId = 4,
-                    Amount = 4,
-                    Comment = "Normal product without charm",
-                    Charms = new List<CharmOrderDto>()
-                }
-            };
-
             var productOrderCharms1 = new List<ProductOrderCharm>
             {
                 new ProductOrderCharm(charms[0], 1),
@@ -135,6 +95,38 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             };
 
             var productOrderCharms4 = new List<ProductOrderCharm>();
+
+            var productsWithCharmsOrderDto = new List<ProductWithCharmsOrderDto>
+            {
+                new ProductWithCharmsOrderDto
+                {
+                    ProductId = 1,
+                    Amount = 2,
+                    Comment = "With 3 charms",
+                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms1)
+                },
+                new ProductWithCharmsOrderDto
+                {
+                    ProductId = 2,
+                    Amount = 1,
+                    Comment = "With 2 charms",
+                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms2)
+                },
+                new ProductWithCharmsOrderDto
+                {
+                    ProductId = 3,
+                    Amount = 2,
+                    Comment = "With 1 charm",
+                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms3)
+                },
+                new ProductWithCharmsOrderDto
+                {
+                    ProductId = 4,
+                    Amount = 4,
+                    Comment = "Normal product without charm",
+                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms4)
+                }
+            };
 
             var productOrder1 =
                 new ProductOrder(productsWithCharmsOrderDto[0].Amount, productsWithCharmsOrderDto[0].Comment);
