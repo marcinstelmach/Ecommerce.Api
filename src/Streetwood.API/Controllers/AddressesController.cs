@@ -7,7 +7,7 @@ using Streetwood.Infrastructure.Queries.Models.Address;
 
 namespace Streetwood.API.Controllers
 {
-    [Route("api/addresses/")]
+    [Route("api/addresses")]
     [Authorize]
     [ApiController]
     public class AddressesController : ControllerBase

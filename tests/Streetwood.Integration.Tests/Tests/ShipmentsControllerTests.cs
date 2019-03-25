@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Streetwood.API;
 using Streetwood.Infrastructure.Dto;
@@ -21,11 +20,15 @@ namespace Streetwood.Integration.Tests.Tests
         [Fact]
         public async Task Get_Return_AllShipments()
         {
+            //arrange
             var httpClient = factory.CreateClient();
+            
+            //act
             var response = await httpClient.GetAsync("api/shipments");
             var stringResponse = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
 
+            //assert
             var shipments = JsonConvert.DeserializeObject<List<ShipmentDto>>(stringResponse);
             shipments.Count.Should().Be(3);
         }

@@ -2,6 +2,7 @@
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
+using Streetwood.Test.Helpers;
 
 namespace Streetwood.Integration.Tests.DbInitializations
 {
@@ -18,6 +19,10 @@ namespace Streetwood.Integration.Tests.DbInitializations
             };
 
             dbContext.Shipments.AddRange(shipments);
+
+            var user = UserHelper.CreateUser();
+            dbContext.Users.Add(user);
+
             dbContext.SaveChanges();
         }
     }
