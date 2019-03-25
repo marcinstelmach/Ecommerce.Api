@@ -6,7 +6,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 {
     internal class AddressRepository : Repository<Address>, IAddressRepository
     {
-        public AddressRepository(IDbContext dbContext) 
+        public AddressRepository(IDbContext dbContext)
             : base(dbContext)
         {
         }

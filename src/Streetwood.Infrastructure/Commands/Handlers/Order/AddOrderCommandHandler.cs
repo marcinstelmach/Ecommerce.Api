@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Streetwood.Infrastructure.Commands.Models.Order;
@@ -16,7 +15,9 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
         private readonly IProductOrderQueryService productOrderQueryService;
         private readonly IOrderCommandService orderCommandService;
 
-        public AddOrderCommandHandler(IUserQueryService userQueryService, IShipmentQueryService shipmentQueryService, IOrderDiscountQueryService orderDiscountQueryService, IProductOrderQueryService productOrderQueryService, IOrderCommandService orderCommandService)
+        public AddOrderCommandHandler(IUserQueryService userQueryService, IShipmentQueryService shipmentQueryService,
+            IOrderDiscountQueryService orderDiscountQueryService, IProductOrderQueryService productOrderQueryService,
+            IOrderCommandService orderCommandService)
         {
             this.userQueryService = userQueryService;
             this.shipmentQueryService = shipmentQueryService;

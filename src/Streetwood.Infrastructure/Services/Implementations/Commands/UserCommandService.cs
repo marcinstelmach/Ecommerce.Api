@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
@@ -14,13 +13,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
     {
         private readonly IUserRepository userRepository;
         private readonly IEncrypter encrypter;
-        private readonly IAddressCommandService addressCommandService;
 
-        public UserCommandService(IUserRepository userRepository, IEncrypter encrypter, IAddressCommandService addressCommandService)
+        public UserCommandService(IUserRepository userRepository, IEncrypter encrypter)
         {
             this.userRepository = userRepository;
             this.encrypter = encrypter;
-            this.addressCommandService = addressCommandService;
         }
 
         public async Task AddUserAsync(string email, string firstName, string lastName, string password)
@@ -46,9 +43,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             user.SetUserStatus(UserStatus.Deactivated);
 
             await userRepository.SaveChangesAsync();
-
-            var addresses = user.Orders.Select(s => s.Address);
-            await addressCommandService.EraseDataAsync(addresses);
         }
     }
 }

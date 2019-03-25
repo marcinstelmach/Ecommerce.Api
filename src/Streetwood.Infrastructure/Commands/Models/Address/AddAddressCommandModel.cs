@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Streetwood.Infrastructure.Commands.Models.Address
 {
-    public class AddAddressCommandModel : IRequest
+    public class AddAddressCommandModel
     {
         [Required]
         public string City { get; set; }
@@ -19,13 +17,5 @@ namespace Streetwood.Infrastructure.Commands.Models.Address
 
         [Required]
         public string Country { get; set; }
-
-        public Guid UserId { get; protected set; }
-
-        public AddAddressCommandModel SetUserId(Guid userId)
-        {
-            UserId = userId;
-            return this;
-        }
     }
 }
