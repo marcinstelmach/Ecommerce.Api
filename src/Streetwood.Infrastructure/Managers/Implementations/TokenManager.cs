@@ -48,7 +48,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
             var refreshToken = GetRefreshToken();
-            return new TokenModel(userId, email, token, expires, refreshToken);
+            return new TokenModel(userId, email, token, expires, refreshToken, role);
         }
 
         public Guid GetUserIdFromExpiredToken(string token)

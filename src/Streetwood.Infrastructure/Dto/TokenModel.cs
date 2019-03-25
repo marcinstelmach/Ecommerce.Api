@@ -1,4 +1,5 @@
 ﻿using System;
+using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Infrastructure.Dto
 {
@@ -14,13 +15,16 @@ namespace Streetwood.Infrastructure.Dto
 
         public string RefreshToken { get; protected set; }
 
-        public TokenModel(Guid userId, string email, string token, DateTime expires, string refreshToken)
+        public string UserType { get; protected set; }
+
+        public TokenModel(Guid userId, string email, string token, DateTime expires, string refreshToken, string type)
         {
             UserId = userId;
             Email = email;
             Token = token;
             Expires = expires;
             RefreshToken = refreshToken;
+            UserType = type;
         }
     }
 }
