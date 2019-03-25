@@ -29,12 +29,13 @@ namespace Streetwood.Infrastructure.Services.Implementations
             var stringTemplate = await emailTemplatesManager.ReadTemplateAsync(ConstantValues.NewEmailOrderTemplate);
             var startIndex = stringTemplate.IndexOf("<!--starter-->", StringComparison.Ordinal) + 14;
             var endIndex = stringTemplate.IndexOf("<!--ender-->", startIndex, StringComparison.Ordinal);
-            var template = stringTemplate.Substring(startIndex, endIndex);
+            var template = stringTemplate.Substring(startIndex, endIndex - startIndex);
             var productsTemplate = new StringBuilder();
 
             foreach (var productOrder in order.ProductOrders)
             {
                 var tempTemplate = template.Replace("{{{ProductName}}}", productOrder.Product.Name);
+                tempTemplate = tempTemplate.Replace("{{{ProductAmount}}}", productOrder.Amount.ToString(CultureInfo.InvariantCulture));
                 var charms = string.Empty;
                 if (productOrder.ProductOrderCharms.Any())
                 {
@@ -43,13 +44,15 @@ namespace Streetwood.Infrastructure.Services.Implementations
                 }
 
                 tempTemplate = tempTemplate.Replace("{{{Charms}}}", charms);
-                tempTemplate = tempTemplate.Replace("{{{Price}}}", productOrder.FinalPrice.ToString(CultureInfo.InvariantCulture));
+                tempTemplate = tempTemplate.Replace("{{{Price}}}",
+                    productOrder.FinalPrice.ToString(CultureInfo.InvariantCulture));
                 productsTemplate.Append(tempTemplate);
             }
 
             stringTemplate = stringTemplate.Remove(startIndex, endIndex - startIndex);
             stringTemplate = stringTemplate.Insert(startIndex, productsTemplate.ToString());
-            stringTemplate = stringTemplate.Replace("{{{TotalPrice}}", order.FinalPrice.ToString(CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{TotalPrice}}}",
+                order.FinalPrice.ToString(CultureInfo.InvariantCulture));
 
             return stringTemplate;
         }

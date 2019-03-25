@@ -4,10 +4,12 @@ namespace Streetwood.Test.Helpers
 {
     public class ProductHelper
     {
-        public static Product GetProduct()
-        {
-            return new Product("Test", "Product", 35, "Description", 
-                "Description", true, "xl", "");
-        }
+        public static Product GetProductWithoutCharms()
+            => new Product("Some shirt", "Product", 99, "Description",
+                "Description", false, "xl", "");
+
+        public static Product GetProductWithCharms()
+            => new Product("Red anchor", "Red anchor", 30, "Description",
+                "Eng description", true, "", "");
     }
 }

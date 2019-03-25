@@ -1,36 +1,40 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
+using FluentAssertions;
 using Moq;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Managers.Abstract;
+using Streetwood.Infrastructure.Services.Implementations;
+using Streetwood.Test.Helpers;
 using Xunit;
 
 namespace Streetwood.Infrastructure.Tests.Services
 {
     public class EmailServiceTest
     {
-        private readonly IMock<IPathManager> pathManager;
+        private readonly Mock<IEmailTemplatesManager> emailTemplateManagerMock;
 
         public EmailServiceTest()
         {
-            pathManager = new Mock<IPathManager>();
+            emailTemplateManagerMock = new Mock<IEmailTemplatesManager>();
         }
 
         [Fact]
         public async Task PrepareNewOrderEmailAsync_Should_Return_Proper_Template()
         {
-//            // arrange
-//            pathManager.Setup(s => s.GetEmailTemplatePath(It.IsAny<string>()))
-//                .Returns("./Resources/Emails/NewOrder.html");
-//
-//            var order = new Order(UserHelper.CreateUser(), ProductsOrderHelper.GetProductsOrders(),
-//                DiscountHelper.GetOrderDiscount(), ShipmentHelper.GetShipment(), 30, 35,
-//                "", null);
-//            var sut = new EmailService();
-//
-//            //act
-//            var result = await sut.PrepareNewOrderEmailAsync(order);
-//
-//            //
-//            result.Should().NotBeEmpty();
+            // arrange
+            var emailTemplate = await File.ReadAllTextAsync("./Resources/Emails/NewOrder.html");
+            var expected = await File.ReadAllTextAsync("./Resources/Emails/NewOrderExpected.html");
+            emailTemplateManagerMock.Setup(s => s.ReadTemplateAsync(It.IsAny<string>())).ReturnsAsync(emailTemplate);
+            var order = new Order(UserHelper.CreateUser(), ProductsOrderHelper.GetProductsOrders(),
+                DiscountHelper.GetOrderDiscount(), ShipmentHelper.GetShipment(), 30, 139, "Some comment", null);
+            var sut = new EmailService(emailTemplateManagerMock.Object);
+
+            //act
+            var result = await sut.PrepareNewOrderEmailAsync(order);
+
+            // assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

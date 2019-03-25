@@ -7,12 +7,19 @@ namespace Streetwood.Test.Helpers
     {
         public static IEnumerable<ProductOrder> GetProductsOrders()
         {
-            var productOrder = new ProductOrder(5, "Product order comment");
-            productOrder.AddProduct(ProductHelper.GetProduct());
+            var productOrder = new ProductOrder(2, "Product order comment");
+            productOrder.AddProduct(ProductHelper.GetProductWithoutCharms());
+            productOrder.SetFinalPrice(99);
+
+            var productOrderWitchCharm = new ProductOrder(1, "Please give give");
+            productOrderWitchCharm.AddProduct(ProductHelper.GetProductWithCharms());
+            productOrderWitchCharm.AddProductOrderCharms(ProductOrderCharmsHelper.GetMultipleProductOrderCharms(3));
+            productOrderWitchCharm.SetFinalPrice(40);
 
             return new List<ProductOrder>
             {
-                productOrder
+                productOrder,
+                productOrderWitchCharm
             };
         }
     }

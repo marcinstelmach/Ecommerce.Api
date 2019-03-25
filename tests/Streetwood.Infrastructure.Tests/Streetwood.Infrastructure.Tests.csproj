@@ -20,11 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Emails\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Resources\Emails\NewOrder.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Emails\NewOrderExpected.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
