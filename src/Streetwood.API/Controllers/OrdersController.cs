@@ -37,7 +37,7 @@ namespace Streetwood.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
-            var orderId = await mediator.Send(model.SetUserId(User.Identity.GetUserId()));
+            var orderId = await mediator.Send(model.SetUserId(User.GetUserId()));
             return Ok(new { orderId });
         }
 

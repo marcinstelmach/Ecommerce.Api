@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using Streetwood.Core.Constants;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
@@ -11,9 +9,9 @@ namespace Streetwood.Core.Extensions
 {
     public static class IdentityExtensions
     {
-        public static Guid GetUserId(this IIdentity identity)
+        public static Guid GetUserId(this ClaimsPrincipal principal)
         {
-            if (Guid.TryParse(identity.Name, out var userId))
+            if (Guid.TryParse(principal.Identity.Name, out var userId))
             {
                 return userId;
             }

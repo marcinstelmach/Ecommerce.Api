@@ -62,7 +62,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var userId = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken).Identity.GetUserId();
+            var userId = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken).GetUserId();
             return userId;
         }
 
