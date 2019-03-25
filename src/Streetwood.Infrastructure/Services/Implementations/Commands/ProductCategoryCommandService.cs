@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
-using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands

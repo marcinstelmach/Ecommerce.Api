@@ -16,6 +16,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Streetwood.Infrastructure\Streetwood.Infrastructure.csproj" />
+    <ProjectReference Include="..\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Emails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Emails\NewOrder.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

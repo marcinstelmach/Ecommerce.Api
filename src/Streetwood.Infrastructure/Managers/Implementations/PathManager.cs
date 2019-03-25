@@ -38,7 +38,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string GetEmailTemplatePath(string templateName)
         {
-            return Path.Combine("wwwroot", "EmailTemplates", templateName);
+            var path= Path.Combine("wwwroot", "EmailTemplates", templateName);
+            return path;
         }
     }
 }

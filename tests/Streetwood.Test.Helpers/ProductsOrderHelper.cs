@@ -12,6 +12,7 @@ namespace Streetwood.Test.Helpers
 
             return new List<ProductOrder>
             {
+                productOrder
             };
         }
     }
