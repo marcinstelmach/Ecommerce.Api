@@ -15,11 +15,14 @@ namespace Streetwood.Core.Domain.Entities
         {
             Id = Guid.NewGuid();
             ImageUrl = imageUrl;
-            IsMain = isMain;
+            SetIsMain(isMain);
         }
 
         protected Image()
         {
         }
+
+        public void SetIsMain(bool isMain)
+            => IsMain = isMain;
     }
 }
