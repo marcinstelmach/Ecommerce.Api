@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Charm;
@@ -24,10 +25,12 @@ namespace Streetwood.API.Controllers
             => Ok(await mediator.Send(new GetCharmByIdQueryModel(id)));
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddCharmCommandModel model)
             => Ok(await mediator.Send(model));
 
         [HttpPost("{id}/image/")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromRoute]Guid id, IFormFile file)
         {
             await mediator.Send(new AddCharmImageCommandModel(id, file));
@@ -35,6 +38,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCharmCommandModel model)
         {
             await mediator.Send(model.SetId(id));
@@ -42,6 +46,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await mediator.Send(new DeleteCharmCommandModel(id));

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Commands.Models.Product;
 
 namespace Streetwood.API.Controllers
 {
     [Route("api/images")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ImagesController : ControllerBase
     {
         private readonly IMediator mediator;

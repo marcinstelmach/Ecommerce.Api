@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.API.Filters;
 using Streetwood.Core.Extensions;
@@ -20,21 +21,23 @@ namespace Streetwood.API.Controllers
             this.mediator = mediator;
         }
 
-        // only for admin
+        // admin can see all, but customer only his own
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
             => Ok(await mediator.Send(new GetOrderQueryModel(id)));
 
-        // all for admin, and specific for user
-        // get filtered
-        // add pagination
         [HttpGet]
         [IgnoreValidation]
-        public async Task<IActionResult> Get([FromQuery] int take, [FromQuery] int? id, [FromQuery] DateTime? dateFrom, [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
-            [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Get([FromQuery] int take,
+                [FromQuery] int? id,[FromQuery] DateTime? dateFrom,
+                [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
+                [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
             => Ok(await mediator.Send(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
             var orderId = await mediator.Send(model.SetUserId(User.GetUserId()));
@@ -42,6 +45,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateOrderCommandModel model)
         {
             await mediator.Send(model.SetId(id));

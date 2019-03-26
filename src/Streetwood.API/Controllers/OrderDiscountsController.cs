@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.OrderDiscount;
 using Streetwood.Infrastructure.Queries.Models.OrderDiscount;
@@ -9,6 +10,7 @@ namespace Streetwood.API.Controllers
 {
     [Route("api/OrderDiscounts")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class OrderDiscountsController : ControllerBase
     {
         private readonly IMediator mediator;
