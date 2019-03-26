@@ -26,8 +26,8 @@ namespace Streetwood.Infrastructure.Tests.Services
             var emailTemplate = await File.ReadAllTextAsync("./Resources/Emails/NewOrder.html");
             var expected = await File.ReadAllTextAsync("./Resources/Emails/NewOrderExpected.html");
             emailTemplateManagerMock.Setup(s => s.ReadTemplateAsync(It.IsAny<string>())).ReturnsAsync(emailTemplate);
-            var order = new Order(UserHelper.CreateUser(), ProductsOrderHelper.GetProductsOrders(),
-                DiscountHelper.GetOrderDiscount(), ShipmentHelper.GetShipment(), 30, 139, "Some comment", null);
+            var order = new Order(UserFactory.CreateUser(), ProductsOrderHelper.GetProductsOrders(),
+                DiscountFactory.GetOrderDiscount(), ShipmentFactory.GetShipment(), 30, 139, "Some comment", null);
             var sut = new EmailService(emailTemplateManagerMock.Object);
 
             //act

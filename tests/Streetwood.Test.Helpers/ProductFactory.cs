@@ -2,7 +2,7 @@
 
 namespace Streetwood.Test.Helpers
 {
-    public class ProductHelper
+    public class ProductFactory
     {
         public static Product GetProductWithoutCharms()
             => new Product("Some shirt", "Product", 99, "Description",

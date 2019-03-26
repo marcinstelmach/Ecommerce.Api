@@ -4,15 +4,15 @@ using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Test.Helpers
 {
-    public class ProductOrderCharmsHelper
+    public class ProductOrderCharmsFactory
     {
         public static ProductOrderCharm GetProductOrderCharms() 
-            => new ProductOrderCharm(CharmHelper.CreateCharms(1).First(), 1);
+            => new ProductOrderCharm(CharmFactory.GetCharm(), 1);
 
         public static IEnumerable<ProductOrderCharm> GetMultipleProductOrderCharms(int count)
         {
             var index = 1;
-            var result = CharmHelper.CreateCharms(count)
+            var result = CharmFactory.GetCharms(count)
                 .Select(s => new ProductOrderCharm(s, index++));
             return result;
         }

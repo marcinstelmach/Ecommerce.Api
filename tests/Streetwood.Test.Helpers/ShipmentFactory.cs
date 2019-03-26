@@ -3,7 +3,7 @@ using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Test.Helpers
 {
-    public class ShipmentHelper
+    public class ShipmentFactory
     {
         public static Shipment GetShipment()
         {

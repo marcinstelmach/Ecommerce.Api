@@ -7,7 +7,7 @@ using Streetwood.Infrastructure.Managers.Implementations;
 
 namespace Streetwood.Test.Helpers
 {
-    public class UserHelper
+    public class UserFactory
     {
         public static User CreateUser()
         {

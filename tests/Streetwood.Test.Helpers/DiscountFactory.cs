@@ -3,7 +3,7 @@ using Streetwood.Core.Domain.Entities;
 
 namespace Streetwood.Test.Helpers
 {
-    public class DiscountHelper
+    public class DiscountFactory
     {
         public static OrderDiscount GetOrderDiscount()
         {

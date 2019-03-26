@@ -15,7 +15,7 @@ namespace Streetwood.Core.Tests.Entities
         {
             // arrange
             var shipment = new Shipment("Test1", "Test1", "", "", 50M, ShipmentType.Courier);
-            var order = new Order(UserHelper.CreateUser(), new List<ProductOrder>(), null, shipment, 50, 60, "", null);
+            var order = new Order(UserFactory.CreateUser(), new List<ProductOrder>(), null, shipment, 50, 60, "", null);
             var expected = DateTime.UtcNow.ToString("f");
 
             // act

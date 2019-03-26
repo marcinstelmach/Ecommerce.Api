@@ -20,7 +20,7 @@ namespace Streetwood.Integration.Tests.DbInitializations
 
             dbContext.Shipments.AddRange(shipments);
 
-            var user = UserHelper.CreateUser();
+            var user = UserFactory.CreateUser();
             dbContext.Users.Add(user);
 
             dbContext.SaveChanges();

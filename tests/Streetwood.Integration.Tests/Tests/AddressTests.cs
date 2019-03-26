@@ -41,7 +41,7 @@ namespace Streetwood.Integration.Tests.Tests
             //arrange
             var expected = HttpStatusCode.OK;
             var httpClient = factory.CreateClient();
-            var token = await UserHelper.AuthenticateUser(httpClient, "test@gmail.com", "1qaz@WSX");
+            var token = await UserFactory.AuthenticateUser(httpClient, "test@gmail.com", "1qaz@WSX");
 
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
 
