@@ -71,6 +71,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode EmailTemplateNotExists(string name) => new ErrorCode($"{nameof(EmailTemplateNotExists)}_{name}");
 
+        public static ErrorCode NoAccess => new ErrorCode(nameof(NoAccess), HttpStatusCode.Forbidden);
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

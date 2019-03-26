@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Shipment;
 using Streetwood.Infrastructure.Queries.Models.Shipment;
@@ -27,6 +28,7 @@ namespace Streetwood.API.Controllers
             => Ok(await mediator.Send(new GetShipmentQueryModel(id)));
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddShipmentCommandModel model)
         {
             await mediator.Send(model);
@@ -34,6 +36,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateShipmentCommandModel model)
         {
             await mediator.Send(model.SetId(id));
@@ -41,6 +44,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await mediator.Send(new DeleteShipmentCommandModel(id));

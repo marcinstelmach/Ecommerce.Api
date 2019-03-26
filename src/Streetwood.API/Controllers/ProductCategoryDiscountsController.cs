@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount;
 using Streetwood.Infrastructure.Queries.Models.ProductCategoryDiscount;
@@ -27,6 +28,7 @@ namespace Streetwood.API.Controllers
             => Ok(await mediator.Send(new GetCategoriesForDiscountQueryModel(id)));
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddProductCategoryDiscountCommandModel model)
         {
             await mediator.Send(model);
@@ -34,6 +36,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateProductCategoryDiscountCommandModel model)
         {
             await mediator.Send(model.SetId(id));
@@ -41,6 +44,7 @@ namespace Streetwood.API.Controllers
         }
 
         [HttpPut("{id}/categories")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutCategories(Guid id, [FromBody] AddProductCategoryToDiscountCommandModel model)
         {
             await mediator.Send(model.SetId(id));

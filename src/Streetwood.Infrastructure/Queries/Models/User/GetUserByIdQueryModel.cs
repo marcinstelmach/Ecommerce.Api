@@ -1,5 +1,6 @@
 ﻿using System;
 using MediatR;
+using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.User
@@ -8,9 +9,21 @@ namespace Streetwood.Infrastructure.Queries.Models.User
     {
         public Guid Id { get; }
 
-        public GetUserByIdQueryModel(Guid id)
+        public Guid CurrentUserId { get; }
+
+        public GetUserByIdQueryModel(Guid id, Guid currentUserId)
         {
             Id = id;
+            CurrentUserId = currentUserId;
+            Validate();
+        }
+
+        private void Validate()
+        {
+            if (Id != CurrentUserId)
+            {
+                throw new StreetwoodException(ErrorCode.NoAccess);
+            }
         }
     }
 }
