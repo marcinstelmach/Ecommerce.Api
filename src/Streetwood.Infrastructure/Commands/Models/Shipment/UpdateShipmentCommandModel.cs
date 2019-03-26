@@ -9,26 +9,26 @@ namespace Streetwood.Infrastructure.Commands.Models.Shipment
     {
         public Guid Id { get; private set; }
 
-//        [Required]
+        [Required]
         public string Name { get; set; }
 
-//        [Required]
+        [Required]
         public string NameEng { get; set; }
 
-//        [Required]
+        [Required]
         public string Description { get; set; }
 
-//        [Required]
+        [Required]
         public string DescriptionEng { get; set; }
 
-//        [Required]
-//        [RegularExpression("^\\d{0,8}(\\.\\d{1,2})?$")]
+        [Required]
+        [RegularExpression("^\\d{0,8}(\\.\\d{1,2})?$")]
         public decimal Price { get; set; }
 
-//        [Required]
+        [Required]
         public bool IsActive { get; set; }
 
-//        [Required]
+        [Required]
         public ShipmentType Type { get; set; }
 
         public UpdateShipmentCommandModel SetId(Guid id)

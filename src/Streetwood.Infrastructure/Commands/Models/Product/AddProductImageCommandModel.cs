@@ -1,29 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Streetwood.Core.Exceptions;
 
 namespace Streetwood.Infrastructure.Commands.Models.Product
 {
     public class AddProductImageCommandModel : IRequest
     {
-        [Required]
-        public int ProductId { get; set; }
+        public int ProductId { get; protected set; }
 
-        [Required]
-        public IFormFile File { get; set; }
+        public IFormFile File { get; protected set; }
 
-        [Required]
-        public bool IsMain { get; set; }
-
-        public AddProductImageCommandModel()
-        {
-        }
+        public bool IsMain { get; protected set; }
 
         public AddProductImageCommandModel(int productId, IFormFile file, bool isMain)
         {
             ProductId = productId;
             File = file;
             IsMain = isMain;
+        }
+
+        private void Validate()
+        {
+            if (File == null)
+            {
+                throw new StreetwoodException(ErrorCode.EmptyImageFile);
+            }
         }
     }
 }

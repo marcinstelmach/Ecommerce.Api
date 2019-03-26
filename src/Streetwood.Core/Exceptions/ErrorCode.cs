@@ -73,6 +73,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode NoAccess => new ErrorCode(nameof(NoAccess), HttpStatusCode.Forbidden);
 
+        public static ErrorCode EmptyImageFile => new ErrorCode(nameof(EmptyImageFile));
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }
