@@ -46,12 +46,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             if (filter.DateFrom.HasValue)
             {
-                orders = orders.Where(s => s.CreationDateTime <= filter.DateFrom);
+                orders = orders.Where(s => s.CreationDateTime >= filter.DateFrom.Value);
             }
 
             if (filter.DateTo.HasValue)
             {
-                orders = orders.Where(s => s.CreationDateTime <= filter.DateTo);
+                orders = orders.Where(s => s.CreationDateTime <= filter.DateTo.Value);
             }
 
             if (filter.IsClosed.HasValue)

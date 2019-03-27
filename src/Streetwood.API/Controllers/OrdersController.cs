@@ -30,7 +30,7 @@ namespace Streetwood.API.Controllers
         [HttpGet]
         [IgnoreValidation]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Get([FromQuery] int take,
+        public async Task<IActionResult> Get([FromQuery] int? take,
                 [FromQuery] int? id,[FromQuery] DateTime? dateFrom,
                 [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
                 [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
