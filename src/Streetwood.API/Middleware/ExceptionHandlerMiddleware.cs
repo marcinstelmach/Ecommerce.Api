@@ -27,12 +27,13 @@ namespace Streetwood.API.Middleware
             }
             catch (StreetwoodException exception)
             {
-                logger.Error($"{exception.ErrorCode.ToString()}");
+                logger.Error($"Streetwood exception with code '{exception.ErrorCode}.\n{exception.Message}");
                 await HandleException(context, exception);
             }
             catch (Exception exception)
             {
-                logger.Error(exception);
+                var message = PrepareExceptionMessage(exception);
+                logger.Error(exception, message);
                 await HandleException(context, exception);
             }
         }
@@ -60,6 +61,18 @@ namespace Streetwood.API.Middleware
             var responseBody = JsonConvert.SerializeObject(new { errorCodeName, message });
 
             return context.Response.WriteAsync(responseBody);
+        }
+
+        private string PrepareExceptionMessage(Exception exception)
+        {
+            var message = exception.Message;
+            while (exception.InnerException != null)
+            {
+                exception = exception.InnerException;
+                message += $" --- Inner exception: {exception.Message}";
+            }
+
+            return message;
         }
     }
 }
