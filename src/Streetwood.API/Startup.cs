@@ -61,7 +61,7 @@ namespace Streetwood.API
         public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddNLog();
-            HostingEnvironment.ConfigureNLog($"nlog.{HostingEnvironment.EnvironmentName}.config");
+            HostingEnvironment.ConfigureNLog("nlog.config");
 
             if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsStaging())
             {
