@@ -18,8 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="nlog.Production.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\Images\Charms\" />
     <Folder Include="wwwroot\Images\Products\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="nlog.Production.config" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,9 +50,6 @@
 
   <ItemGroup>
     <Content Update="nlog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="nlog.Production.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

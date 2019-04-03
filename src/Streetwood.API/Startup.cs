@@ -22,10 +22,13 @@ namespace Streetwood.API
 {
     public class Startup
     {
+        private readonly ILogger logger;
+
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
             HostingEnvironment = hostingEnvironment;
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -47,7 +50,7 @@ namespace Streetwood.API
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterInstance(LogManager.GetCurrentClassLogger()).As<ILogger>();
+            builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterModule<RepositoriesModule>();
             builder.RegisterModule<ManagersModule>();
             builder.RegisterModule<MediaTrModule>();
@@ -55,13 +58,15 @@ namespace Streetwood.API
             builder.RegisterModule<ServicesModule>();
 
             Container = builder.Build();
-            return new AutofacServiceProvider(Container);
+            var serviceProvider = new AutofacServiceProvider(Container);
+
+            return serviceProvider;
         }
 
         public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddNLog();
-            HostingEnvironment.ConfigureNLog("nlog.config");
+            HostingEnvironment.ConfigureNLog($"nlog.{HostingEnvironment.EnvironmentName}.config");
 
             if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsStaging())
             {
@@ -80,13 +85,14 @@ namespace Streetwood.API
                 s.AllowAnyHeader();
                 s.AllowAnyMethod();
             });
-//            app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMvc();
 
             applicationLifetime.ApplicationStopped.Register(() => Container.Dispose());
+            logger.Info("Application successfully configured.");
         }
     }
 }
