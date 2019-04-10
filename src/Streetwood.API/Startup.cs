@@ -77,6 +77,7 @@ namespace Streetwood.API
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             app.UseCors(s =>
@@ -85,7 +86,7 @@ namespace Streetwood.API
                 s.AllowAnyHeader();
                 s.AllowAnyMethod();
             });
-            app.UseHttpsRedirection();
+
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandlerMiddleware>();

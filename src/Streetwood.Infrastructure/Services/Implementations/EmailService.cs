@@ -19,11 +19,6 @@ namespace Streetwood.Infrastructure.Services.Implementations
             this.emailTemplatesManager = emailTemplatesManager;
         }
 
-        public async Task SendAsync(string receiver, string subject, string body)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<string> PrepareNewOrderEmailAsync(Order order)
         {
             var stringTemplate = await emailTemplatesManager.ReadTemplateAsync(ConstantValues.NewEmailOrderTemplate);

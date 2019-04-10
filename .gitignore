@@ -266,3 +266,4 @@ __pycache__/
 *.pyc
 /src/Streetwood.API/Properties/PublishProfiles
 /src/Streetwood.API/appsettings.Staging.json
+/tests/Streetwood.Test.Helpers/appSettings.Test.json
