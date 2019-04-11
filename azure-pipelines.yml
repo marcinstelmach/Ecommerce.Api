@@ -1,20 +1,12 @@
-trigger:
-- master
-- develop
-
-variables:
-  buildConfiguration: 'Release'
-
-pool:
-  vmImage: 'Ubuntu 16.04'
-
 jobs:
   - job: setEmailSecrets
+    pool:
+      vmImage: 'Ubuntu 16.04'
     variables:
     - group: TestDataSecrets
     steps:
     - script: |
-      dotnet user-secrets set "Email:server" $(server) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set Email:server $(server) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
       dotnet user-secrets set "Email:username" $(username) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
       dotnet user-secrets set "Email:password" $(password) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
       dotnet user-secrets set "Email:senderAddress" $(senderAddress) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
@@ -25,13 +17,15 @@ jobs:
       echo 'Job setEmailSecrets done!'
 
   -job: buildProject
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    variables:
+      buildConfiguration: 'Release'
     steps:
     - script: |
         dotnet build --configuration $(buildConfiguration)
         echo 'Job builProject done!'
-
-  -job: runTests
-    steps:
+        
     - task: DotNetCoreCLI@2
       inputs:
         command: test
