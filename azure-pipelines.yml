@@ -2,18 +2,38 @@ trigger:
 - master
 - develop
 
-pool:
-  vmImage: 'Ubuntu 16.04'
-  
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: |
-    dotnet build --configuration $(buildConfiguration)
+pool:
+  vmImage: 'Ubuntu 16.04'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+jobs:
+  - job: setEmailSecrets
+    variables:
+    - group: TestDataSecrets
+    steps:
+    - script: |
+      dotnet user-secrets set "Email:server" $(server) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:username" $(username) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:password" $(password) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:senderAddress" $(senderAddress) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:senderName" $(senderName) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:port" $(port) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "Email:useSSL" $(useSSL) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      dotnet user-secrets set "EmailReceiver:address" $(emailReceiver) --project "tests\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj"
+      echo 'Job setEmailSecrets done!'
+
+  -job: buildProject
+    steps:
+    - script: |
+        dotnet build --configuration $(buildConfiguration)
+        echo 'Job builProject done!'
+
+  -job: runTests
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
