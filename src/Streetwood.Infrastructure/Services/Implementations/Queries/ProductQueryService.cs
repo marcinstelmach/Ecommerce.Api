@@ -50,7 +50,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductWithDiscountDto>> GetAvailableWithDiscountByCategoryIdAsync(Guid id)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(id);
-            var products = category.Products;
+            var products = category
+                .Products
+                .Where(s => s.Status == ItemStatus.Available);
             var productsDto = mapper.Map<List<ProductWithDiscountDto>>(products);
             var discounts = await productCategoryDiscountRepository.GetActiveByCategoryId(id);
             if (discounts.Any())
