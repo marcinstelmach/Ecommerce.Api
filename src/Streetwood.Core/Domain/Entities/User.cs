@@ -30,6 +30,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public UserType Type { get; protected set; }
 
+        public string FullName => $"{FirstName} {LastName}";
+
         public virtual IReadOnlyCollection<Order> Orders => orders;
 
         public User(string email, string firstName, string lastName)

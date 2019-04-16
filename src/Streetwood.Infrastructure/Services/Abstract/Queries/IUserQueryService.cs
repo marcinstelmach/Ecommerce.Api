@@ -16,6 +16,8 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<TokenModel> GetTokenAsync(string email, string password);
 
-        Task<TokenModel> RefreshToken(string jwtToken, string refreshToken);
+        Task<TokenModel> RefreshTokenAsync(string jwtToken, string refreshToken);
+
+        Task<User> CreateChangePasswordTokenAsync(string email);
     }
 }

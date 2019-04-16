@@ -17,6 +17,6 @@ namespace Streetwood.Infrastructure.Queries.Handlers.User
         }
 
         public async Task<TokenModel> Handle(RefreshTokenQueryModel request, CancellationToken cancellationToken)
-            => await userQueryService.RefreshToken(request.JwtToken, request.RefreshToken);
+            => await userQueryService.RefreshTokenAsync(request.JwtToken, request.RefreshToken);
     }
 }

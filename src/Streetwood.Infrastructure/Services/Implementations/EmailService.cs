@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Streetwood.Core.Constants;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract;
@@ -13,53 +9,28 @@ namespace Streetwood.Infrastructure.Services.Implementations
     internal class EmailService : IEmailService
     {
         private readonly IEmailTemplatesManager emailTemplatesManager;
+        private readonly IEmailManager emailManager;
 
-        public EmailService(IEmailTemplatesManager emailTemplatesManager)
+        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager)
         {
             this.emailTemplatesManager = emailTemplatesManager;
+            this.emailManager = emailManager;
         }
 
-        public async Task<string> PrepareNewOrderEmailAsync(Order order)
-        {
-            var stringTemplate = await emailTemplatesManager.ReadTemplateAsync(ConstantValues.NewEmailOrderTemplate);
-            var startIndex = stringTemplate.IndexOf("<!--starter-->", StringComparison.Ordinal) + 14;
-            var endIndex = stringTemplate.IndexOf("<!--ender-->", startIndex, StringComparison.Ordinal);
-            var template = stringTemplate.Substring(startIndex, endIndex - startIndex);
-            var productsTemplate = new StringBuilder();
-
-            foreach (var productOrder in order.ProductOrders)
-            {
-                var tempTemplate = template.Replace("{{{ProductName}}}", productOrder.Product.Name);
-                tempTemplate = tempTemplate.Replace("{{{ProductAmount}}}", productOrder.Amount.ToString(CultureInfo.InvariantCulture));
-                var charms = string.Empty;
-                if (productOrder.ProductOrderCharms.Any())
-                {
-                    var charmsNames = productOrder.ProductOrderCharms.Select(s => s.Charm.Name);
-                    charms = $"({string.Join(" +", charmsNames)})";
-                }
-
-                tempTemplate = tempTemplate.Replace("{{{Charms}}}", charms);
-                tempTemplate = tempTemplate.Replace("{{{Price}}}",
-                    productOrder.FinalPrice.ToString(CultureInfo.InvariantCulture));
-                productsTemplate.Append(tempTemplate);
-            }
-
-            stringTemplate = stringTemplate.Remove(startIndex, endIndex - startIndex);
-            stringTemplate = stringTemplate.Insert(startIndex, productsTemplate.ToString());
-            stringTemplate = stringTemplate.Replace("{{{TotalPrice}}}",
-                order.FinalPrice.ToString(CultureInfo.InvariantCulture));
-
-            return stringTemplate;
-        }
-
-        public async Task<string> PrepareNewUserEmailAsync(User user)
+        public async Task SendPrepareNewOrderEmailAsync(Order order)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<string> ForgottenPasswordEmailAsync(User user)
+        public async Task SendNewUserEmailAsync(User user)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task SendForgottenPasswordEmailAsync(User user)
+        {
+            var template = await emailTemplatesManager.PrepareForgottenPasswordEmailAsync(user);
+            await emailManager.SendAsync(user.Email, user.FullName, "Streetwood Password Reset", template);
         }
     }
 }

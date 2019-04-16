@@ -75,6 +75,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode EmptyImageFile => new ErrorCode(nameof(EmptyImageFile));
 
+        public static ErrorCode AccessingDeactivatedUser => new ErrorCode(nameof(AccessingDeactivatedUser));
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

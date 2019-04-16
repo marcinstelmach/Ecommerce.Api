@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Streetwood.Core.Constants;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
 using Streetwood.Core.Managers;
@@ -19,13 +21,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         private readonly IMapper mapper;
         private readonly IEncrypter encrypter;
         private readonly ITokenManager tokenManager;
+        private readonly IStringGenerator stringGenerator;
 
-        public UserQueryService(IUserRepository userRepository, IMapper mapper, IEncrypter encrypter, ITokenManager tokenManager)
+        public UserQueryService(IUserRepository userRepository, IMapper mapper, IEncrypter encrypter, ITokenManager tokenManager, IStringGenerator stringGenerator)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
             this.encrypter = encrypter;
             this.tokenManager = tokenManager;
+            this.stringGenerator = stringGenerator;
         }
 
         public async Task<IList<UserDto>> GetAsync()
@@ -59,7 +63,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return token;
         }
 
-        public async Task<TokenModel> RefreshToken(string jwtToken, string refreshToken)
+        public async Task<TokenModel> RefreshTokenAsync(string jwtToken, string refreshToken)
         {
             var userId = tokenManager.GetUserIdFromExpiredToken(jwtToken);
             var user = await userRepository.GetAndEnsureExistAsync(userId);
@@ -73,6 +77,20 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             await userRepository.SaveChangesAsync();
 
             return token;
+        }
+
+        public async Task<User> CreateChangePasswordTokenAsync(string email)
+        {
+            var user = await userRepository.GetByEmailAndEnsureExistAsync(email);
+            if (user.UserStatus == UserStatus.Deactivated)
+            {
+                throw new StreetwoodException(ErrorCode.AccessingDeactivatedUser);
+            }
+
+            user.SetChangePasswordToken(stringGenerator);
+            await userRepository.SaveChangesAsync();
+
+            return user;
         }
     }
 }

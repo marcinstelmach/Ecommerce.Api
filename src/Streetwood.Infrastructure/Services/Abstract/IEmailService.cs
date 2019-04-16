@@ -5,10 +5,10 @@ namespace Streetwood.Infrastructure.Services.Abstract
 {
     public interface IEmailService
     {
-        Task<string> PrepareNewOrderEmailAsync(Order order);
+        Task SendPrepareNewOrderEmailAsync(Order order);
 
-        Task<string> PrepareNewUserEmailAsync(User user);
+        Task SendNewUserEmailAsync(User user);
 
-        Task<string> ForgottenPasswordEmailAsync(User user);
+        Task SendForgottenPasswordEmailAsync(User user);
     }
 }
