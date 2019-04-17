@@ -27,11 +27,5 @@ namespace Streetwood.API.Controllers
             await mediator.Send(model);
             return Accepted();
         }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            throw new Exception("Test Exception");
-        }
     }
 }
