@@ -22,11 +22,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.pathManager = pathManager;
         }
 
-        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng, bool acceptCharms, string sizes, Guid productCategoryId)
+        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng, 
+            bool acceptCharms, int maxCharmsCount, string sizes, Guid productCategoryId)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
             var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
-            var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, sizes, imagesPath);
+            var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, maxCharmsCount, sizes, imagesPath);
 
             category.AddProduct(product);
             await productCategoryRepository.SaveChangesAsync();

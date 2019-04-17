@@ -60,10 +60,10 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         {
             var products = new List<Product>
             {
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 1},
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 2},
-                new Product("Test", "Test", 50, "Test", "Test", true, "", "") {Id = 3},
-                new Product("Test", "Test", 100, "Test", "Test", false, "", "") {Id = 4},
+                new Product("Test", "Test", 50, "Test", "Test", true, 5, "", "") {Id = 1},
+                new Product("Test", "Test", 50, "Test", "Test", true,5,  "", "") {Id = 2},
+                new Product("Test", "Test", 50, "Test", "Test", true, 5, "", "") {Id = 3},
+                new Product("Test", "Test", 100, "Test", "Test", false, 0,"", "") {Id = 4},
             };
 
             var charms = new List<Charm>

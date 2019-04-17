@@ -24,6 +24,8 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
 
         public bool AcceptCharms { get; set; }
 
+        public int MaxCharmCount { get; set; }
+
         public string Sizes { get; set; }
 
         [Required]

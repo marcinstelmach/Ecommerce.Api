@@ -20,6 +20,8 @@ namespace Streetwood.Infrastructure.Dto
 
         public bool AcceptCharms { get; set; }
 
+        public int MaxCharmsCount { get; set; }
+
         public string Sizes { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Product
         public async Task<int> Handle(AddProductCommandModel request, CancellationToken cancellationToken)
         {
             var productId = await productCommandService.AddAsync(request.Name, request.NameEng, request.Price, request.Description,
-                request.DescriptionEng, request.AcceptCharms, request.Sizes, request.ProductCategoryId);
+                request.DescriptionEng, request.AcceptCharms, request.MaxCharmCount, request.Sizes, request.ProductCategoryId);
 
             return productId;
         }

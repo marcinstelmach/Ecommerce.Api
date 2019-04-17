@@ -51,7 +51,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             // arrange
             var products = new List<Product>
             {
-                new Product("", "", 35, "", "", true, "", "")
+                new Product("", "", 35, "", "", true, 5, "", "")
             };
             var discounts = new List<ProductCategoryDiscount>();
             var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
@@ -111,10 +111,10 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
 
         private (List<Product>, List<ProductCategoryDiscount>) PrepareProductsWithDiscounts()
         {
-            var product1 = new Product("Test", "Test", 50, "Test", "Test", true, "", "") { Id = 1 };
-            var product2 = new Product("Test2", "Test2", 40, "Test2", "Test2", true, "", "") { Id = 2 };
-            var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, "", "") { Id = 3 };
-            var product4 = new Product("Test4", "Test3", 30, "Test3", "Test3", true, "", "") { Id = 4 };
+            var product1 = new Product("Test", "Test", 50, "Test", "Test", true, 5, "", "") { Id = 1 };
+            var product2 = new Product("Test2", "Test2", 40, "Test2", "Test2", true, 5, "", "") { Id = 2 };
+            var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, 5, "", "") { Id = 3 };
+            var product4 = new Product("Test4", "Test3", 30, "Test3", "Test3", true,3, "", "") { Id = 4 };
 
             var category1 = new ProductCategory("Test1", "Test1");
             var category2 = new ProductCategory("Test2", "Test2");
