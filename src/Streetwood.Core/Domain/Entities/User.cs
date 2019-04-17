@@ -75,5 +75,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetChangePasswordToken(IStringGenerator generator)
             => ChangePasswordToken = generator.Generate(50);
+
+        public void SetChangePasswordToken()
+            => ChangePasswordToken = string.Empty;
     }
 }

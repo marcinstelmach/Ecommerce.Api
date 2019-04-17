@@ -8,5 +8,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
         Task AddUserAsync(string email, string firstName, string lastName, string password);
 
         Task EraseUserDataAsync(Guid id);
+
+        Task UpdateUserPasswordAsync(string email, string newPassword, string token);
     }
 }

@@ -77,6 +77,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode AccessingDeactivatedUser => new ErrorCode(nameof(AccessingDeactivatedUser));
 
+        public static ErrorCode InvalidChangePasswordToken => new ErrorCode(nameof(InvalidChangePasswordToken));
+
         public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
     }
 }

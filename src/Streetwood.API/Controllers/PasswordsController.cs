@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.Infrastructure.Commands.Models.Password;
 
 namespace Streetwood.API.Controllers
 {
@@ -21,8 +18,13 @@ namespace Streetwood.API.Controllers
 
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
-        {
+            => Ok(await mediator.Send(new SendPasswordResetEmailCommandModel(email)));
 
+        [HttpPost]
+        public async Task<IActionResult> Post(UpdatePasswordCommandModel model)
+        {
+            await mediator.Send(model);
+            return Accepted();
         }
     }
 }

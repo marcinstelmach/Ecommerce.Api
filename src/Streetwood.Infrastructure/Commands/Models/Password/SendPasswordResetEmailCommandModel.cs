@@ -7,6 +7,11 @@ namespace Streetwood.Infrastructure.Commands.Models.Password
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; }
+
+        public SendPasswordResetEmailCommandModel(string email)
+        {
+            Email = email;
+        }
     }
 }

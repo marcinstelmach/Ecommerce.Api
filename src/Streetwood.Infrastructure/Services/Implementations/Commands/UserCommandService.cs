@@ -44,5 +44,20 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             await userRepository.SaveChangesAsync();
         }
+
+        public async Task UpdateUserPasswordAsync(string email, string newPassword, string token)
+        {
+            var user = await userRepository.GetByEmailAndEnsureExistAsync(email);
+
+            if (user.ChangePasswordToken != token)
+            {
+                throw new StreetwoodException(ErrorCode.InvalidChangePasswordToken);
+            }
+
+            user.SetPassword(newPassword, encrypter);
+            user.SetChangePasswordToken();
+
+            await userRepository.SaveChangesAsync();
+        }
     }
 }
