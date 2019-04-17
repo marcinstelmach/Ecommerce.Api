@@ -27,7 +27,7 @@ namespace Streetwood.API.Middleware
             }
             catch (StreetwoodException exception)
             {
-                logger.Error($"Streetwood exception with code '{exception.ErrorCode}.\n{exception.Message}");
+                logger.Warn($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{exception.Message}");
                 await HandleException(context, exception);
             }
             catch (Exception exception)

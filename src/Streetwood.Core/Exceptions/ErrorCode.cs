@@ -63,13 +63,16 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode DiscountWithThisCodeExistAlready =>
             new ErrorCode(nameof(DiscountWithThisCodeExistAlready));
 
-        public static ErrorCode NoProductsForNewOrder => new ErrorCode(nameof(NoProductsForNewOrder), HttpStatusCode.InternalServerError);
+        public static ErrorCode NoProductsForNewOrder =>
+            new ErrorCode(nameof(NoProductsForNewOrder), HttpStatusCode.InternalServerError);
 
-        public static ErrorCode OrderBasePriceBelowZero => new ErrorCode(nameof(OrderBasePriceBelowZero), HttpStatusCode.InternalServerError);
+        public static ErrorCode OrderBasePriceBelowZero =>
+            new ErrorCode(nameof(OrderBasePriceBelowZero), HttpStatusCode.InternalServerError);
 
         public static ErrorCode ProductNotAcceptCharms => new ErrorCode(nameof(ProductNotAcceptCharms));
 
-        public static ErrorCode EmailTemplateNotExists(string name) => new ErrorCode($"{nameof(EmailTemplateNotExists)}_{name}");
+        public static ErrorCode EmailTemplateNotExists(string name) =>
+            new ErrorCode($"{nameof(EmailTemplateNotExists)}_{name}");
 
         public static ErrorCode NoAccess => new ErrorCode(nameof(NoAccess), HttpStatusCode.Forbidden);
 
@@ -77,8 +80,9 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode AccessingDeactivatedUser => new ErrorCode(nameof(AccessingDeactivatedUser));
 
-        public static ErrorCode InvalidChangePasswordToken => new ErrorCode(nameof(InvalidChangePasswordToken));
+        public static ErrorCode InvalidChangePasswordToken =>
+            new ErrorCode(nameof(InvalidChangePasswordToken), "Provided token is invalid.");
 
-        public new string ToString() => $"{ErrorCodeName}: {StatusCode}, {Message}";
+        public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }
