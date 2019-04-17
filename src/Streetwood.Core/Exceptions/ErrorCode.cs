@@ -83,6 +83,8 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode InvalidChangePasswordToken =>
             new ErrorCode(nameof(InvalidChangePasswordToken), "Provided token is invalid.");
 
+        public static ErrorCode CannotAddToQueue => new ErrorCode(nameof(CannotAddToQueue));
+
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }

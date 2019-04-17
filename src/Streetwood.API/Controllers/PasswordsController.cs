@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.Infrastructure.Commands.Models.Password;
@@ -25,6 +26,12 @@ namespace Streetwood.API.Controllers
         {
             await mediator.Send(model);
             return Accepted();
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            throw new Exception("Test Exception");
         }
     }
 }

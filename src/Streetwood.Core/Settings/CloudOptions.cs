@@ -2,7 +2,7 @@
 {
     public class CloudOptions
     {
-        public string AccessKey { get; set; }
+        public string StorageConnectionString { get; set; }
 
         public string ExceptionQueue { get; set; }
 

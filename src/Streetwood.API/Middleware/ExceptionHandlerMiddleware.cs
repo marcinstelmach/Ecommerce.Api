@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NLog;
 using Streetwood.Core.Exceptions;
+using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.API.Middleware
 {
@@ -12,11 +14,16 @@ namespace Streetwood.API.Middleware
     {
         private readonly RequestDelegate nextDelegate;
         private readonly ILogger logger;
+        private readonly IQueueManager queueManager;
+        private readonly IHostingEnvironment environment;
 
-        public ExceptionHandlerMiddleware(RequestDelegate nextDelegate, ILogger logger)
+        public ExceptionHandlerMiddleware(RequestDelegate nextDelegate, ILogger logger, IQueueManager queueManager,
+            IHostingEnvironment environment)
         {
             this.nextDelegate = nextDelegate;
             this.logger = logger;
+            this.queueManager = queueManager;
+            this.environment = environment;
         }
 
         public async Task Invoke(HttpContext context)
@@ -27,13 +34,19 @@ namespace Streetwood.API.Middleware
             }
             catch (StreetwoodException exception)
             {
-                logger.Warn($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{exception.Message}");
+                var message = PrepareExceptionMessage(exception);
+                logger.Warn($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
                 await HandleException(context, exception);
             }
             catch (Exception exception)
             {
                 var message = PrepareExceptionMessage(exception);
                 logger.Error(exception, message);
+                if (!environment.IsDevelopment())
+                {
+                    await queueManager.AddMessageAsync(message);
+                }
+
                 await HandleException(context, exception);
             }
         }
@@ -66,13 +79,14 @@ namespace Streetwood.API.Middleware
         private string PrepareExceptionMessage(Exception exception)
         {
             var message = exception.Message;
+            var stackTrace = exception.StackTrace;
             while (exception.InnerException != null)
             {
                 exception = exception.InnerException;
                 message += $" --- Inner exception: {exception.Message}";
             }
 
-            return message;
+            return $"{message}. --- Stack trace: {stackTrace}.";
         }
     }
 }
