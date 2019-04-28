@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
@@ -30,7 +31,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductListDto>> GetAsync()
         {
-            var products = await productRepository.GetListAsync();
+            var products = await productRepository
+                .GetQueryable()
+                .Where(s => s.Status == ItemStatus.Available)
+                .ToListAsync();
             return mapper.Map<IList<ProductListDto>>(products);
         }
 
