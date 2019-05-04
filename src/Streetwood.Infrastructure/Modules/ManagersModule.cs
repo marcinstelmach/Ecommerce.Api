@@ -16,7 +16,7 @@ namespace Streetwood.Infrastructure.Modules
             builder.RegisterType<FileManager>().As<IFileManager>().InstancePerLifetimeScope();
             builder.RegisterType<MemoryCache>().As<ICache>().SingleInstance();
             builder.RegisterType<EmailTemplatesManager>().As<IEmailTemplatesManager>().InstancePerLifetimeScope();
-            builder.RegisterType<SmtpEmailManager>().As<IEmailManager>().InstancePerLifetimeScope();
+            builder.RegisterType<MailKitManager>().As<IEmailManager>().InstancePerLifetimeScope();
             builder.RegisterType<AzureStorageQueueManager>().As<IQueueManager>().SingleInstance();
         }
     }

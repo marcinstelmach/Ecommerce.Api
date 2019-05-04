@@ -8,11 +8,11 @@ using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
 {
-    internal class SmtpEmailManager : IEmailManager
+    internal class MailKitManager : IEmailManager
     {
         private readonly IEmailOptions emailOptions;
 
-        public SmtpEmailManager(IOptions<EmailOptions> emailOptions)
+        public MailKitManager(IOptions<EmailOptions> emailOptions)
         {
             this.emailOptions = emailOptions.Value;
         }
