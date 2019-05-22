@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MediatR;
 using Streetwood.Infrastructure.Commands.Models.Order;
-using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
@@ -15,18 +14,16 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
         private readonly IOrderDiscountQueryService orderDiscountQueryService;
         private readonly IProductOrderQueryService productOrderQueryService;
         private readonly IOrderCommandService orderCommandService;
-        private readonly IEmailService emailService;
 
         public AddOrderCommandHandler(IUserQueryService userQueryService, IShipmentQueryService shipmentQueryService,
             IOrderDiscountQueryService orderDiscountQueryService, IProductOrderQueryService productOrderQueryService,
-            IOrderCommandService orderCommandService, IEmailService emailService)
+            IOrderCommandService orderCommandService)
         {
             this.userQueryService = userQueryService;
             this.shipmentQueryService = shipmentQueryService;
             this.orderDiscountQueryService = orderDiscountQueryService;
             this.productOrderQueryService = productOrderQueryService;
             this.orderCommandService = orderCommandService;
-            this.emailService = emailService;
         }
 
         public async Task<int> Handle(AddOrderCommandModel request, CancellationToken cancellationToken)

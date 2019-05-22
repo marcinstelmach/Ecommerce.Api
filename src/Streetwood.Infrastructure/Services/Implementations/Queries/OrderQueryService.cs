@@ -25,11 +25,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<OrderDto> GetAsync(int id)
         {
-            var order = await orderRepository.GetFullAsync(id);
+            var order = await orderRepository.GetFullAndEnsureExistsAsync(id);
             var mapped = mapper.Map<OrderDto>(order);
 
             return mapped;
         }
+
+        public async Task<Order> GetRawAndEnsureExistsAsync(int id)
+            => await orderRepository.GetFullAndEnsureExistsAsync(id);
 
         public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
@@ -41,7 +44,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             if (filter.Id.HasValue)
             {
                 var order = await orders.FirstOrDefaultAsync(s => s.Id == filter.Id.Value);
-                return mapper.Map<IList<OrdersListDto>>(new List<Order> {order});
+                return mapper.Map<IList<OrdersListDto>>(new List<Order> { order });
             }
 
             if (filter.DateFrom.HasValue)

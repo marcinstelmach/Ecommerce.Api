@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
@@ -22,7 +21,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         public async Task AddAsync(Order order)
             => await dbContext.Orders.AddAsync(order);
 
-        public async Task<Order> GetFullAsync(int id)
+        public async Task<Order> GetFullAndEnsureExistsAsync(int id)
         {
             var order = await dbContext
                 .Orders
