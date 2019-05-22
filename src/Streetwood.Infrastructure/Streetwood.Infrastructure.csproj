@@ -38,4 +38,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Events\Handlers\" />
+  </ItemGroup>
+
 </Project>

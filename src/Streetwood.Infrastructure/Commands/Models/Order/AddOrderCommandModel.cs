@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models.Address;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
@@ -19,7 +18,7 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
         public Guid UserId { get; protected set; }
 
         [Required]
-        public AddAddressCommandModel Address { get; set; }
+        public NewAddressDto Address { get; set; }
 
         public string Comment { get; set; }
 

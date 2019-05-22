@@ -25,6 +25,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         {
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
             logger.Info($"Creating new order for products: {productNames}");
+
             if (!productOrders.Any())
             {
                 throw new StreetwoodException(ErrorCode.NoProductsForNewOrder);

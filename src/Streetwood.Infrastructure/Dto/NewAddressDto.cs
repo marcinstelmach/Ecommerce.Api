@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Streetwood.Infrastructure.Commands.Models.Address
+namespace Streetwood.Infrastructure.Dto
 {
-    public class AddAddressCommandModel
+    public class NewAddressDto
     {
         [Required]
         public string City { get; set; }
