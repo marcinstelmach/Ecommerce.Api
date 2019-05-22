@@ -5,7 +5,7 @@ namespace Streetwood.Infrastructure.Services.Abstract
 {
     public interface IEmailService
     {
-        Task SendPrepareNewOrderEmailAsync(Order order);
+        Task SendNewOrderEmailAsync(Order order);
 
         Task SendNewUserEmailAsync(User user);
 

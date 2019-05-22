@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using NLog;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract;
@@ -10,21 +10,23 @@ namespace Streetwood.Infrastructure.Services.Implementations
     {
         private readonly IEmailTemplatesManager emailTemplatesManager;
         private readonly IEmailManager emailManager;
+        private readonly ILogger logger;
 
-        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager)
+        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager, ILogger logger)
         {
             this.emailTemplatesManager = emailTemplatesManager;
             this.emailManager = emailManager;
+            this.logger = logger;
         }
 
-        public async Task SendPrepareNewOrderEmailAsync(Order order)
+        public async Task SendNewOrderEmailAsync(Order order)
         {
-            throw new NotImplementedException();
+            logger.Info("Sending Email - New order");
         }
 
         public async Task SendNewUserEmailAsync(User user)
         {
-            throw new NotImplementedException();
+            logger.Info("Sending Email for new user");
         }
 
         public async Task SendForgottenPasswordEmailAsync(User user)
