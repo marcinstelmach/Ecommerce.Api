@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.API.Filters;
 using Streetwood.Core.Extensions;
-using Streetwood.Infrastructure.Commands.Models.Email.Models;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Queries.Models.Order;
 
@@ -42,8 +41,6 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
             var orderId = await mediator.Send(model.SetUserId(User.GetUserId()));
-            await mediator.Send(new SendNewOrderEmailCommandModel(orderId));
-
             return Ok(new { orderId });
         }
 

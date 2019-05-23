@@ -20,7 +20,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.orderRepository = orderRepository;
         }
 
-        public async Task<int> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
+        public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
             OrderDiscount orderDiscount, string comment, Address address)
         {
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
@@ -52,7 +52,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             logger.Info($"Order id: {order.Id} added successfully !!!");
 
-            return order.Id;
+            return order;
         }
 
         public async Task UpdateAsync(int id, bool payed, bool shipped, bool closed)

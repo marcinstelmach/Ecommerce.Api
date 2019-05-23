@@ -12,6 +12,8 @@ namespace Streetwood.Infrastructure.Dto
 
         public string LastName { get; set; }
 
+        public string FullName { get; set; }
+
         public DateTime CreationDateTime { get; set; }
 
         public int PhoneNumber { get; set; }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Streetwood.Core.Constants;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -32,7 +33,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return emailTemplate;
         }
 
-        public async Task<string> PrepareNewOrderEmailAsync(Order order)
+        public async Task<string> PrepareNewOrderEmailAsync(OrderDto order)
         {
             var stringTemplate = await ReadTemplateAsync(ConstantValues.NewEmailOrderTemplate);
             var startIndex = stringTemplate.IndexOf("<!--starter-->", StringComparison.Ordinal) + 14;
@@ -65,7 +66,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return stringTemplate;
         }
 
-        public async Task<string> PrepareNewUserEmailAsync(User user)
+        public async Task<string> PrepareNewUserEmailAsync(UserDto user)
         {
             // just for test
             return await Task.FromResult($"{user.Email}, {user.FirstName}");
