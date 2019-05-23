@@ -49,7 +49,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<TokenModel> GetTokenAsync(string email, string password)
         {
-            var user = await userRepository.GetByEmailAndEnsureExistAsync(email);
+            var user = await userRepository.GetByEmailAndEnsureExistAsync(email, ErrorCode.InvalidUserCredentials);
             var hash = encrypter.GetHash(password, user.Salt);
             if (hash != user.PasswordHash)
             {
@@ -81,7 +81,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<User> CreateChangePasswordTokenAsync(string email)
         {
-            var user = await userRepository.GetByEmailAndEnsureExistAsync(email);
+            var user = await userRepository.GetByEmailAndEnsureExistAsync(email, ErrorCode.GenericNotExist(typeof(User)));
             if (user.UserStatus == UserStatus.Deactivated)
             {
                 throw new StreetwoodException(ErrorCode.AccessingDeactivatedUser);

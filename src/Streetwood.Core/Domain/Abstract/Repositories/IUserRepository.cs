@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Exceptions;
 
 namespace Streetwood.Core.Domain.Abstract.Repositories
 {
@@ -9,6 +10,6 @@ namespace Streetwood.Core.Domain.Abstract.Repositories
 
         Task<User> GetByEmailAsync(string email);
 
-        Task<User> GetByEmailAndEnsureExistAsync(string email);
+        Task<User> GetByEmailAndEnsureExistAsync(string email, ErrorCode errorCode);
     }
 }

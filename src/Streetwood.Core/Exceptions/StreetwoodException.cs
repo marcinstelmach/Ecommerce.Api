@@ -7,7 +7,7 @@ namespace Streetwood.Core.Exceptions
         public ErrorCode ErrorCode { get; set; }
 
         public StreetwoodException(ErrorCode errorCode)
-            : this(errorCode, string.Empty)
+            : this(errorCode, errorCode.Message)
         {
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Abstract.Repositories;
@@ -27,7 +26,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
         public async Task<User> GetByEmailAsync(string email)
             => await dbContext.Users.SingleOrDefaultAsync(s => s.Email == email);
 
-        public async Task<User> GetByEmailAndEnsureExistAsync(string email)
-            => await dbContext.Users.FindAndEnsureSingleAsync(s => s.Email == email, ErrorCode.InvalidUserCredentials);
+        public async Task<User> GetByEmailAndEnsureExistAsync(string email, ErrorCode errorCode)
+            => await dbContext.Users.FindAndEnsureSingleAsync(s => s.Email == email, errorCode);
     }
 }
