@@ -23,7 +23,6 @@ namespace Streetwood.Core.Exceptions
         {
         }
 
-
         public static ErrorCode GenericNotExist(Type type, string message = null) =>
             new ErrorCode($"{type.Name}NotExist", message);
 

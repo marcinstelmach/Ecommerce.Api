@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +9,7 @@ namespace Streetwood.Core.Extensions
 {
     public static class AuthExtensions
     {
-        public static void AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtAuth(this IServiceCollection services)
         {
             var options = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>().Value;
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

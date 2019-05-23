@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace Streetwood.Infrastructure.Commands.Models.Password
+namespace Streetwood.Infrastructure.Commands.Models.Email
 {
     public class SendPasswordResetEmailCommandModel : IRequest
     {

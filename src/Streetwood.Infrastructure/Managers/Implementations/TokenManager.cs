@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -29,7 +30,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
                 new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimeStamp().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimeStamp().ToString(CultureInfo.InvariantCulture)),
                 new Claim(ClaimTypes.Role, role)
             };
 
@@ -66,7 +67,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return userId;
         }
 
-        private string GetRefreshToken()
+        private static string GetRefreshToken()
         {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())

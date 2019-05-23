@@ -10,7 +10,7 @@ namespace Streetwood.Infrastructure.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<StringGenerator>().As<IStringGenerator>().InstancePerLifetimeScope();
-            builder.RegisterType<Encrypter>().As<IEncrypter>().InstancePerLifetimeScope();
+            builder.RegisterType<PasswordEncrypter>().As<IEncrypter>().InstancePerLifetimeScope();
             builder.RegisterType<TokenManager>().As<ITokenManager>().InstancePerLifetimeScope();
             builder.RegisterType<PathManager>().As<IPathManager>().InstancePerLifetimeScope();
             builder.RegisterType<FileManager>().As<IFileManager>().InstancePerLifetimeScope();

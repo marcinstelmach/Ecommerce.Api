@@ -43,7 +43,7 @@ namespace Streetwood.API
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
-            services.AddJwtAuth(Configuration);
+            services.AddJwtAuth();
             services.AddStreetwoodContext();
             services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
             services.AddMemoryCache();

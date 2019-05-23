@@ -12,6 +12,5 @@ namespace Streetwood.Infrastructure.Queries.Models.ProductCategory
         {
             Id = id;
         }
-
     }
 }

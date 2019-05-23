@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.Infrastructure.Commands.Models.Email;
 using Streetwood.Infrastructure.Commands.Models.Password;
 
 namespace Streetwood.API.Controllers

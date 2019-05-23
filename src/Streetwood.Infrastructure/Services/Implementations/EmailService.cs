@@ -10,23 +10,23 @@ namespace Streetwood.Infrastructure.Services.Implementations
     {
         private readonly IEmailTemplatesManager emailTemplatesManager;
         private readonly IEmailManager emailManager;
-        private readonly ILogger logger;
 
-        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager, ILogger logger)
+        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager)
         {
             this.emailTemplatesManager = emailTemplatesManager;
             this.emailManager = emailManager;
-            this.logger = logger;
         }
 
         public async Task SendNewOrderEmailAsync(Order order)
         {
-            logger.Info("Sending Email - New order");
+            var template = await emailTemplatesManager.PrepareNewOrderEmailAsync(order);
+            await emailManager.SendAsync(order.User.Email, order.User.FullName, $"New order no.{order.Id}", template);
         }
 
         public async Task SendNewUserEmailAsync(User user)
         {
-            logger.Info("Sending Email for new user");
+            var template = await emailTemplatesManager.PrepareNewUserEmailAsync(user);
+            await emailManager.SendAsync(user.FirstName, user.FullName, "Welcome in streetwood !", template);
         }
 
         public async Task SendForgottenPasswordEmailAsync(User user)

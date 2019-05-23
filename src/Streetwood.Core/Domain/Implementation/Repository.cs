@@ -59,7 +59,6 @@ namespace Streetwood.Core.Domain.Implementation
             {
                 throw new StreetwoodException(ErrorCode.CannotSaveDatabase, ex.Message, ex);
             }
-            
         }
     }
 }

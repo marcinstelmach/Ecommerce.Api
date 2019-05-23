@@ -67,7 +67,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public async Task<string> PrepareNewUserEmailAsync(User user)
         {
-            throw new NotImplementedException();
+            // just for test
+            return await Task.FromResult($"{user.Email}, {user.FirstName}");
         }
 
         public async Task<string> PrepareForgottenPasswordEmailAsync(User user)

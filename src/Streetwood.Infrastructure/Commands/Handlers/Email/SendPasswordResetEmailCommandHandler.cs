@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using MediatR;
 using NLog;
-using Streetwood.Infrastructure.Commands.Models.Password;
+using Streetwood.Infrastructure.Commands.Models.Email;
 using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
-namespace Streetwood.Infrastructure.Commands.Handlers.Password
+namespace Streetwood.Infrastructure.Commands.Handlers.Email
 {
     public class SendPasswordResetEmailCommandHandler : IRequestHandler<SendPasswordResetEmailCommandModel>
     {
@@ -27,7 +27,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Password
             var user = await userQueryService.CreateChangePasswordTokenAsync(request.Email);
 
             await emailService.SendForgottenPasswordEmailAsync(user);
-            logger.Info($"Successfully send password");
+            logger.Info("Successfully send password");
             return Unit.Value;
         }
     }

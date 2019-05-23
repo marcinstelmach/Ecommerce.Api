@@ -29,6 +29,5 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
 
         public async Task<User> GetByEmailAndEnsureExistAsync(string email)
             => await dbContext.Users.FindAndEnsureSingleAsync(s => s.Email == email, ErrorCode.InvalidUserCredentials);
-
     }
 }

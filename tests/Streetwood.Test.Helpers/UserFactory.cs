@@ -12,7 +12,7 @@ namespace Streetwood.Test.Helpers
         public static User CreateUser()
         {
             var user = new User("test@gmail.com", "John", "Smith");
-            user.SetPassword("1qaz@WSX", new Encrypter());
+            user.SetPassword("1qaz@WSX", new PasswordEncrypter());
             return user;
         }
 
