@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract;
@@ -16,19 +17,22 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
         private readonly IShipmentQueryService shipmentQueryService;
         private readonly IOrderDiscountQueryService orderDiscountQueryService;
         private readonly IProductOrderQueryService productOrderQueryService;
+        private readonly IAddressQueryService addressQueryService;
         private readonly IOrderCommandService orderCommandService;
         private readonly IEmailService emailService;
         private readonly IMapper mapper;
 
         public AddOrderCommandHandler(IUserQueryService userQueryService, IShipmentQueryService shipmentQueryService,
             IOrderDiscountQueryService orderDiscountQueryService, IProductOrderQueryService productOrderQueryService,
-            IOrderCommandService orderCommandService, IEmailService emailService, IMapper mapper)
+            IAddressQueryService addressQueryService, IOrderCommandService orderCommandService, IEmailService emailService,
+            IMapper mapper)
         {
             this.userQueryService = userQueryService;
             this.shipmentQueryService = shipmentQueryService;
             this.orderDiscountQueryService = orderDiscountQueryService;
             this.productOrderQueryService = productOrderQueryService;
             this.orderCommandService = orderCommandService;
+            this.addressQueryService = addressQueryService;
             this.emailService = emailService;
             this.mapper = mapper;
         }
@@ -40,8 +44,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var productOrders = await productOrderQueryService.CreateAsync(request.Products);
             var shipment = await shipmentQueryService.GetRawAsync(request.ShipmentId);
             var orderDiscount = await orderDiscountQueryService.GetRawByCodeAsync(request.PromoCode);
-            var address = new Core.Domain.Entities.Address(request.Address.Street, request.Address.City,
-                request.Address.Country, request.Address.PostCode, request.Address.PhoneNumber);
+            var address = await addressQueryService.GetAsync(request.Address, request.AddressId); 
 
             var order = await orderCommandService.AddAsync(user, productOrders, shipment, orderDiscount, request.Comment, address);
             await emailService.SendNewOrderEmailAsync(mapper.Map<OrderDto>(order));
