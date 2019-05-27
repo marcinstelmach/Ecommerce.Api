@@ -44,7 +44,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var productOrders = await productOrderQueryService.CreateAsync(request.Products);
             var shipment = await shipmentQueryService.GetRawAsync(request.ShipmentId);
             var orderDiscount = await orderDiscountQueryService.GetRawByCodeAsync(request.PromoCode);
-            var address = await addressQueryService.GetAsync(request.Address, request.AddressId); 
+            var address = await addressQueryService.GetAsync(request.Address, request.AddressId, request.UserId); 
 
             var order = await orderCommandService.AddAsync(user, productOrders, shipment, orderDiscount, request.Comment, address);
             await emailService.SendNewOrderEmailAsync(mapper.Map<OrderDto>(order));

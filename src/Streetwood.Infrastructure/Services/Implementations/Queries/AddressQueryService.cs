@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
@@ -13,13 +14,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
     internal class AddressQueryService : IAddressQueryService
     {
         private readonly IUserRepository userRepository;
-        private readonly IAddressRepository addressRepository;
         private readonly IMapper mapper;
 
-        public AddressQueryService(IUserRepository userRepository, IAddressRepository addressRepository, IMapper mapper)
+        public AddressQueryService(IUserRepository userRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
-            this.addressRepository = addressRepository;
             this.mapper = mapper;
         }
 
@@ -31,14 +30,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<IList<AddressDto>>(addresses);
         }
 
-        public async Task<Address> GetAsync(Guid id)
-           => await addressRepository.GetAndEnsureExistAsync(id);
-
-        public async Task<Address> GetAsync(NewAddressDto addressDto, Guid? id)
+        public async Task<Address> GetAsync(NewAddressDto addressDto, Guid? id, Guid userId)
         {
             if (id != null)
             {
-                return await addressRepository.GetAndEnsureExistAsync(id.Value);
+                var user = await userRepository.GetAndEnsureExistAsync(userId);
+                return user.Orders.Select(s => s.Address).EnsureSingleExists(s => s.Id == id.Value);
             }
 
             return new Address(addressDto.Street, addressDto.City, addressDto.Country, addressDto.PostCode, addressDto.PhoneNumber);

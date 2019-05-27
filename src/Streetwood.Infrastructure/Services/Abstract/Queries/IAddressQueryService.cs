@@ -10,8 +10,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
     {
         Task<IList<AddressDto>> GetByUserAsync(Guid userId);
 
-        Task<Address> GetAsync(Guid id);
-
-        Task<Address> GetAsync(NewAddressDto addressDto, Guid? id);
+        Task<Address> GetAsync(NewAddressDto addressDto, Guid? id, Guid userId);
     }
 }
