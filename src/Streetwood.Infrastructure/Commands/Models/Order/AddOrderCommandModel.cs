@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
+using Streetwood.Infrastructure.CustomValidators;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
 {
+    [AddOrderAddressValidator]
     public class AddOrderCommandModel : IRequest<int>
     {
         [Required]
@@ -17,8 +19,9 @@ namespace Streetwood.Infrastructure.Commands.Models.Order
         [Required]
         public Guid UserId { get; protected set; }
 
-        [Required]
         public NewAddressDto Address { get; set; }
+
+        public Guid? AddressId { get; set; }
 
         public string Comment { get; set; }
 
