@@ -38,7 +38,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             if (id != null)
             {
                 var user = await userRepository.GetAndEnsureExistAsync(userId);
-                return user.Orders.Select(s => s.Address).EnsureSingleExists(s => s.Id == id.Value);
+                return user.Orders
+                    .Select(s => s.Address)
+                    .Distinct()
+                    .EnsureSingleExists(s => s.Id == id.Value);
             }
 
             return new Address(addressDto.Street, addressDto.City, addressDto.Country, addressDto.PostCode, addressDto.PhoneNumber);
