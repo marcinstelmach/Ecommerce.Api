@@ -25,7 +25,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<AddressDto>> GetByUserAsync(Guid userId)
         {
             var user = await userRepository.GetAndEnsureExistAsync(userId);
-            var addresses = user.Orders.Select(s => s.Address);
+            var addresses = user
+                .Orders
+                .Select(s => s.Address)
+                .Distinct();
 
             return mapper.Map<IList<AddressDto>>(addresses);
         }
