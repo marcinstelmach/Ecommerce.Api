@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.User;
 using Streetwood.Infrastructure.Queries.Models.User;
@@ -13,27 +13,27 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public UsersController(IMediator mediator)
+        public UsersController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetUsersQueryModel()));
+            => Ok(await bus.SendAsync(new GetUsersQueryModel()));
 
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await mediator.Send(new GetUserByIdQueryModel(id, User.GetUserId())));
+            => Ok(await bus.SendAsync(new GetUserByIdQueryModel(id, User.GetUserId())));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddUserCommandModel model)
         {
-            await mediator.Send(model);
+            await bus.SendAsync(model);
             return Accepted();
         }
 
@@ -41,7 +41,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id)
         {
-            await mediator.Send(new EraseUserDataCommandModel(id));
+            await bus.SendAsync(new EraseUserDataCommandModel(id));
             return Accepted();
         }
 
@@ -49,7 +49,7 @@ namespace Streetwood.API.Controllers
         [Authorize]
         public async Task<IActionResult> Put()
         {
-            await mediator.Send(new EraseUserDataCommandModel(User.GetUserId()));
+            await bus.SendAsync(new EraseUserDataCommandModel(User.GetUserId()));
             return Accepted();
         }
     }

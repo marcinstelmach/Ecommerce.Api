@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.Product;
 
 namespace Streetwood.API.Controllers
@@ -13,11 +13,11 @@ namespace Streetwood.API.Controllers
     [Authorize(Roles = "Admin")]
     public class ImagesController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public ImagesController(IMediator mediator)
+        public ImagesController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpPost("{id}/{isMain}")]
@@ -28,14 +28,14 @@ namespace Streetwood.API.Controllers
                 return BadRequest("Missing file");
             }
 
-            await mediator.Send(new AddProductImageCommandModel(id, file, isMain));
+            await bus.SendAsync(new AddProductImageCommandModel(id, file, isMain));
             return Accepted();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            await mediator.Send(new DeleteImageCommandModel(id));
+            await bus.SendAsync(new DeleteImageCommandModel(id));
             return Accepted();
         }
     }

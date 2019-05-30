@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Streetwood.API.Bus;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
 using Streetwood.Core.Extensions;
@@ -47,6 +48,7 @@ namespace Streetwood.API
             services.AddStreetwoodContext();
             services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
             services.AddMemoryCache();
+            services.AddScoped<IBus, Bus.MediatorBus>();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.OrderDiscount;
 using Streetwood.Infrastructure.Queries.Models.OrderDiscount;
 
@@ -13,28 +13,28 @@ namespace Streetwood.API.Controllers
     [Authorize(Roles = "Admin")]
     public class OrderDiscountsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public OrderDiscountsController(IMediator mediator)
+        public OrderDiscountsController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetOrderDiscountsQueryModel()));
+            => Ok(await bus.SendAsync(new GetOrderDiscountsQueryModel()));
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderDiscountCommandModel model)
         {
-            await mediator.Send(model);
+            await bus.SendAsync(model);
             return Accepted();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateOrderDiscountCommandModel model)
         {
-            await mediator.Send(model.SetId(id));
+            await bus.SendAsync(model.SetId(id));
             return Accepted();
         }
     }

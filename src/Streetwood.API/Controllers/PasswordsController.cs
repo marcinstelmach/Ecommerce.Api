@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.Email;
 using Streetwood.Infrastructure.Commands.Models.Password;
 
@@ -10,21 +10,21 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class PasswordsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public PasswordsController(IMediator mediator)
+        public PasswordsController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
-            => Ok(await mediator.Send(new SendPasswordResetEmailCommandModel(email)));
+            => Ok(await bus.SendAsync(new SendPasswordResetEmailCommandModel(email)));
 
         [HttpPost]
         public async Task<IActionResult> Post(UpdatePasswordCommandModel model)
         {
-            await mediator.Send(model);
+            await bus.SendAsync(model);
             return Accepted();
         }
     }

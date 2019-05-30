@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.Shipment;
 using Streetwood.Infrastructure.Queries.Models.Shipment;
 
@@ -12,26 +12,26 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class ShipmentsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public ShipmentsController(IMediator mediator)
+        public ShipmentsController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetShipmentsQueryModel()));
+            => Ok(await bus.SendAsync(new GetShipmentsQueryModel()));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await mediator.Send(new GetShipmentQueryModel(id)));
+            => Ok(await bus.SendAsync(new GetShipmentQueryModel(id)));
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddShipmentCommandModel model)
         {
-            await mediator.Send(model);
+            await bus.SendAsync(model);
             return Accepted();
         }
 
@@ -39,7 +39,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateShipmentCommandModel model)
         {
-            await mediator.Send(model.SetId(id));
+            await bus.SendAsync(model.SetId(id));
             return Accepted();
         }
 
@@ -47,7 +47,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteShipmentCommandModel(id));
+            await bus.SendAsync(new DeleteShipmentCommandModel(id));
             return Accepted();
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Queries.Models.User;
 
 namespace Streetwood.API.Controllers
@@ -9,19 +9,19 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AuthUserQueryModel model)
-            => Ok(await mediator.Send(model));
+            => Ok(await bus.SendAsync(model));
 
         [HttpPost("refresh")]
         public async Task<IActionResult> Post([FromBody] RefreshTokenQueryModel model)
-            => Ok(await mediator.Send(model));
+            => Ok(await bus.SendAsync(model));
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.CharmCategory;
 using Streetwood.Infrastructure.Queries.Models.CharmCategory;
 
@@ -12,26 +12,26 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class CharmCategoriesController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public CharmCategoriesController(IMediator mediator)
+        public CharmCategoriesController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetCharmCategoriesWithCharmsQueryModel()));
+            => Ok(await bus.SendAsync(new GetCharmCategoriesWithCharmsQueryModel()));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
-            => Ok(await mediator.Send(new GetCharmCategoryWithCharmsQueryModel(id)));
+            => Ok(await bus.SendAsync(new GetCharmCategoryWithCharmsQueryModel(id)));
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddCharmCategoryCommandModel model)
         {
-            await mediator.Send(model);
+            await bus.SendAsync(model);
             return Accepted();
         }
 
@@ -39,7 +39,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateCharmCategoryCommandModel model)
         {
-            await mediator.Send(model.SetId(id));
+            await bus.SendAsync(model.SetId(id));
             return Accepted();
         }
 
@@ -47,7 +47,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            await mediator.Send(new DeleteCharmCategoryCommandModel(id));
+            await bus.SendAsync(new DeleteCharmCategoryCommandModel(id));
             return Accepted();
         }
     }

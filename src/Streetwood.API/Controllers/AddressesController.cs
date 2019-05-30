@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Queries.Models.Address;
 
@@ -12,15 +12,15 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class AddressesController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public AddressesController(IMediator mediator)
+        public AddressesController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await mediator.Send(new GetUserAddressesQueryModel(User.GetUserId())));
+            => Ok(await bus.SendAsync(new GetUserAddressesQueryModel(User.GetUserId())));
     }
 }

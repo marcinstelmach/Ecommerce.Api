@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streetwood.API.Bus;
 using Streetwood.Infrastructure.Commands.Models.Charm;
 using Streetwood.Infrastructure.Queries.Models.Charm;
 
@@ -13,27 +13,27 @@ namespace Streetwood.API.Controllers
     [ApiController]
     public class CharmsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IBus bus;
 
-        public CharmsController(IMediator mediator)
+        public CharmsController(IBus bus)
         {
-            this.mediator = mediator;
+            this.bus = bus;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await mediator.Send(new GetCharmByIdQueryModel(id)));
+            => Ok(await bus.SendAsync(new GetCharmByIdQueryModel(id)));
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddCharmCommandModel model)
-            => Ok(await mediator.Send(model));
+            => Ok(await bus.SendAsync(model));
 
         [HttpPost("{id}/image/")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromRoute]Guid id, IFormFile file)
         {
-            await mediator.Send(new AddCharmImageCommandModel(id, file));
+            await bus.SendAsync(new AddCharmImageCommandModel(id, file));
             return Accepted();
         }
 
@@ -41,7 +41,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCharmCommandModel model)
         {
-            await mediator.Send(model.SetId(id));
+            await bus.SendAsync(model.SetId(id));
             return Accepted();
         }
 
@@ -49,7 +49,7 @@ namespace Streetwood.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteCharmCommandModel(id));
+            await bus.SendAsync(new DeleteCharmCommandModel(id));
             return Accepted();
         }
     }
