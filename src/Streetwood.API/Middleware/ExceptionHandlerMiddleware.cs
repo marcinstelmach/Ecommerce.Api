@@ -3,8 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NLog;
 using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Managers.Abstract;
 
@@ -17,7 +17,7 @@ namespace Streetwood.API.Middleware
         private readonly IQueueManager queueManager;
         private readonly IHostingEnvironment environment;
 
-        public ExceptionHandlerMiddleware(RequestDelegate nextDelegate, ILogger logger, IQueueManager queueManager,
+        public ExceptionHandlerMiddleware(RequestDelegate nextDelegate, ILogger<ExceptionHandlerMiddleware> logger, IQueueManager queueManager,
             IHostingEnvironment environment)
         {
             this.nextDelegate = nextDelegate;
@@ -35,13 +35,13 @@ namespace Streetwood.API.Middleware
             catch (StreetwoodException exception)
             {
                 var message = PrepareExceptionMessage(exception);
-                logger.Warn($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
+                logger.LogWarning($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
                 await HandleException(context, exception);
             }
             catch (Exception exception)
             {
                 var message = PrepareExceptionMessage(exception);
-                logger.Error(exception, message);
+                logger.LogError(exception, message);
                 if (!environment.IsDevelopment())
                 {
                     await queueManager.AddMessageAsync(message);

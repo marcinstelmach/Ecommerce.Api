@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NLog;
+using Microsoft.Extensions.Logging;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
@@ -14,7 +14,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         private readonly ILogger logger;
         private readonly IOrderRepository orderRepository;
 
-        public OrderCommandService(ILogger logger, IOrderRepository orderRepository)
+        public OrderCommandService(ILogger<OrderCommandService> logger, IOrderRepository orderRepository)
         {
             this.logger = logger;
             this.orderRepository = orderRepository;
@@ -24,7 +24,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             OrderDiscount orderDiscount, string comment, Address address)
         {
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
-            logger.Info($"Creating new order for products: {productNames}");
+            logger.LogInformation($"Creating new order for products: {productNames}");
 
             if (!productOrders.Any())
             {
@@ -45,12 +45,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             }
 
             var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, finalPrice, comment, address);
-            logger.Info($"Trying add order {order.Id}, with base price {basePrice}...");
+            logger.LogInformation($"Trying add order {order.Id}, with base price {basePrice}...");
 
             await orderRepository.AddAsync(order);
             await orderRepository.SaveChangesAsync();
 
-            logger.Info($"Order id: {order.Id} added successfully !!!");
+            logger.LogInformation($"Order id: {order.Id} added successfully !!!");
 
             return order;
         }
