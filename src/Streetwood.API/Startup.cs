@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
-using NLog.Web;
 using Streetwood.API.Bus;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
@@ -64,11 +62,8 @@ namespace Streetwood.API
             return serviceProvider;
         }
 
-        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime)
         {
-            loggerFactory.AddNLog();
-            HostingEnvironment.ConfigureNLog($"nlog.{HostingEnvironment.EnvironmentName}.config");
-
             if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsStaging())
             {
                 app.UseDeveloperExceptionPage();

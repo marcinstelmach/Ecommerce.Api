@@ -16,7 +16,6 @@ namespace Streetwood.API.Bus
             this.logger = logger;
         }
 
-
         public Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
             var type = request.GetType();
