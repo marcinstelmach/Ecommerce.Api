@@ -18,16 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="nlog.Production.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\Images\Charms\" />
     <Folder Include="wwwroot\Images\Products\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="nlog.Production.config" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +29,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0-dev-00838" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -46,12 +41,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Streetwood.Infrastructure\Streetwood.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="nlog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

@@ -49,7 +49,6 @@ namespace Streetwood.API
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterInstance(logger).As<ILogger>();
             builder.RegisterModule<RepositoriesModule>();
             builder.RegisterModule<ManagersModule>();
             builder.RegisterModule<MediaTrModule>();
