@@ -47,6 +47,7 @@ namespace Streetwood.API
             services.AddStreetwoodContext();
             services.AddSwaggerGen(s => { s.SwaggerDoc("v1", new Info { Title = "Streetwood API", Version = "v1" }); });
             services.AddMemoryCache();
+            services.AddHttpContextAccessor();
             services.AddScoped<IBus, MediatorBus>();
 
             var builder = new ContainerBuilder();
