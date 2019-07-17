@@ -16,10 +16,13 @@ namespace Streetwood.API
                     .MinimumLevel.Information()
                     .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                     .WriteTo.File(
-                        path: ConstantValues.LogPath,
+                        path: GetLogPath(hostingContext.HostingEnvironment),
                         outputTemplate: ConstantValues.LogTemplate,
                         rollingInterval: RollingInterval.Day,
                         rollOnFileSizeLimit: true));
         }
+
+        private static string GetLogPath(IHostingEnvironment env)
+            => env.IsDevelopment() ? ConstantValues.DevelopmentLogPath : ConstantValues.ProductionLogPath;
     }
 }

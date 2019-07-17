@@ -4,7 +4,9 @@
     {
         public static string LogTemplate => "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level} - {Message:lj}{NewLine}{Exception}";
 
-        public static string LogPath => "../Log/streetwood.log";
+        public static string DevelopmentLogPath => "../Log/streetwood.log";
+
+        public static string ProductionLogPath => "../../Log/streetwood.log";
 
         public static string PriceDecimalType => "decimal(18,2)";
 

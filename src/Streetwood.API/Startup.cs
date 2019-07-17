@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Streetwood.API.Bus;
 using Streetwood.API.Filters;
 using Streetwood.API.Middleware;
@@ -14,6 +15,7 @@ using Streetwood.Core.Extensions;
 using Streetwood.Core.Modules;
 using Streetwood.Infrastructure.Modules;
 using Swashbuckle.AspNetCore.Swagger;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Streetwood.API
 {
@@ -38,7 +40,7 @@ namespace Streetwood.API
         {
             logger.LogInformation("Application (re)started.");
             services.AddMvc(opt => opt.Filters.Add(typeof(ValidationActionFilter)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
             services.AddJwtAuth();
@@ -61,8 +63,10 @@ namespace Streetwood.API
             return serviceProvider;
         }
 
-        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime)
+        public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddSerilog();
+
             if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsStaging())
             {
                 app.UseDeveloperExceptionPage();
