@@ -6,7 +6,7 @@
 
         public static string DevelopmentLogPath => "../Log/streetwood.log";
 
-        public static string ProductionLogPath => "../../Log/streetwood.log";
+        public static string ProductionLogPath => "./Log/streetwood.log";
 
         public static string PriceDecimalType => "decimal(18,2)";
 
