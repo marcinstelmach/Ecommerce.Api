@@ -10,10 +10,11 @@ This is a ecommerce api, which can be used for many online shops. It contain fea
 
 # Dev info
 Technologies:
-* .NET CORE 2.1
-* .NET CORE Framework
+* .NET CORE 2.2
+* .Entity Framework CORE
 * MediatR
 * Autofac
+* Serilog
 * CQRS (one database :))
 * Smart domain objects (DDD)
 
