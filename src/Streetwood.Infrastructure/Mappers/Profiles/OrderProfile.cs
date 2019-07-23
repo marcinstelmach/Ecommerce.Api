@@ -12,7 +12,7 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
             CreateMap<Order, OrderDto>()
                 .ForMember(dest => dest.PayedDateTime, opt => opt.MapFrom(src => src.PayedDateTime ?? default))
                 .ForMember(dest => dest.ClosedDateTime, opt => opt.MapFrom(src => src.ClosedDateTime ?? default))
-                .ForMember(dest => dest.PayedDateTime, opt => opt.MapFrom(src => src.PayedDateTime ?? default));
+                .ForMember(dest => dest.ShipmentDateTime, opt => opt.MapFrom(src => src.ShipmentDateTime ?? default));
 
             CreateMap<ProductOrder, ProductOrderDto>()
                 .ForMember(dest => dest.ProductOrderCharms, opt => opt.MapFrom(src => src.ProductOrderCharms));
