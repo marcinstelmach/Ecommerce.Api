@@ -35,7 +35,8 @@ namespace Streetwood.Convention.Tests
                 .Where(s => s.ReturnType.IsAssignableFrom(typeof(Task<>)))
                 .Where(s => !s.ReturnType.IsEquivalentTo(typeof(object))) // because of System methods
                 .Where(s => !s.Name.EndsWith("Async"))
-                .Where(s => s.DisplayName() != "DbContext.Find"); // because of EF method
+                .Where(s => s.DisplayName() != "DbContext.Find")
+                .ToList(); // because of EF method
 
             // assert
             if (!result.IsNullOrEmpty())

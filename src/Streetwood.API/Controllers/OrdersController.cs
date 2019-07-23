@@ -6,6 +6,7 @@ using Streetwood.API.Bus;
 using Streetwood.API.Filters;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.Order;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Queries.Models.Order;
 
 namespace Streetwood.API.Controllers
@@ -41,7 +42,7 @@ namespace Streetwood.API.Controllers
         public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
         {
             var orderId = await bus.SendAsync(model.SetUserId(User.GetUserId()));
-            return Ok(new { orderId });
+            return Ok(new NewOrderDto(orderId));
         }
 
         [HttpPut("{id}")]

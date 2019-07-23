@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Castle.Core.Internal;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
@@ -32,6 +33,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<Charm>> GetRawByIdsAsync(IList<Guid> ids)
         {
+            if (ids.IsNullOrEmpty())
+            {
+                return null;
+            }
+
             var charms = await charmRepository.GetByIdsAsync(ids);
 
             if (!charms.Any())

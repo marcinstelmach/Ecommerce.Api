@@ -13,7 +13,7 @@ namespace Streetwood.Integration.Tests.DbInitializations
 
             dbContext.CharmCategories.AddRange(CharmCategoryFactory.GetCharmCategoriesWithCharms(3, 2));
 
-
+            dbContext.Products.AddRange(ProductFactory.GetNonCharmProducts(3));
 
             dbContext.SaveChanges();
         }
