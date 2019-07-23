@@ -44,5 +44,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void AddCharm(Charm charm)
             => charms.Add(charm);
+
+        public void AddCharms(IEnumerable<Charm> newCharms)
+            => charms.AddRange(newCharms);
     }
 }

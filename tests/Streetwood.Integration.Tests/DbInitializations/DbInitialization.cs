@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Streetwood.Core.Domain.Abstract;
-using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Domain.Enums;
+﻿using Streetwood.Core.Domain.Abstract;
 using Streetwood.Test.Helpers;
 
 namespace Streetwood.Integration.Tests.DbInitializations
@@ -10,18 +7,13 @@ namespace Streetwood.Integration.Tests.DbInitializations
     {
         public static void InitDb(IDbContext dbContext)
         {
-            var shipments = new List<Shipment>
-            {
-                new Shipment("Kurier", "Courier", "SomeDescription", "SomeDescription", 15, ShipmentType.Courier),
-                new Shipment("Osobisty", "Personal", "SomeDescription", "SomeDescription", 0, ShipmentType.Personal),
-                new Shipment("Pobranie", "Pay on delivery", "SomeDescription", "SomeDescription", 15,
-                    ShipmentType.CashOnDelivery)
-            };
+            dbContext.Shipments.AddRange(ShipmentFactory.GetShipments());
 
-            dbContext.Shipments.AddRange(shipments);
+            dbContext.Users.Add(UserFactory.CreateUser());
 
-            var user = UserFactory.CreateUser();
-            dbContext.Users.Add(user);
+            dbContext.CharmCategories.AddRange(CharmCategoryFactory.GetCharmCategoriesWithCharms(3, 2));
+
+
 
             dbContext.SaveChanges();
         }

@@ -22,7 +22,7 @@ namespace Streetwood.Core.Domain.Entities
         {
         }
 
-        public void AddProductCategory(IEnumerable<DiscountCategory> discountCategoriess)
-            => this.discountCategories.AddRange(discountCategoriess);
+        public void AddProductCategory(IEnumerable<DiscountCategory> newDiscountCategories)
+            => this.discountCategories.AddRange(newDiscountCategories);
     }
 }

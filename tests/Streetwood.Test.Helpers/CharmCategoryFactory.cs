@@ -10,12 +10,25 @@ namespace Streetwood.Test.Helpers
             return new CharmCategory("Emoji", "Emoji");
         }
 
-        public static List<CharmCategory> GetCharmCategories(int count)
+        public static IEnumerable<CharmCategory> GetCharmCategories(int count)
         {
             var charmCategories = new List<CharmCategory>();
             for (int i = 0; i < count; i++)
             {
                 charmCategories.Add(new CharmCategory($"Charm Category {i}", $"Charm Category {i}"));
+            }
+
+            return charmCategories;
+        }
+
+        public static IEnumerable<CharmCategory> GetCharmCategoriesWithCharms(int categories, int charmsInCategory)
+        {
+            var charmCategories = new List<CharmCategory>();
+            for (var i = 0; i < categories; i++)
+            {
+                var charmCategory = new CharmCategory($"Charm Category {i}", $"Charm Category {i}");
+                charmCategory.AddCharms(CharmFactory.GetCharms(charmsInCategory));
+                charmCategories.Add(charmCategory);
             }
 
             return charmCategories;

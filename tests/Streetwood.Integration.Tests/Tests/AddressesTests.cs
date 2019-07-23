@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Streetwood.API;
@@ -10,12 +7,12 @@ using Xunit;
 
 namespace Streetwood.Integration.Tests.Tests
 {
-    public class AddressTests : IClassFixture<InMemoryWebApplicationFactory<Startup>>
+    public class AddressesTests : IClassFixture<InMemoryWebApplicationFactory<Startup>>
     {
         private readonly InMemoryWebApplicationFactory<Startup> factory;
         private readonly string baseEndpoint;
 
-        public AddressTests(InMemoryWebApplicationFactory<Startup> factory)
+        public AddressesTests(InMemoryWebApplicationFactory<Startup> factory)
         {
             this.factory = factory;
             baseEndpoint = "api/Addresses";
