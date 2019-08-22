@@ -1,4 +1,5 @@
 ﻿using System;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Queries.Models.Order;
 
 namespace Streetwood.Infrastructure.Filters
@@ -19,6 +20,10 @@ namespace Streetwood.Infrastructure.Filters
 
         public int? Take { get; set; }
 
+        public Guid UserId { get; }
+
+        public UserType UserType { get; }
+
         public OrderQueryFilter(GetFilteredOrdersQueryModel filter)
         {
             Id = filter.Id;
@@ -28,6 +33,8 @@ namespace Streetwood.Infrastructure.Filters
             IsPayed = filter.IsPayed;
             IsClosed = filter.IsClosed;
             Take = filter.Take;
+            UserId = filter.UserId;
+            UserType = filter.UserType;
         }
     }
 }

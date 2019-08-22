@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.API.Bus;
 using Streetwood.API.Filters;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Dto;
@@ -24,18 +25,18 @@ namespace Streetwood.API.Controllers
 
         // admin can see all, but customer only his own
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get(int id)
             => Ok(await bus.SendAsync(new GetOrderQueryModel(id)));
 
         [HttpGet]
         [IgnoreValidation]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Get([FromQuery] int? take,
                 [FromQuery] int? id, [FromQuery] DateTime? dateFrom,
                 [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
                 [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
-            => Ok(await bus.SendAsync(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take)));
+            => Ok(await bus.SendAsync(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take, User.GetUserId(), User.GetUserType())));
 
         [HttpPost]
         [Authorize]

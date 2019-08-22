@@ -6,6 +6,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Domain.Enums;
+using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Filters;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -44,7 +46,17 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             if (filter.Id.HasValue)
             {
                 var order = await orders.FirstOrDefaultAsync(s => s.Id == filter.Id.Value);
+                if (filter.UserType == UserType.Customer && order.User.Id != filter.UserId)
+                {
+                   throw new StreetwoodException(ErrorCode.NoAccess);
+                }
+
                 return mapper.Map<IList<OrdersListDto>>(new List<Order> { order });
+            }
+
+            if (filter.UserType == UserType.Customer)
+            {
+                orders = orders.Where(s => s.User.Id == filter.UserId);
             }
 
             if (filter.DateFrom.HasValue)

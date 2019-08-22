@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MediatR;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.Order
@@ -21,7 +22,11 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 
         public int? Take { get; set; }
 
-        public GetFilteredOrdersQueryModel(int? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int? take)
+        public Guid UserId { get; }
+
+        public UserType UserType { get; }
+
+        public GetFilteredOrdersQueryModel(int? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int? take, Guid userId, UserType userType)
         {
             Id = id;
             DateFrom = dateFrom;
@@ -30,6 +35,8 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
             IsPayed = isPayed;
             IsClosed = isClosed;
             Take = take;
+            UserId = userId;
+            UserType = userType;
         }
 
         public void SetDateTo(DateTime? dateTo)
