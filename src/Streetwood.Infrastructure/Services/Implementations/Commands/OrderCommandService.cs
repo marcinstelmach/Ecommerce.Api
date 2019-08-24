@@ -14,7 +14,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         private readonly ILogger logger;
         private readonly IOrderRepository orderRepository;
 
-        public OrderCommandService(ILogger<OrderCommandService> logger, IOrderRepository orderRepository)
+        public OrderCommandService(ILogger<IOrderCommandService> logger, IOrderRepository orderRepository)
         {
             this.logger = logger;
             this.orderRepository = orderRepository;
@@ -23,13 +23,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
             OrderDiscount orderDiscount, string comment, Address address)
         {
-            var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
-            logger.LogInformation($"Creating new order for products: {productNames}");
-
             if (!productOrders.Any())
             {
                 throw new StreetwoodException(ErrorCode.NoProductsForNewOrder);
             }
+
+            var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
+            logger.LogInformation($"Creating new order for products: {productNames}");
 
             var basePrice = productOrders.Sum(s => (s.CurrentProductPrice + s.CharmsPrice) * s.Amount);
             if (basePrice <= 0)
