@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract;
