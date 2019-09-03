@@ -16,8 +16,8 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
         {
             // arrange
             var charms = CreateCharms(7);
-            var charmsids = charms.Select(s => s.Id).ToList();
-            var productWithCharmsOrderDtos = PrepareTest_ProductWithCharmOrderDto(charmsids);
+            var charmsIds = charms.Select(s => s.Id).ToList();
+            var productWithCharmsOrderDtos = PrepareTest_ProductWithCharmOrderDto(charmsIds);
             var sut = new ProductOrderCharmCommandService();
 
             // act

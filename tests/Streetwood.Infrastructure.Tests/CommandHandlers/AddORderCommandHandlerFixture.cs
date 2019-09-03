@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
 
         public Mock<IProductOrderQueryService> ProductOrderQueryServiceMock { get; }
 
-        public Mock<IAddressQueryService> AddressQueryServiceMOck { get; }
+        public Mock<IAddressQueryService> AddressQueryServiceMock { get; }
 
         public Mock<IOrderCommandService> OrderCommandServiceMock { get; }
 
@@ -39,12 +39,14 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             ShipmentQueryServiceMock = new Mock<IShipmentQueryService>();
             OrderDiscountQueryServiceMock = new Mock<IOrderDiscountQueryService>();
             ProductOrderQueryServiceMock = new Mock<IProductOrderQueryService>();
-            AddressQueryServiceMOck = new Mock<IAddressQueryService>();
+            AddressQueryServiceMock = new Mock<IAddressQueryService>();
             OrderCommandServiceMock = new Mock<IOrderCommandService>();
             EmailServiceMock = new Mock<IEmailService>();
             MapperMock = new Mock<IMapper>();
-            Sut = new AddOrderCommandHandler(UserQueryServiceMock.Object, ShipmentQueryServiceMock.Object, OrderDiscountQueryServiceMock.Object,
-                ProductOrderQueryServiceMock.Object, AddressQueryServiceMOck.Object, OrderCommandServiceMock.Object, EmailServiceMock.Object, MapperMock.Object);
+            Sut = new AddOrderCommandHandler(UserQueryServiceMock.Object, ShipmentQueryServiceMock.Object,
+                OrderDiscountQueryServiceMock.Object,
+                ProductOrderQueryServiceMock.Object, AddressQueryServiceMock.Object, OrderCommandServiceMock.Object,
+                EmailServiceMock.Object, MapperMock.Object);
             Request = Fixture.Build<AddOrderCommandModel>()
                 .Do(s => s.SetUserId(Guid.NewGuid()))
                 .Create();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using Streetwood.Core.Domain.Entities;
