@@ -16,17 +16,19 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
 {
     public class ProductOrderQueryServiceTests
     {
-        private readonly Mock<IProductQueryService> productQueryService;
-        private readonly Mock<ICharmQueryService> charmQueryService;
-        private readonly Mock<IProductCategoryDiscountQueryService> productCategoryDiscountQueryService;
-        private readonly IMapper mapper;
+        private readonly Mock<IProductQueryService> productQueryServiceMock;
+        private readonly Mock<ICharmQueryService> charmQueryServiceMock;
+        private readonly Mock<IProductCategoryDiscountQueryService> productCategoryDiscountQueryServiceMock;
+        private readonly IMapper mapperMock;
+        private readonly ProductOrderQueryService sut;
 
         public ProductOrderQueryServiceTests()
         {
-            productQueryService = new Mock<IProductQueryService>();
-            charmQueryService = new Mock<ICharmQueryService>();
-            productCategoryDiscountQueryService = new Mock<IProductCategoryDiscountQueryService>();
-            mapper = AutoMapperConfig.Initialize();
+            productQueryServiceMock = new Mock<IProductQueryService>();
+            charmQueryServiceMock = new Mock<ICharmQueryService>();
+            productCategoryDiscountQueryServiceMock = new Mock<IProductCategoryDiscountQueryService>();
+            mapperMock = AutoMapperConfig.Initialize();
+            sut = new ProductOrderQueryService(productQueryServiceMock.Object, charmQueryServiceMock.Object, productCategoryDiscountQueryServiceMock.Object);
         }
 
         [Fact]
@@ -34,16 +36,13 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         {
             // arrange
             var (productsWithCharmsOrderDto, products, charms, expected) = PrepareTestDataWithoutDiscount();
-            productQueryService.Setup(s => s.GetRawByIdsAsync(It.IsAny<IEnumerable<int>>())).ReturnsAsync(products);
-            charmQueryService.Setup(s => s.GetRawByIdsAsync(It.IsAny<List<Guid>>())).ReturnsAsync(charms);
-            productCategoryDiscountQueryService.Setup(s => s.GetRawActiveAsync())
+            productQueryServiceMock.Setup(s => s.GetRawByIdsAsync(It.IsAny<IEnumerable<int>>())).ReturnsAsync(products);
+            charmQueryServiceMock.Setup(s => s.GetRawByIdsAsync(It.IsAny<List<Guid>>())).ReturnsAsync(charms);
+            productCategoryDiscountQueryServiceMock.Setup(s => s.GetRawActiveAsync())
                 .ReturnsAsync(new List<ProductCategoryDiscount>());
-            productCategoryDiscountQueryService.Setup(s =>
+            productCategoryDiscountQueryServiceMock.Setup(s =>
                     s.ApplyDiscountsToProducts(It.IsAny<List<Product>>(), It.IsAny<List<ProductCategoryDiscount>>()))
                 .Returns(new List<(int, ProductCategoryDiscount)>());
-
-            var sut = new ProductOrderQueryService(productQueryService.Object, charmQueryService.Object,
-                productCategoryDiscountQueryService.Object);
 
             // act
             var result = await sut.CreateAsync(productsWithCharmsOrderDto);
@@ -55,8 +54,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 .Excluding(x => x.RuntimeType == typeof(Guid)));
         }
 
-        private (IList<ProductWithCharmsOrderDto>, IList<Product>, IList<Charm>, IList<ProductOrder>)
-            PrepareTestDataWithoutDiscount()
+        private (IList<ProductWithCharmsOrderDto>, IList<Product>, IList<Charm>, IList<ProductOrder>) PrepareTestDataWithoutDiscount()
         {
             var products = new List<Product>
             {
@@ -103,28 +101,28 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                     ProductId = 1,
                     Amount = 2,
                     Comment = "With 3 charms",
-                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms1)
+                    Charms = mapperMock.Map<List<CharmOrderDto>>(productOrderCharms1)
                 },
                 new ProductWithCharmsOrderDto
                 {
                     ProductId = 2,
                     Amount = 1,
                     Comment = "With 2 charms",
-                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms2)
+                    Charms = mapperMock.Map<List<CharmOrderDto>>(productOrderCharms2)
                 },
                 new ProductWithCharmsOrderDto
                 {
                     ProductId = 3,
                     Amount = 2,
                     Comment = "With 1 charm",
-                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms3)
+                    Charms = mapperMock.Map<List<CharmOrderDto>>(productOrderCharms3)
                 },
                 new ProductWithCharmsOrderDto
                 {
                     ProductId = 4,
                     Amount = 4,
                     Comment = "Normal product without charm",
-                    Charms = mapper.Map<List<CharmOrderDto>>(productOrderCharms4)
+                    Charms = mapperMock.Map<List<CharmOrderDto>>(productOrderCharms4)
                 }
             };
 
