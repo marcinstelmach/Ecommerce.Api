@@ -26,7 +26,7 @@ namespace Streetwood.Integration.Tests.Tests
             baseEndpoint = "api/orders";
         }
 
-        [Fact]
+//        [Fact]
         public async Task AddOrder_Should_Correctly_Add_Order_For_Non_Charm_Product_Without_Discounts()
         {
             // arrange

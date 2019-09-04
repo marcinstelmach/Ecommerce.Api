@@ -1,14 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Extensions;
-using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Integration.Tests.DbInitializations;
-using Streetwood.Test.Helpers.Mocks;
 
 namespace Streetwood.Integration.Tests
 {
