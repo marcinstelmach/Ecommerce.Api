@@ -36,6 +36,11 @@ namespace Streetwood.API.Middleware
             {
                 var message = PrepareExceptionMessage(exception);
                 logger.LogWarning($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
+                if (!environment.IsDevelopment() && exception.ErrorCode.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    await queueManager.AddMessageAsync(message);
+                }
+
                 await HandleException(context, exception);
             }
             catch (Exception exception)
