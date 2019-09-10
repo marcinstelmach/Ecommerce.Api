@@ -70,13 +70,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return productsDto;
         }
 
-        public async Task<IList<Product>> GetRawByIdsAsync(IEnumerable<int> ids)
+        public async Task<IList<Product>> GetRawByIdsAsync(IList<int> ids)
         {
             var products = await productRepository.GetByIdsAsync(ids);
 
-            if (!products.Any())
+            if (products.Count != ids.Count())
             {
-                throw new StreetwoodException(ErrorCode.OrderProductsNotFound);
+                var missingIds = ids.Except(products.Select(x => x.Id));
+                throw new StreetwoodException(ErrorCode.NotAllOrderProductsFound(missingIds));
             }
 
             return products;

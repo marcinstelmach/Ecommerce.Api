@@ -16,6 +16,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<IList<ProductWithDiscountDto>> GetAvailableWithDiscountByCategoryIdAsync(Guid id);
 
-        Task<IList<Product>> GetRawByIdsAsync(IEnumerable<int> ids);
+        Task<IList<Product>> GetRawByIdsAsync(IList<int> ids);
     }
 }

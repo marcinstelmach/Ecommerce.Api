@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Services.Abstract.Helpers;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Queries
@@ -13,17 +14,23 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         private readonly IProductQueryService productQueryService;
         private readonly ICharmQueryService charmQueryService;
         private readonly IProductCategoryDiscountQueryService productCategoryDiscountQueryService;
+        private readonly IProductOrderCharmsHelper productOrderCharmsHelper;
 
-        public ProductOrderQueryService(IProductQueryService productQueryService, ICharmQueryService charmQueryService, IProductCategoryDiscountQueryService productCategoryDiscountQueryService)
+        public ProductOrderQueryService(
+            IProductQueryService productQueryService,
+            ICharmQueryService charmQueryService,
+            IProductCategoryDiscountQueryService productCategoryDiscountQueryService,
+            IProductOrderCharmsHelper productOrderCharmsHelper)
         {
             this.productQueryService = productQueryService;
             this.charmQueryService = charmQueryService;
             this.productCategoryDiscountQueryService = productCategoryDiscountQueryService;
+            this.productOrderCharmsHelper = productOrderCharmsHelper;
         }
 
         public async Task<IList<ProductOrder>> CreateAsync(IList<ProductWithCharmsOrderDto> productsWithCharmsOrder)
         {
-            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId);
+            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId).ToList();
             var charmsIds = productsWithCharmsOrder.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
             var products = await productQueryService.GetRawByIdsAsync(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
@@ -34,15 +41,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             foreach (var productWithCharmsOrder in productsWithCharmsOrder)
             {
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
-
-                var product = products.SingleOrDefault(s => s.Id == productWithCharmsOrder.ProductId);
-                if (product == null)
-                {
-                    throw new StreetwoodException(ErrorCode.OrderProductsNotFound);
-                }
-
+                var product = products.First(s => s.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(product);
 
+                // No need to check for null because of ValueTuples
                 var discount = productsDiscounts.FirstOrDefault(s => s.Item1 == product.Id).Item2;
                 var finalPrice = product.Price;
 
@@ -55,7 +57,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                         throw new StreetwoodException(ErrorCode.ProductNotAcceptCharms);
                     }
 
-                    var productOrderCharms = CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
+                    var productOrderCharms = productOrderCharmsHelper.CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
                     var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice);
 
                     productOrder.AddProductOrderCharms(productOrderCharms);
@@ -88,24 +90,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             }
 
             return productOrders;
-        }
-
-        private List<ProductOrderCharm> CreateProductOrderCharms(IEnumerable<CharmOrderDto> charmsOrderDto, IList<Charm> charms)
-        {
-            var productOrderCharms = new List<ProductOrderCharm>();
-            foreach (var charmOrder in charmsOrderDto)
-            {
-                var charm = charms.SingleOrDefault(s => s.Id == charmOrder.CharmId);
-                if (charm == null)
-                {
-                    throw new StreetwoodException(ErrorCode.OrderCharmsNotFound);
-                }
-
-                var productCharmOrder = new ProductOrderCharm(charm, charmOrder.Sequence);
-                productOrderCharms.Add(productCharmOrder);
-            }
-
-            return productOrderCharms.OrderBy(s => s.Sequence).ToList();
         }
     }
 }

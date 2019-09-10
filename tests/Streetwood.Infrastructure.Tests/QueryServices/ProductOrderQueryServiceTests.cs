@@ -36,7 +36,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         {
             // arrange
             var (productsWithCharmsOrderDto, products, charms, expected) = PrepareTestDataWithoutDiscount();
-            productQueryServiceMock.Setup(s => s.GetRawByIdsAsync(It.IsAny<IEnumerable<int>>())).ReturnsAsync(products);
+            productQueryServiceMock.Setup(s => s.GetRawByIdsAsync(It.IsAny<IList<int>>())).ReturnsAsync(products);
             charmQueryServiceMock.Setup(s => s.GetRawByIdsAsync(It.IsAny<List<Guid>>())).ReturnsAsync(charms);
             productCategoryDiscountQueryServiceMock.Setup(s => s.GetRawActiveAsync())
                 .ReturnsAsync(new List<ProductCategoryDiscount>());
