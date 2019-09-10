@@ -55,9 +55,9 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderDiscountInUse => new ErrorCode(nameof(OrderDiscountInUse));
 
-        public static ErrorCode OrderProductsNotFound => new ErrorCode(nameof(OrderProductsNotFound));
+        public static ErrorCode OrderProductsNotFound => new ErrorCode(nameof(OrderProductsNotFound), HttpStatusCode.InternalServerError);
 
-        public static ErrorCode OrderCharmsNotFound => new ErrorCode(nameof(OrderCharmsNotFound));
+        public static ErrorCode OrderCharmsNotFound => new ErrorCode(nameof(OrderCharmsNotFound), HttpStatusCode.InternalServerError);
 
         public static ErrorCode DiscountWithThisCodeExistAlready =>
             new ErrorCode(nameof(DiscountWithThisCodeExistAlready));

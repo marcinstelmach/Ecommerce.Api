@@ -35,10 +35,19 @@ namespace Streetwood.API.Middleware
             catch (StreetwoodException exception)
             {
                 var message = PrepareExceptionMessage(exception);
-                logger.LogWarning($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
-                if (!environment.IsDevelopment() && exception.ErrorCode.StatusCode == HttpStatusCode.InternalServerError)
+                
+                if (exception.ErrorCode.StatusCode == HttpStatusCode.InternalServerError)
                 {
-                    await queueManager.AddMessageAsync(message);
+                    if (!environment.IsDevelopment())
+                    {
+                        await queueManager.AddMessageAsync(message);
+                    }
+
+                    logger.LogError($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
+                }
+                else
+                {
+                    logger.LogWarning($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
                 }
 
                 await HandleException(context, exception);
@@ -91,7 +100,7 @@ namespace Streetwood.API.Middleware
                 message += $" --- Inner exception: {exception.Message}";
             }
 
-            return $"{message}. --- Stack trace: {stackTrace}.";
+            return $"{message}. ENVIRONMENT: '{environment.EnvironmentName}'. --- Stack trace: {stackTrace}.";
         }
     }
 }
