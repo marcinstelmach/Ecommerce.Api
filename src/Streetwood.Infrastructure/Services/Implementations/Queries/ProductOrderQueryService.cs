@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract.Helpers;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -14,18 +13,18 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         private readonly IProductQueryService productQueryService;
         private readonly ICharmQueryService charmQueryService;
         private readonly IProductCategoryDiscountQueryService productCategoryDiscountQueryService;
-        private readonly IProductOrderCharmsHelper productOrderCharmsHelper;
+        private readonly IProductOrderHelper productOrderHelper;
 
         public ProductOrderQueryService(
             IProductQueryService productQueryService,
             ICharmQueryService charmQueryService,
             IProductCategoryDiscountQueryService productCategoryDiscountQueryService,
-            IProductOrderCharmsHelper productOrderCharmsHelper)
+            IProductOrderHelper productOrderHelper)
         {
             this.productQueryService = productQueryService;
             this.charmQueryService = charmQueryService;
             this.productCategoryDiscountQueryService = productCategoryDiscountQueryService;
-            this.productOrderCharmsHelper = productOrderCharmsHelper;
+            this.productOrderHelper = productOrderHelper;
         }
 
         public async Task<IList<ProductOrder>> CreateAsync(IList<ProductWithCharmsOrderDto> productsWithCharmsOrder)
@@ -35,7 +34,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var products = await productQueryService.GetRawByIdsAsync(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
             var enabledDiscounts = await productCategoryDiscountQueryService.GetRawActiveAsync();
-            var productsDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
+            var productsWithDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
             var productOrders = new List<ProductOrder>();
 
             foreach (var productWithCharmsOrder in productsWithCharmsOrder)
@@ -45,39 +44,19 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 productOrder.AddProduct(product);
 
                 // No need to check for null because of ValueTuples
-                var discount = productsDiscounts.FirstOrDefault(s => s.Item1 == product.Id).Item2;
-                var finalPrice = product.Price;
+                var discount = productsWithDiscounts.FirstOrDefault(s => s.Key == product.Id).Value;
+                var finalPrice = product.Price; 
 
                 productOrder.AddProductCategoryDiscount(discount);
 
                 if (productWithCharmsOrder.HaveCharms)
                 {
-                    if (!product.AcceptCharms)
-                    {
-                        throw new StreetwoodException(ErrorCode.ProductNotAcceptCharms);
-                    }
-
-                    var productOrderCharms = productOrderCharmsHelper.CreateProductOrderCharms(productWithCharmsOrder.Charms, charms);
-                    var charmsPrice = productOrderCharms.Sum(s => s.CurrentPrice);
-
-                    productOrder.AddProductOrderCharms(productOrderCharms);
-
-                    // we subtract one charm because first is free
-                    charmsPrice -= productOrderCharms.First().CurrentPrice;
-
-                    if (discount != null)
-                    {
-                        var discountValue = (finalPrice + charmsPrice) * (discount.PercentValue / 100.0M);
-                        finalPrice = (finalPrice + charmsPrice) - discountValue;
-                    }
-                    else
-                    {
-                        finalPrice += charmsPrice;
-                    }
-
-                    productOrder.SetCharmsPrice(charmsPrice);
+                    var result = productOrderHelper.ApplyCharmsToProductOrder(productOrder, productWithCharmsOrder, charms, finalPrice);
+                    productOrder = result.ProductOrder;
+                    finalPrice = result.FinalPrice;
                 }
-                else if (discount != null)
+
+                if (discount != null)
                 {
                     var discountValue = finalPrice * (discount.PercentValue / 100.0M);
                     finalPrice -= discountValue;

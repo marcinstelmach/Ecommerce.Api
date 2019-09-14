@@ -103,7 +103,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
                 productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
             var result = sut.ApplyDiscountsToProducts(products, discounts);
-            var productsWithoutDiscounts = result.Where(s => s.Item2 == null);
+            var productsWithoutDiscounts = result.Where(s => s.Value == null);
 
             // assert
             productsWithoutDiscounts.Count().Should().Be(1);

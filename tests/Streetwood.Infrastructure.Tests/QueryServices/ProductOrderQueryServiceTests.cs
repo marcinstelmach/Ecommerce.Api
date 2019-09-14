@@ -8,6 +8,7 @@ using Moq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Mappers;
+using Streetwood.Infrastructure.Services.Abstract.Helpers;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 using Streetwood.Infrastructure.Services.Implementations.Queries;
 using Xunit;
@@ -19,6 +20,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         private readonly Mock<IProductQueryService> productQueryServiceMock;
         private readonly Mock<ICharmQueryService> charmQueryServiceMock;
         private readonly Mock<IProductCategoryDiscountQueryService> productCategoryDiscountQueryServiceMock;
+        private readonly Mock<IProductOrderHelper> productOrderHelperMock;
         private readonly IMapper mapperMock;
         private readonly ProductOrderQueryService sut;
 
@@ -27,8 +29,12 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             productQueryServiceMock = new Mock<IProductQueryService>();
             charmQueryServiceMock = new Mock<ICharmQueryService>();
             productCategoryDiscountQueryServiceMock = new Mock<IProductCategoryDiscountQueryService>();
+            productOrderHelperMock = new Mock<IProductOrderHelper>();
             mapperMock = AutoMapperConfig.Initialize();
-            sut = new ProductOrderQueryService(productQueryServiceMock.Object, charmQueryServiceMock.Object, productCategoryDiscountQueryServiceMock.Object);
+            sut = new ProductOrderQueryService(productQueryServiceMock.Object,
+                charmQueryServiceMock.Object,
+                productCategoryDiscountQueryServiceMock.Object,
+                productOrderHelperMock.Object);
         }
 
         [Fact]
@@ -42,7 +48,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 .ReturnsAsync(new List<ProductCategoryDiscount>());
             productCategoryDiscountQueryServiceMock.Setup(s =>
                     s.ApplyDiscountsToProducts(It.IsAny<List<Product>>(), It.IsAny<List<ProductCategoryDiscount>>()))
-                .Returns(new List<(int, ProductCategoryDiscount)>());
+                .Returns(new Dictionary<int, ProductCategoryDiscount>());
 
             // act
             var result = await sut.CreateAsync(productsWithCharmsOrderDto);

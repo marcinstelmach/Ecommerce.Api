@@ -16,7 +16,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<IList<ProductCategoryDiscount>> GetRawActiveAsync();
 
-        IList<(int, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
+        IDictionary<int, ProductCategoryDiscount> ApplyDiscountsToProducts(IList<Product> products,
             IList<ProductCategoryDiscount> discounts);
     }
 }
