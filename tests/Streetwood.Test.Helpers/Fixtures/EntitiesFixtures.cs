@@ -14,7 +14,7 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         public User User { get; private set; }
 
-        public IEnumerable<Product> Products { get; private set; }
+        public List<Product> Products { get; private set; }
 
         public Product Product => Products.First();
 
@@ -51,7 +51,7 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         private void CreateProducts()
         {
-            Products = Fixture.CreateMany<Product>();
+            Products = Fixture.CreateMany<Product>().ToList();
         }
 
         private void CreateShipment()

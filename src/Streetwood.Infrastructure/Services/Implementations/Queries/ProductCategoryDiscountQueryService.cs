@@ -60,24 +60,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var result = new List<ApplyDiscountsToProductsResult>();
 
-            if (!products.Any() || !discounts.Any())
+            if (!products.Any())
             {
                 return result;
             }
 
-            foreach (var discount in discounts)
+            foreach (var product in products)
             {
-                var productCategories = discount.DiscountCategories.Select(s => s.ProductCategory);
-                var productsWithDiscounts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
-                productsWithDiscounts.ForEach(s => result.Add(new ApplyDiscountsToProductsResult(s.Id, discount)));
-            }
-
-            // checking if there are some products without discount
-            var resultProducts = result.Select(s => s.ProductId).ToList();
-            if (resultProducts.Any())
-            {
-                var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s.Id)).ToList();
-                productsWithoutDiscount.ForEach(s => result.Add(new ApplyDiscountsToProductsResult(s.Id, null)));
+                var discount = discounts.FirstOrDefault(x => x.DiscountCategories.Select(y => y.ProductCategory).Contains(product.ProductCategory));
+                result.Add(new ApplyDiscountsToProductsResult(product, discount));
             }
 
             return result;

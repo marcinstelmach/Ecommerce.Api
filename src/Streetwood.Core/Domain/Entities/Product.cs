@@ -80,10 +80,10 @@ namespace Streetwood.Core.Domain.Entities
         public void SetAcceptCharms(bool acceptCharms)
             => AcceptCharms = acceptCharms;
 
-        public void SetProductCategory(ProductCategory productCategory)
-            => ProductCategory = productCategory;
-
         public void AddImage(Image image)
             => images.Add(image);
+
+        internal void SetProductCategory(ProductCategory productCategory)
+            => ProductCategory = productCategory;
     }
 }

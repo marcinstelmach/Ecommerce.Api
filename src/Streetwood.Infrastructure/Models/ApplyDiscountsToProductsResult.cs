@@ -4,13 +4,13 @@ namespace Streetwood.Infrastructure.Models
 {
     public class ApplyDiscountsToProductsResult
     {
-        public ApplyDiscountsToProductsResult(int productId, ProductCategoryDiscount productCategoryDiscount)
+        public ApplyDiscountsToProductsResult(Product product, ProductCategoryDiscount productCategoryDiscount)
         {
-            ProductId = productId;
+            Product = product;
             ProductCategoryDiscount = productCategoryDiscount;
         }
 
-        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
         public ProductCategoryDiscount ProductCategoryDiscount { get; set; }
     }

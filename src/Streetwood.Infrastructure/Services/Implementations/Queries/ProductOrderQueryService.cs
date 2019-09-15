@@ -51,7 +51,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     finalPrice = result.FinalPrice;
                 }
 
-                var discount = productsWithDiscounts.FirstOrDefault(s => s.ProductId == product.Id)?.ProductCategoryDiscount;
+                var discount = productsWithDiscounts.FirstOrDefault(s => s.Product.Id == product.Id)?.ProductCategoryDiscount;
                 if (discount != null)
                 {
                     productOrder.AddProductCategoryDiscount(discount);
