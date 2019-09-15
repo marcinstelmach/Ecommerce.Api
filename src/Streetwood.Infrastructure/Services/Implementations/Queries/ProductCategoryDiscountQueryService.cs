@@ -6,6 +6,7 @@ using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Models;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Queries
@@ -55,10 +56,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscount>> GetRawActiveAsync()
             => await discountRepository.GetActiveAsync();
 
-        public IDictionary<int, ProductCategoryDiscount> ApplyDiscountsToProducts(IList<Product> products,
-            IList<ProductCategoryDiscount> discounts)
+        public IList<ApplyDiscountsToProductsResult> ApplyDiscountsToProducts(IList<Product> products, IList<ProductCategoryDiscount> discounts)
         {
-            var result = new Dictionary<int, ProductCategoryDiscount>();
+            var result = new List<ApplyDiscountsToProductsResult>();
 
             if (!products.Any() || !discounts.Any())
             {
@@ -68,16 +68,16 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             foreach (var discount in discounts)
             {
                 var productCategories = discount.DiscountCategories.Select(s => s.ProductCategory);
-                var discountProducts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
-                discountProducts.ForEach(s => result.Add(s.Id, discount));
+                var productsWithDiscounts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
+                productsWithDiscounts.ForEach(s => result.Add(new ApplyDiscountsToProductsResult(s.Id, discount)));
             }
 
             // checking if there are some products without discount
-            var resultProducts = result.Select(s => s.Key).ToList();
+            var resultProducts = result.Select(s => s.ProductId).ToList();
             if (resultProducts.Any())
             {
                 var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s.Id)).ToList();
-                productsWithoutDiscount.ForEach(s => result.Add(s.Id, null));
+                productsWithoutDiscount.ForEach(s => result.Add(new ApplyDiscountsToProductsResult(s.Id, null)));
             }
 
             return result;

@@ -8,6 +8,7 @@ using Moq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Mappers;
+using Streetwood.Infrastructure.Models;
 using Streetwood.Infrastructure.Services.Abstract.Helpers;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 using Streetwood.Infrastructure.Services.Implementations.Queries;
@@ -48,7 +49,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 .ReturnsAsync(new List<ProductCategoryDiscount>());
             productCategoryDiscountQueryServiceMock.Setup(s =>
                     s.ApplyDiscountsToProducts(It.IsAny<List<Product>>(), It.IsAny<List<ProductCategoryDiscount>>()))
-                .Returns(new Dictionary<int, ProductCategoryDiscount>());
+                .Returns(new List<ApplyDiscountsToProductsResult>());
 
             // act
             var result = await sut.CreateAsync(productsWithCharmsOrderDto);

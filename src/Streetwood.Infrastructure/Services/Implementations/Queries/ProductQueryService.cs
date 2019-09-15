@@ -74,7 +74,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var products = await productRepository.GetByIdsAsync(ids);
 
-            if (products.Count != ids.Count())
+            if (products.Count != ids.Count)
             {
                 var missingIds = ids.Except(products.Select(x => x.Id));
                 throw new StreetwoodException(ErrorCode.NotAllOrderProductsFound(missingIds));

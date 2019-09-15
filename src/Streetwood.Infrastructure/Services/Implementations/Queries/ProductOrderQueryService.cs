@@ -42,12 +42,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
                 var product = products.First(s => s.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(product);
-
-                // No need to check for null because of ValueTuples
-                var discount = productsWithDiscounts.FirstOrDefault(s => s.Key == product.Id).Value;
                 var finalPrice = product.Price; 
-
-                productOrder.AddProductCategoryDiscount(discount);
 
                 if (productWithCharmsOrder.HaveCharms)
                 {
@@ -56,8 +51,10 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     finalPrice = result.FinalPrice;
                 }
 
+                var discount = productsWithDiscounts.FirstOrDefault(s => s.ProductId == product.Id)?.ProductCategoryDiscount;
                 if (discount != null)
                 {
+                    productOrder.AddProductCategoryDiscount(discount);
                     var discountValue = finalPrice * (discount.PercentValue / 100.0M);
                     finalPrice -= discountValue;
                 }

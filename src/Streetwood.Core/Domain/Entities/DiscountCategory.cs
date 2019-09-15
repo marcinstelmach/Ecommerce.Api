@@ -17,8 +17,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public DiscountCategory(ProductCategory productCategory, ProductCategoryDiscount productCategoryDiscount)
         {
-            ProductCategory = productCategory;
-            ProductCategoryDiscount = productCategoryDiscount;
+            SetProductCategory(productCategory);
+            SetDiscount(productCategoryDiscount);
         }
 
         protected DiscountCategory()

@@ -5,7 +5,6 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Managers.Implementations;
-using Streetwood.Test.Helpers.SpecimenBuilders;
 
 namespace Streetwood.Test.Helpers.Fixtures
 {
@@ -62,11 +61,19 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         private void CreateOrderDiscount()
         {
-            Fixture.Customizations.Add(new DateFromSpecimenBuilder());
-            Fixture.Customizations.Add(new DateToSpecimenBuilder());
+            var rnd = new Random();
+            var percentValue = rnd.Next(1, 99);
 
-            // Need to put values to constructor
-            OrderDiscount = Fixture.Create<OrderDiscount>();
+            OrderDiscount = new OrderDiscount(
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                percentValue,
+                DateTime.Now,
+                DateTime.Now.AddDays(5),
+                Fixture.Create<string>()
+                );
         }
 
         private void CreateOrder()
@@ -85,9 +92,15 @@ namespace Streetwood.Test.Helpers.Fixtures
         {
             var rnd = new Random();
             var percentValue = rnd.Next(1, 99);
-            ProductCategoryDiscount = Fixture.Build<ProductCategoryDiscount>()
-                .Do(x => x.SetPercentValue(percentValue))
-                .Create();
+            ProductCategoryDiscount = new ProductCategoryDiscount(
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                percentValue,
+                DateTime.Now,
+                DateTime.Now.AddDays(5)
+            );
         }
     }
 }
