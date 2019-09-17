@@ -10,7 +10,6 @@ namespace Streetwood.API.Controllers
 {
     [Route("api/OrderDiscounts")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class OrderDiscountsController : ControllerBase
     {
         private readonly IBus bus;
@@ -20,10 +19,17 @@ namespace Streetwood.API.Controllers
             this.bus = bus;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Get()
             => Ok(await bus.SendAsync(new GetOrderDiscountsQueryModel()));
 
+        [Authorize]
+        [HttpGet("{code}")]
+        public async Task<IActionResult> GetByCode(string code)
+            => Ok(await bus.SendAsync(new GetOrderDiscountByCodeQueryModel(code)));
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddOrderDiscountCommandModel model)
         {
@@ -31,6 +37,7 @@ namespace Streetwood.API.Controllers
             return Accepted();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] UpdateOrderDiscountCommandModel model)
         {
