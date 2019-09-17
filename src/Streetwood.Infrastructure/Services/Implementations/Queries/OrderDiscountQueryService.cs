@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -38,6 +37,17 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             }
 
             return discount;
+        }
+
+        public async Task<OrderDiscountDto> GetByCodeAsync(string code)
+        {
+            var discount = await orderDiscountRepository.GetByCodeAsync(code);
+            if (discount == null)
+            {
+                throw new StreetwoodException(ErrorCode.OrderDiscountNotFound);
+            }
+
+            return mapper.Map<OrderDiscountDto>(discount);
         }
 
         public async Task<IList<OrderDiscountDto>> GetAsync()

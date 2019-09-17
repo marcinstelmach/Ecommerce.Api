@@ -9,6 +9,8 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
     {
         Task<OrderDiscount> GetRawByCodeAsync(string code);
 
+        Task<OrderDiscountDto> GetByCodeAsync(string code);
+
         Task<IList<OrderDiscountDto>> GetAsync();
     }
 }
