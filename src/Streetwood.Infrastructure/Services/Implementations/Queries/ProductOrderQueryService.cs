@@ -37,12 +37,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var productsWithDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
             var productOrders = new List<ProductOrder>();
 
-            foreach (var productWithCharmsOrder in productsWithCharmsOrder)
+            foreach (var productWithDiscount in productsWithDiscounts)
             {
+                var productWithCharmsOrder = productsWithCharmsOrder.First(x => x.ProductId == productWithDiscount.Product.Id);
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
-                var product = products.First(s => s.Id == productWithCharmsOrder.ProductId);
-                productOrder.AddProduct(product);
-                var finalPrice = product.Price; 
+                productOrder.AddProduct(productWithDiscount.Product);
+                var finalPrice = productWithDiscount.Product.Price;
 
                 if (productWithCharmsOrder.HaveCharms)
                 {
@@ -51,17 +51,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     finalPrice = result.FinalPrice;
                 }
 
-                var discount = productsWithDiscounts.FirstOrDefault(s => s.Product.Id == product.Id)?.ProductCategoryDiscount;
-                if (discount != null)
+                if (productWithDiscount.ProductCategoryDiscount != null)
                 {
-                    productOrder.AddProductCategoryDiscount(discount);
-                    var discountValue = finalPrice * (discount.PercentValue / 100.0M);
+                    productOrder.AddProductCategoryDiscount(productWithDiscount.ProductCategoryDiscount);
+                    var discountValue = finalPrice * (productWithDiscount.ProductCategoryDiscount.PercentValue / 100.0M);
                     finalPrice -= discountValue;
                 }
 
-                productOrder.SetCurrentProductPrice(product.Price);
+                productOrder.SetCurrentProductPrice(productWithDiscount.Product.Price);
                 productOrder.SetFinalPrice(finalPrice);
-
                 productOrders.Add(productOrder);
             }
 
