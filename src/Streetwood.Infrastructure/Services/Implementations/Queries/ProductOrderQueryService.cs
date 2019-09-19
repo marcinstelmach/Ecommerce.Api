@@ -47,7 +47,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 if (productWithCharmsOrder.HaveCharms)
                 {
                     var result = productOrderHelper.ApplyCharmsToProductOrder(productOrder, productWithCharmsOrder, charms, finalPrice);
-                    productOrder = result.ProductOrder;
                     finalPrice = result.FinalPrice;
                 }
 
