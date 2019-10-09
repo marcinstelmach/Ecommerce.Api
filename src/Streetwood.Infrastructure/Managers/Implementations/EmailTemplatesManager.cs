@@ -75,7 +75,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
         public async Task<string> PrepareForgottenPasswordEmailAsync(User user)
         {
             // just for test
-            var content = $"Email:{user.Email},<br>Token: {user.ChangePasswordToken}"
+            var content = $"Email:{user.Email},<br>Token: {user.ChangePasswordToken}<br>"
                 + $"Url: <a href=\"http://localhost:4200/password/recovery?token={user.ChangePasswordToken}\">http://localhost:4200/password/recovery?token={user.ChangePasswordToken}</a>";
             return await Task.FromResult(content);
         }
