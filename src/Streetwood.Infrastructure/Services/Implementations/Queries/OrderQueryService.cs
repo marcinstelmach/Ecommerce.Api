@@ -84,14 +84,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 orders = orders.Where(s => s.IsShipped == filter.IsShipped);
             }
 
+            orders = orders.OrderByDescending(x => x.CreationDateTime);
+
             if (filter.Take.HasValue)
             {
                 orders = orders.Take(filter.Take.Value);
             }
 
             var ordersList = await orders
-                .Include(s => s.User)
-                .OrderByDescending(s => s.CreationDateTime)
                 .ToListAsync();
             return mapper.Map<IList<OrdersListDto>>(ordersList);
         }
