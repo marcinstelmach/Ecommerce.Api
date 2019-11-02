@@ -1,3 +1,7 @@
+trigger:
+- master
+- develop
+
 pool:
   vmImage: 'Ubuntu 16.04'
   
@@ -5,10 +9,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-    dotnet build --configuration $(buildConfiguration)
 - task: DotNetCoreCLI@2
+  displayName: 'Build'
   inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    command: 'build'
+
+- task: DotNetCoreCLI@2
+  displayName: "Tests"
+  inputs:
+    command: 'test'
+
+- task: DotNetCoreCLI@2
+  displayName: "Tests"
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '-c $(buildConfiguration) -o $(System.DefaultWorkingDirectory)'

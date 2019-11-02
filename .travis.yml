@@ -1,0 +1,13 @@
+language: csharp
+sudo: required
+dist: xenial
+mono: none
+dotnet: 2.2.100
+
+before_script:
+ - dotnet restore
+ 
+script:
+ - dotnet build
+ - dotnet test
+ - dotnet publish src/Streetwood.API -c Release -o ../../publish
