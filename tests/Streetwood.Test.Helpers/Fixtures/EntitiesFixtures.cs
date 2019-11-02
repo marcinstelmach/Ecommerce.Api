@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Managers.Implementations;
-using Streetwood.Test.Helpers.SpecimenBuilders;
 
 namespace Streetwood.Test.Helpers.Fixtures
 {
@@ -13,13 +14,19 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         public User User { get; private set; }
 
-        public IEnumerable<Product> Products { get; private set; }
+        public List<Product> Products { get; private set; }
+
+        public Product Product => Products.First();
 
         public Shipment Shipment { get; private set; }
 
         public OrderDiscount OrderDiscount { get; private set; }
 
         public Order Order { get; private set; }
+
+        public ProductCategoryDiscount ProductCategoryDiscount { get; private set; }
+
+        public ProductOrder ProductOrder { get; private set; }
 
         public EntitiesFixtures()
         {
@@ -29,6 +36,8 @@ namespace Streetwood.Test.Helpers.Fixtures
             CreateShipment();
             CreateOrderDiscount();
             CreateOrder();
+            CreateProductOrder();
+            CreateProductCategoryDiscount();
         }
 
         private void CreateUser()
@@ -42,7 +51,7 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         private void CreateProducts()
         {
-            Products = Fixture.CreateMany<Product>();
+            Products = Fixture.CreateMany<Product>().ToList();
         }
 
         private void CreateShipment()
@@ -52,17 +61,46 @@ namespace Streetwood.Test.Helpers.Fixtures
 
         private void CreateOrderDiscount()
         {
-            Fixture.Customizations.Add(new DateFromSpecimenBuilder());
-            Fixture.Customizations.Add(new DateToSpecimenBuilder());
+            var rnd = new Random();
+            var percentValue = rnd.Next(1, 99);
 
-            // Need to put values to constructor
-            OrderDiscount = Fixture.Create<OrderDiscount>();
+            OrderDiscount = new OrderDiscount(
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                percentValue,
+                DateTime.Now,
+                DateTime.Now.AddDays(5),
+                Fixture.Create<string>()
+                );
         }
 
         private void CreateOrder()
         {
             Fixture.Register<OrderDiscount>(() => OrderDiscount);
             Order = Fixture.Create<Order>();
+        }
+
+        private void CreateProductOrder()
+        {
+            ProductOrder = Fixture.Create<ProductOrder>();
+            ProductOrder.AddProduct(Product);
+        }
+
+        private void CreateProductCategoryDiscount()
+        {
+            var rnd = new Random();
+            var percentValue = rnd.Next(1, 99);
+            ProductCategoryDiscount = new ProductCategoryDiscount(
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                Fixture.Create<string>(),
+                percentValue,
+                DateTime.Now,
+                DateTime.Now.AddDays(5)
+            );
         }
     }
 }

@@ -8,41 +8,40 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
 {
     public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrdersListDto>>
     {
-        public int? Id { get; }
+        private DateTime? dateTo;
 
-        public DateTime? DateFrom { get; }
+        public int? Id { get; set; }
 
-        public DateTime? DateTo { get; private set; }
+        public DateTime? DateFrom { get; set; }
 
-        public bool? IsShipped { get; }
+        public DateTime? DateTo
+        {
+            get => dateTo?.AddDays(1) ?? dateTo;
+            set => dateTo = value;
+        }
 
-        public bool? IsPayed { get; }
+        public bool? IsShipped { get; set; }
 
-        public bool? IsClosed { get; }
+        public bool? IsPayed { get; set; }
+
+        public bool? IsClosed { get; set; }
 
         public int? Take { get; set; }
 
-        public Guid UserId { get; }
+        public Guid UserId { get; private set; }
 
-        public UserType UserType { get; }
+        public UserType UserType { get; private set; }
 
-        public GetFilteredOrdersQueryModel(int? id, DateTime? dateFrom, DateTime? dateTo, bool? isShipped, bool? isPayed, bool? isClosed, int? take, Guid userId, UserType userType)
+        public GetFilteredOrdersQueryModel SetUserId(Guid userId)
         {
-            Id = id;
-            DateFrom = dateFrom;
-            SetDateTo(dateTo);
-            IsShipped = isShipped;
-            IsPayed = isPayed;
-            IsClosed = isClosed;
-            Take = take;
             UserId = userId;
-            UserType = userType;
+            return this;
         }
 
-        public void SetDateTo(DateTime? dateTo)
+        public GetFilteredOrdersQueryModel SetUserType(UserType userType)
         {
-            dateTo = dateTo?.AddDays(1);
-            DateTo = dateTo;
+            UserType = userType;
+            return this;
         }
     }
 }

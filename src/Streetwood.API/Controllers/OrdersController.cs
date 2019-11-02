@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Streetwood.API.Bus;
 using Streetwood.API.Filters;
-using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Dto;
@@ -32,11 +30,8 @@ namespace Streetwood.API.Controllers
         [HttpGet]
         [IgnoreValidation]
         [Authorize]
-        public async Task<IActionResult> Get([FromQuery] int? take,
-                [FromQuery] int? id, [FromQuery] DateTime? dateFrom,
-                [FromQuery] DateTime? dateTo, [FromQuery] bool? isShipped,
-                [FromQuery] bool? isPayed, [FromQuery] bool? isClosed)
-            => Ok(await bus.SendAsync(new GetFilteredOrdersQueryModel(id, dateFrom, dateTo, isShipped, isPayed, isClosed, take, User.GetUserId(), User.GetUserType())));
+        public async Task<IActionResult> Get([FromQuery] GetFilteredOrdersQueryModel model)
+            => Ok(await bus.SendAsync(model.SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpPost]
         [Authorize]

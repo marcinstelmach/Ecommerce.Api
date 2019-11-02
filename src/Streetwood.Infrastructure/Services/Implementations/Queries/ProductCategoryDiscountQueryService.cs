@@ -6,6 +6,7 @@ using AutoMapper;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Models;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Queries
@@ -55,29 +56,19 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscount>> GetRawActiveAsync()
             => await discountRepository.GetActiveAsync();
 
-        public IList<(int, ProductCategoryDiscount)> ApplyDiscountsToProducts(IList<Product> products,
-            IList<ProductCategoryDiscount> discounts)
+        public IList<ApplyDiscountsToProductsResult> ApplyDiscountsToProducts(IList<Product> products, IList<ProductCategoryDiscount> discounts)
         {
-            if (!products.Any() || !discounts.Any())
+            var result = new List<ApplyDiscountsToProductsResult>();
+
+            if (!products.Any())
             {
-                return new List<(int, ProductCategoryDiscount)>();
+                return result;
             }
 
-            var result = new List<(int, ProductCategoryDiscount)>();
-
-            foreach (var discount in discounts)
+            foreach (var product in products)
             {
-                var productCategories = discount.DiscountCategories.Select(s => s.ProductCategory);
-                var discountProducts = products.Where(s => productCategories.Contains(s.ProductCategory)).ToList();
-                discountProducts.ForEach(s => result.Add((s.Id, discount)));
-            }
-
-            // checking if there are some products without discount
-            var resultProducts = result.Select(s => s.Item1).ToList();
-            if (resultProducts.Any())
-            {
-                var productsWithoutDiscount = products.Where(s => !resultProducts.Contains(s.Id)).ToList();
-                productsWithoutDiscount.ForEach(s => result.Add((s.Id, null)));
+                var discount = discounts.FirstOrDefault(x => x.DiscountCategories.Select(y => y.ProductCategory).Contains(product.ProductCategory));
+                result.Add(new ApplyDiscountsToProductsResult(product, discount));
             }
 
             return result;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Streetwood.Core.Exceptions
@@ -55,7 +56,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderDiscountInUse => new ErrorCode(nameof(OrderDiscountInUse));
 
-        public static ErrorCode OrderProductsNotFound => new ErrorCode(nameof(OrderProductsNotFound), HttpStatusCode.InternalServerError);
+        public static ErrorCode NotAllOrderProductsFound(IEnumerable<int> missingIds)
+            => new ErrorCode(nameof(NotAllOrderProductsFound), $"Product missingIds: '{string.Join(',', missingIds)}'", HttpStatusCode.InternalServerError);
 
         public static ErrorCode OrderCharmsNotFound => new ErrorCode(nameof(OrderCharmsNotFound), HttpStatusCode.InternalServerError);
 

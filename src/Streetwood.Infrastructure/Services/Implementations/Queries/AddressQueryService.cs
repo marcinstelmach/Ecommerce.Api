@@ -25,6 +25,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<AddressDto>> GetByUserAsync(Guid userId)
         {
             var user = await userRepository.GetAndEnsureExistAsync(userId);
+            var orders = user.Orders.ToList();
             var addresses = user
                 .Orders
                 .Select(s => s.Address)

@@ -33,7 +33,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<Charm>> GetRawByIdsAsync(IList<Guid> ids)
         {
-            if (ids.IsNullOrEmpty())
+            if (!ids.Any())
             {
                 return null;
             }

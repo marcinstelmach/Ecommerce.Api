@@ -23,9 +23,9 @@ namespace Streetwood.Infrastructure.Commands.Models.ProductCategoryDiscount
         public int PercentValue { get; set; }
 
         [Required]
-        public DateTime AvailableFrom { get; set; }
+        public DateTimeOffset AvailableFrom { get; set; }
 
         [Required]
-        public DateTime AvailableTo { get; set; }
+        public DateTimeOffset AvailableTo { get; set; }
     }
 }
