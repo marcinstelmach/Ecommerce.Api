@@ -7,5 +7,7 @@
         public string ExceptionQueue { get; set; }
 
         public string ExceptionFunctionUrl { get; set; }
+
+        public string EmailTemplatesContainerName { get; set; }
     }
 }
