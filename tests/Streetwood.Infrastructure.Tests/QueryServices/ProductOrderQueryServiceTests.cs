@@ -211,11 +211,6 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
                 results[i].ProductId = productsWithDiscounts[i].Product.Id;
             }
 
-            if (results.Any())
-            {
-                results[0].Charms = new List<CharmOrderDto>();
-            }
-
             return results;
         }
 

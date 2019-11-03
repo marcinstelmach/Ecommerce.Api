@@ -65,31 +65,6 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         }
 
         [Fact]
-        public void ApplyDiscountToProducts_WhenAreDiscounts_ReturnValidPairs()
-        {
-            // arrange
-            var (products, discounts) = PrepareProductsWithDiscounts();
-
-            var expected = new List<(int, ProductCategoryDiscount)>
-            {
-                (products[0].Id, discounts[0]),
-                (products[1].Id, discounts[0]),
-                (products[2].Id, discounts[1]),
-                (products[3].Id, null)
-            };
-
-            // act
-            var sut = new ProductCategoryDiscountQueryService(categoryDiscountRepository.Object,
-                productCategoryRepository.Object, discountCategoryRepository.Object, mapper.Object);
-
-            var result = sut.ApplyDiscountsToProducts(products, discounts);
-
-            // assert
-            result.Count.Should().Be(products.Count);
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
         public void ApplyDiscountToProducts_ReturnProductsIfDifferentDiscount()
         {
             // arrange
