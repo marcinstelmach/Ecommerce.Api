@@ -18,16 +18,18 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             }
 
             var imagePath = Path.Combine(directoryPath, uniqueFileName);
-            using (var stream = new FileStream(imagePath, FileMode.Create))
+            using var stream = new FileStream(imagePath, FileMode.Create);
+            try
             {
-                try
-                {
-                    await file.CopyToAsync(stream);
-                }
-                catch (Exception e)
-                {
-                    throw new StreetwoodException(ErrorCode.UnableToSavePhoto, e.Message, e);
-                }
+                await file.CopyToAsync(stream);
+            }
+            catch (Exception e)
+            {
+                throw new StreetwoodException(ErrorCode.UnableToSavePhoto, e.Message, e);
+            }
+            finally
+            {
+                stream.Dispose();
             }
         }
 
