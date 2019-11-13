@@ -14,8 +14,6 @@
 
         public static string InvalidDateRangesKey => "InvalidDateRanges";
 
-        public static string NewEmailOrderTemplate => "NewOrder.html";
-
         public static int DefaultResetPasswordTokenLength => 15;
     }
 }
