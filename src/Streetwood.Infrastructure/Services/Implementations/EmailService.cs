@@ -35,10 +35,11 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 
-        public async Task SendNewUserEmailAsync(UserDto user)
+        public async Task SendNewUserEmailAsync(User user)
         {
-            var template = await emailTemplateParser.PrepareNewUserEmailAsync(user);
-            await emailManager.SendAsync(user.FirstName, user.FullName, "Welcome in streetwood !", template);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.ActivateNewUser.TemplateName);
+            template = emailTemplateParser.PrepareActivateNewUserEmail(user, template);
+            await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ActivateNewUser.Subject, template);
         }
 
         public async Task SendResetPasswordEmailAsync(User user)
@@ -48,7 +49,7 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ResetPassword.Subject, template);
         }
 
-        private string ParseNewOrderSubject(string subject, int orderId)
+        private static string ParseNewOrderSubject(string subject, int orderId)
         {
             return subject.Replace("{{{orderId}}}", orderId.ToString(CultureInfo.InvariantCulture));
         }

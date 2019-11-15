@@ -52,10 +52,14 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return stringTemplate;
         }
 
-        public async Task<string> PrepareNewUserEmailAsync(UserDto user)
+        public string PrepareActivateNewUserEmail(User user, string stringTemplate)
         {
-            // just for test
-            return await Task.FromResult($"{user.Email}, {user.FirstName}");
+            var url = $"{clientOptions.Url}activate";
+            var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
+            stringTemplate = stringTemplate.Replace("{{{url}}}", url);
+            stringTemplate = stringTemplate.Replace("{{{name}}}", user.FullName);
+            stringTemplate = stringTemplate.Replace("{{{today}}}", today);
+            return stringTemplate;
         }
 
         public string PrepareResetPasswordEmail(User user, string stringTemplate)

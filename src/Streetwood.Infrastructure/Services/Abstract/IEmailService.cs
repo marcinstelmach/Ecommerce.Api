@@ -8,7 +8,7 @@ namespace Streetwood.Infrastructure.Services.Abstract
     {
         Task SendNewOrderEmailAsync(OrderDto order);
 
-        Task SendNewUserEmailAsync(UserDto user);
+        Task SendNewUserEmailAsync(User user);
 
         Task SendResetPasswordEmailAsync(User user);
     }

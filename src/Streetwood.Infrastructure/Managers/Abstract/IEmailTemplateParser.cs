@@ -8,7 +8,7 @@ namespace Streetwood.Infrastructure.Managers.Abstract
     {
         string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate);
 
-        Task<string> PrepareNewUserEmailAsync(UserDto user);
+        string PrepareActivateNewUserEmail(User user, string stringTemplate);
 
         string PrepareResetPasswordEmail(User user, string stringTemplate);
     }

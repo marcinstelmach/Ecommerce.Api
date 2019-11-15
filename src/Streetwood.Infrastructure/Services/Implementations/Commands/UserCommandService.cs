@@ -5,6 +5,7 @@ using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Managers;
+using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -13,11 +14,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
     {
         private readonly IUserRepository userRepository;
         private readonly IEncrypter encrypter;
+        private readonly IEmailService emailService;
 
-        public UserCommandService(IUserRepository userRepository, IEncrypter encrypter)
+        public UserCommandService(IUserRepository userRepository, IEncrypter encrypter, IEmailService emailService)
         {
             this.userRepository = userRepository;
             this.encrypter = encrypter;
+            this.emailService = emailService;
         }
 
         public async Task AddUserAsync(string email, string firstName, string lastName, string password)
@@ -32,6 +35,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             user.SetPassword(password, encrypter);
             await userRepository.AddAsync(user);
             await userRepository.SaveChangesAsync();
+
+            await emailService.SendNewUserEmailAsync(user);
         }
 
         public async Task EraseUserDataAsync(Guid id)
