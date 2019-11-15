@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
-using Streetwood.Core.Constants;
+﻿using System.Globalization;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Settings;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract;
@@ -12,19 +14,25 @@ namespace Streetwood.Infrastructure.Services.Implementations
         private readonly IEmailTemplateParser emailTemplateParser;
         private readonly IEmailTemplatesManager emailTemplatesManager;
         private readonly IEmailManager emailManager;
+        private readonly EmailTemplatesOptions emailTemplatesOptions;
 
-        public EmailService(IEmailTemplatesManager emailTemplatesManager, IEmailManager emailManager, IEmailTemplateParser emailTemplateParser)
+        public EmailService(
+            IEmailTemplatesManager emailTemplatesManager,
+            IEmailManager emailManager, IEmailTemplateParser emailTemplateParser,
+            IOptions<EmailTemplatesOptions> emailTemplatesOptions)
         {
             this.emailTemplatesManager = emailTemplatesManager;
             this.emailManager = emailManager;
             this.emailTemplateParser = emailTemplateParser;
+            this.emailTemplatesOptions = emailTemplatesOptions.Value;
         }
 
         public async Task SendNewOrderEmailAsync(OrderDto order)
         {
-            var template = await emailTemplatesManager.ReadTemplateAsync(ConstantValues.NewEmailOrderTemplate);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.NewOrder.TemplateName);
             template = emailTemplateParser.PrepareNewOrderEmailAsync(order, template);
-            await emailManager.SendAsync(order.User.Email, order.User.FullName, $"New order no.{order.Id}", template);
+            var subject = ParseNewOrderSubject(emailTemplatesOptions.NewOrder.Subject, order.Id);
+            await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 
         public async Task SendNewUserEmailAsync(UserDto user)
@@ -33,10 +41,16 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(user.FirstName, user.FullName, "Welcome in streetwood !", template);
         }
 
-        public async Task SendForgottenPasswordEmailAsync(User user)
+        public async Task SendResetPasswordEmailAsync(User user)
         {
-            var template = await emailTemplateParser.PrepareForgottenPasswordEmailAsync(user);
-            await emailManager.SendAsync(user.Email, user.FullName, "Streetwood Password Reset", template);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.ResetPassword.TemplateName);
+            template = emailTemplateParser.PrepareResetPasswordEmail(user, template);
+            await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ResetPassword.Subject, template);
+        }
+
+        private string ParseNewOrderSubject(string subject, int orderId)
+        {
+            return subject.Replace("{{{orderId}}}", orderId.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

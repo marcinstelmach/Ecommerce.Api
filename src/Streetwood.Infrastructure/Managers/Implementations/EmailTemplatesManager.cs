@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Streetwood.Core.Exceptions;
@@ -11,14 +12,10 @@ namespace Streetwood.Infrastructure.Managers.Implementations
     internal class EmailTemplatesManager : IEmailTemplatesManager
     {
         private readonly IPathManager pathManager;
-        private readonly IAzureStorageFactory azureStorageFactory;
-        private readonly CloudOptions cloudOptions;
 
-        public EmailTemplatesManager(IPathManager pathManager, IAzureStorageFactory azureStorageFactory, IOptions<CloudOptions> cloudOptions)
+        public EmailTemplatesManager(IPathManager pathManager)
         {
             this.pathManager = pathManager;
-            this.azureStorageFactory = azureStorageFactory;
-            this.cloudOptions = cloudOptions.Value;
         }
 
         public async Task<string> ReadTemplateAsync(string templateName)
@@ -30,17 +27,12 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             }
 
             var emailTemplate = await File.ReadAllTextAsync(templatePath);
+            if (string.IsNullOrEmpty(emailTemplate))
+            {
+                throw new Exception($"Cannot read email template from path: '{templateName}'.");
+            }
 
-            var blob = azureStorageFactory
-                .CreateStorageAccount(cloudOptions.StorageConnectionString)
-                .ForBlobClient()
-                .WithContainer(cloudOptions.EmailTemplatesContainerName)
-                .GetBlob(templateName);
-
-            using var stream = new MemoryStream();
-            await blob.DownloadToStreamAsync(stream);
-            using var streamReader = new StreamReader(stream);
-            return await streamReader.ReadToEndAsync();
+            return emailTemplate;
         }
     }
 }

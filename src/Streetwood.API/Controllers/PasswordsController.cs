@@ -17,9 +17,9 @@ namespace Streetwood.API.Controllers
             this.bus = bus;
         }
 
-        [HttpGet("{email}")]
-        public async Task<IActionResult> Get(string email)
-            => Ok(await bus.SendAsync(new SendPasswordResetEmailCommandModel(email)));
+        [HttpPost("reset")]
+        public async Task<IActionResult> Reset(SendPasswordResetEmailCommandModel model)
+            => Ok(await bus.SendAsync(model));
 
         [HttpPost]
         public async Task<IActionResult> Post(UpdatePasswordCommandModel model)

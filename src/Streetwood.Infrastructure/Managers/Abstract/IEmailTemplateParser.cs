@@ -10,6 +10,6 @@ namespace Streetwood.Infrastructure.Managers.Abstract
 
         Task<string> PrepareNewUserEmailAsync(UserDto user);
 
-        Task<string> PrepareForgottenPasswordEmailAsync(User user);
+        string PrepareResetPasswordEmail(User user, string stringTemplate);
     }
 }

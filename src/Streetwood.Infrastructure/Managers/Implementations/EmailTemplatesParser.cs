@@ -3,7 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Core.Settings;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 
@@ -11,6 +13,13 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     public class EmailTemplatesParser : IEmailTemplateParser
     {
+        private readonly ClientOptions clientOptions;
+
+        public EmailTemplatesParser(IOptions<ClientOptions> clientOptions)
+        {
+            this.clientOptions = clientOptions.Value;
+        }
+
         public string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate)
         {
             var startIndex = stringTemplate.IndexOf("<!--starter-->", StringComparison.Ordinal) + 14;
@@ -49,12 +58,13 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return await Task.FromResult($"{user.Email}, {user.FirstName}");
         }
 
-        public async Task<string> PrepareForgottenPasswordEmailAsync(User user)
+        public string PrepareResetPasswordEmail(User user, string stringTemplate)
         {
-            // just for test
-            var content = $"Email:{user.Email},<br>Token: {user.ChangePasswordToken}<br>"
-                + $"Url: <a href=\"http://localhost:4200/password/recovery?token={user.ChangePasswordToken}\">http://localhost:4200/password/recovery?token={user.ChangePasswordToken}</a>";
-            return await Task.FromResult(content);
+            var url = $"{clientOptions.Url}password/recovery?token={user.ChangePasswordToken}";
+            var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
+            stringTemplate = stringTemplate.Replace("{{{url}}}", url);
+            stringTemplate = stringTemplate.Replace("{{{today}}}", today);
+            return stringTemplate;
         }
     }
 }

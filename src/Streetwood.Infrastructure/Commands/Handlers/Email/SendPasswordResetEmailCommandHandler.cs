@@ -26,7 +26,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Email
         {
             var user = await userQueryService.CreateChangePasswordTokenAsync(request.Email);
 
-            await emailService.SendForgottenPasswordEmailAsync(user);
+            await emailService.SendResetPasswordEmailAsync(user);
             logger.LogInformation("Successfully send password");
             return Unit.Value;
         }
