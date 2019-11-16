@@ -21,6 +21,9 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate)
         {
+            var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
+            stringTemplate = stringTemplate.Replace("{{{today}}}", today);
+
             var startIndex = stringTemplate.IndexOf("<!--starter-->", StringComparison.Ordinal) + 14;
             var endIndex = stringTemplate.IndexOf("<!--ender-->", startIndex, StringComparison.Ordinal);
             var template = stringTemplate.Substring(startIndex, endIndex - startIndex);
@@ -34,20 +37,27 @@ namespace Streetwood.Infrastructure.Managers.Implementations
                 if (productOrder.ProductOrderCharms.Any())
                 {
                     var charmsNames = productOrder.ProductOrderCharms.Select(s => s.Charm.Name);
-                    charms = $"({string.Join(" +", charmsNames)})";
+                    charms = $"({string.Join(" | ", charmsNames)})";
                 }
 
                 tempTemplate = tempTemplate.Replace("{{{Charms}}}", charms);
                 tempTemplate = tempTemplate.Replace("{{{Price}}}",
-                    productOrder.FinalPrice.ToString(CultureInfo.InvariantCulture));
+                    (productOrder.FinalPrice * productOrder.Amount).ToString(CultureInfo.InvariantCulture));
                 productsTemplate.Append(tempTemplate);
             }
 
             stringTemplate = stringTemplate.Remove(startIndex, endIndex - startIndex);
             stringTemplate = stringTemplate.Insert(startIndex, productsTemplate.ToString());
-            stringTemplate = stringTemplate.Replace("{{{TotalPrice}}}",
-                order.FinalPrice.ToString(CultureInfo.InvariantCulture));
-
+            stringTemplate = stringTemplate.Replace("{{{TotalPrice}}}", order.FinalPrice.ToString(CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{FullName}}}", order.User.FullName);
+            stringTemplate = stringTemplate.Replace("{{{Street}}}", order.Address.Street);
+            stringTemplate = stringTemplate.Replace("{{{PhoneNumber}}}", order.Address.PhoneNumber.ToString(CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{PostCode}}}", order.Address.PostCode);
+            stringTemplate = stringTemplate.Replace("{{{City}}}", order.Address.City);
+            stringTemplate = stringTemplate.Replace("{{{ShipmentName}}}", order.Shipment.Name);
+            stringTemplate = stringTemplate.Replace("{{{ShipmentPrice}}}", order.ShipmentPrice.ToString("F", CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{OrderPrice}}}", (order.FinalPrice + order.ShipmentPrice).ToString("F", CultureInfo.InvariantCulture));
+            
             return stringTemplate;
         }
 

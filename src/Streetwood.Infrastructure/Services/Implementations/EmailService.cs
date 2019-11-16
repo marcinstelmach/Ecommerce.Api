@@ -59,7 +59,7 @@ namespace Streetwood.Infrastructure.Services.Implementations
 
         private static string ParseSubjectOrderId(string subject, int orderId)
         {
-            return subject.Replace("{{{orderId}}}", orderId.ToString(CultureInfo.InvariantCulture));
+            return subject.Replace("{{{OrderId}}}", orderId.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
