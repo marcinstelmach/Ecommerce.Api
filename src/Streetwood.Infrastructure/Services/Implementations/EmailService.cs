@@ -49,6 +49,11 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ResetPassword.Subject, template);
         }
 
+        public async Task SendOrderWasShippedEmailAsync(Order order)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private static string ParseNewOrderSubject(string subject, int orderId)
         {
             return subject.Replace("{{{orderId}}}", orderId.ToString(CultureInfo.InvariantCulture));

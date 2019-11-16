@@ -11,5 +11,7 @@ namespace Streetwood.Infrastructure.Services.Abstract
         Task SendNewUserEmailAsync(User user);
 
         Task SendResetPasswordEmailAsync(User user);
+
+        Task SendOrderWasShippedEmailAsync(Order order);
     }
 }

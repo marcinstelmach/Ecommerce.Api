@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
+using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -13,11 +14,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
     {
         private readonly ILogger logger;
         private readonly IOrderRepository orderRepository;
+        private readonly IEmailService emailService;
 
-        public OrderCommandService(ILogger<IOrderCommandService> logger, IOrderRepository orderRepository)
+        public OrderCommandService(ILogger<IOrderCommandService> logger, IOrderRepository orderRepository, IEmailService emailService)
         {
             this.logger = logger;
             this.orderRepository = orderRepository;
+            this.emailService = emailService;
         }
 
         public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
@@ -58,11 +61,17 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task UpdateAsync(int id, bool payed, bool shipped, bool closed)
         {
             var order = await orderRepository.GetAndEnsureExistAsync(id);
+            var shippedBeforeSave = order.IsShipped;
             order.SetIsPayed(payed);
             order.SetIsShipped(shipped);
             order.SetIsClosed(closed);
 
             await orderRepository.SaveChangesAsync();
+
+            if (!shippedBeforeSave && shipped)
+            {
+                await emailService.SendOrderWasShippedEmailAsync(order);
+            }
         }
     }
 }

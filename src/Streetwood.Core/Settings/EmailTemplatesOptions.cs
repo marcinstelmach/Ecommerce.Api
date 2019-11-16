@@ -6,7 +6,7 @@
 
         public Template ActivateNewUser { get; set; }
 
-        public Template ChangedOrderStatus { get; set; }
+        public Template OrderWasShipped { get; set; }
 
         public Template ResetPassword { get; set; }
     }
