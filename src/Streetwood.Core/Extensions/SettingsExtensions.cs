@@ -13,6 +13,8 @@ namespace Streetwood.Core.Extensions
             services.Configure<CacheOptions>(configuration.GetSection("Cache"));
             services.Configure<EmailOptions>(configuration.GetSection("Email"));
             services.Configure<CloudOptions>(configuration.GetSection("Cloud"));
+            services.Configure<EmailTemplatesOptions>(configuration.GetSection("EmailTemplates"));
+            services.Configure<ClientOptions>(configuration.GetSection("Client"));
         }
     }
 }

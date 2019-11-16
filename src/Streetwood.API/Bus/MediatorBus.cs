@@ -18,7 +18,7 @@ namespace Streetwood.API.Bus
 
         public Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
-            logger.LogInformation($"Invoked '{request.GetType().Name}.");
+            logger.LogDebug($"Invoked '{request.GetType().Name}.");
             return mediator.Send(request, cancellationToken);
         }
     }

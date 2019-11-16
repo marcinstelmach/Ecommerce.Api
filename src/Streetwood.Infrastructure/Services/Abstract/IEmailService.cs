@@ -8,8 +8,10 @@ namespace Streetwood.Infrastructure.Services.Abstract
     {
         Task SendNewOrderEmailAsync(OrderDto order);
 
-        Task SendNewUserEmailAsync(UserDto user);
+        Task SendNewUserEmailAsync(User user);
 
-        Task SendForgottenPasswordEmailAsync(User user);
+        Task SendResetPasswordEmailAsync(User user);
+
+        Task SendOrderWasShippedEmailAsync(OrderDto order);
     }
 }

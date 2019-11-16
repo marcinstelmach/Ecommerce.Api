@@ -88,6 +88,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode CannotAddToQueue => new ErrorCode(nameof(CannotAddToQueue));
 
+        public static ErrorCode OrderNotFound => new ErrorCode(nameof(OrderNotFound), HttpStatusCode.NotFound);
+
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }

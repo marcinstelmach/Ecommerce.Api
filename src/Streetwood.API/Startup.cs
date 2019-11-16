@@ -58,6 +58,7 @@ namespace Streetwood.API
             builder.RegisterModule<MapperModule>();
             builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<HelpersModule>();
+            builder.RegisterModule<FactoriesModule>();
 
             Container = builder.Build();
             var serviceProvider = new AutofacServiceProvider(Container);

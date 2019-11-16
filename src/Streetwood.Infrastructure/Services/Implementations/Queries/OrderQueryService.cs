@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,14 +38,20 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
             var orders = orderRepository.GetQueryable()
-                .AsTracking()
+                .AsNoTracking()
                 .Include(s => s.User)
                 .AsQueryable();
 
             if (filter.Id.HasValue)
             {
                 var order = await orders.FirstOrDefaultAsync(s => s.Id == filter.Id.Value);
-                if (filter.UserType == UserType.Customer && order.User.Id != filter.UserId)
+
+                if (order == null && filter.UserType == UserType.Admin)
+                {
+                    throw new StreetwoodException(ErrorCode.OrderNotFound);
+                }
+
+                if (order == null || (filter.UserType == UserType.Customer && order.User.Id != filter.UserId))
                 {
                    throw new StreetwoodException(ErrorCode.NoAccess);
                 }
