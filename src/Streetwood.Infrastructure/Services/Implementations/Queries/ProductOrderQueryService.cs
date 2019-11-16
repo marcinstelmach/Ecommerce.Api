@@ -29,7 +29,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductOrder>> CreateAsync(IList<ProductWithCharmsOrderDto> productsWithCharmsOrder)
         {
-            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId).ToList();
+            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId).Distinct().ToList();
             var charmsIds = productsWithCharmsOrder.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
             var products = await productQueryService.GetRawByIdsAsync(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
