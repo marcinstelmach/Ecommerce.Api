@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -15,12 +17,14 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         private readonly ILogger logger;
         private readonly IOrderRepository orderRepository;
         private readonly IEmailService emailService;
+        private readonly IMapper mapper;
 
-        public OrderCommandService(ILogger<IOrderCommandService> logger, IOrderRepository orderRepository, IEmailService emailService)
+        public OrderCommandService(ILogger<IOrderCommandService> logger, IOrderRepository orderRepository, IEmailService emailService, IMapper mapper)
         {
             this.logger = logger;
             this.orderRepository = orderRepository;
             this.emailService = emailService;
+            this.mapper = mapper;
         }
 
         public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
@@ -70,7 +74,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             if (!shippedBeforeSave && shipped)
             {
-                await emailService.SendOrderWasShippedEmailAsync(order);
+                var orderDto = mapper.Map<Order, OrderDto>(order);
+                await emailService.SendOrderWasShippedEmailAsync(orderDto);
             }
         }
     }

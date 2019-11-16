@@ -31,7 +31,7 @@ namespace Streetwood.Infrastructure.Services.Implementations
         {
             var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.NewOrder.TemplateName);
             template = emailTemplateParser.PrepareNewOrderEmailAsync(order, template);
-            var subject = ParseNewOrderSubject(emailTemplatesOptions.NewOrder.Subject, order.Id);
+            var subject = ParseSubjectOrderId(emailTemplatesOptions.NewOrder.Subject, order.Id);
             await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 
@@ -49,12 +49,15 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ResetPassword.Subject, template);
         }
 
-        public async Task SendOrderWasShippedEmailAsync(Order order)
+        public async Task SendOrderWasShippedEmailAsync(OrderDto order)
         {
-            throw new System.NotImplementedException();
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.OrderWasShipped.TemplateName);
+            template = emailTemplateParser.PrepareOrderWasShippedEmail(order, template);
+            var subject = ParseSubjectOrderId(emailTemplatesOptions.OrderWasShipped.Subject, order.Id);
+            await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 
-        private static string ParseNewOrderSubject(string subject, int orderId)
+        private static string ParseSubjectOrderId(string subject, int orderId)
         {
             return subject.Replace("{{{orderId}}}", orderId.ToString(CultureInfo.InvariantCulture));
         }

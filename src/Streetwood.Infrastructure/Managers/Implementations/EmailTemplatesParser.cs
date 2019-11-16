@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Settings;
@@ -68,6 +67,17 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
             stringTemplate = stringTemplate.Replace("{{{url}}}", url);
             stringTemplate = stringTemplate.Replace("{{{today}}}", today);
+            return stringTemplate;
+        }
+
+        public string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate)
+        {
+            var url = $"{clientOptions.Url}profile/my-orders/{order.Id}";
+            var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
+            stringTemplate = stringTemplate.Replace("{{{today}}}", today);
+            stringTemplate = stringTemplate.Replace("{{{name}}}", order.User.FirstName);
+            stringTemplate = stringTemplate.Replace("{{{orderId}}}", order.Id.ToString(CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{url}}}", url);
             return stringTemplate;
         }
     }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.Xunit2;
+using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 using Streetwood.Infrastructure.Services.Implementations.Commands;
@@ -19,6 +21,7 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
     {
         private readonly Mock<IOrderRepository> orderRepositoryMock;
         private readonly Mock<IEmailService> emailServiceMock;
+        private readonly Mock<IMapper> mapperMock;
         private readonly OrderCommandService sut;
 
         public OrderCommandServiceTests()
@@ -26,7 +29,8 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
             var loggerMock = new Mock<ILogger<IOrderCommandService>>();
             orderRepositoryMock = new Mock<IOrderRepository>();
             emailServiceMock = new Mock<IEmailService>();
-            sut = new OrderCommandService(loggerMock.Object, orderRepositoryMock.Object, emailServiceMock.Object);
+            mapperMock = new Mock<IMapper>();
+            sut = new OrderCommandService(loggerMock.Object, orderRepositoryMock.Object, emailServiceMock.Object, mapperMock.Object);
         }
 
         [Theory]
@@ -106,8 +110,7 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
 
         [Theory]
         [AutoData]
-        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_True_From_False_Then_Send_Email(int id, bool payed,
-            bool closed)
+        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_True_From_False_Then_Maps_Order_To_OrderDto(int id, bool payed, bool closed)
         {
             // Arrange
             var order = CreateOrder();
@@ -118,13 +121,29 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
             await sut.UpdateAsync(id, payed, true, closed);
 
             // Assert
-            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(order), Times.Once);
+            mapperMock.Verify(x => x.Map<Order, OrderDto>(order), Times.Once);
         }
 
         [Theory]
         [AutoData]
-        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_True_From_True_Then_Does_Not_Send_Email(int id, bool payed,
-            bool closed)
+        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_True_From_False_Then_Send_Email(int id, bool payed, bool closed, OrderDto orderDto)
+        {
+            // Arrange
+            var order = CreateOrder();
+            order.SetIsShipped(false);
+            orderRepositoryMock.Setup(x => x.GetAndEnsureExistAsync(It.IsAny<int>())).ReturnsAsync(order);
+            mapperMock.Setup(x => x.Map<Order, OrderDto>(It.IsAny<Order>())).Returns(orderDto);
+
+            // Act
+            await sut.UpdateAsync(id, payed, true, closed);
+
+            // Assert
+            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(orderDto), Times.Once);
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_True_From_True_Then_Does_Not_Send_Email(int id, bool payed, bool closed)
         {
             // Arrange
             var order = CreateOrder();
@@ -135,13 +154,12 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
             await sut.UpdateAsync(id, payed, true, closed);
 
             // Assert
-            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(It.IsAny<Order>()), Times.Never);
+            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(It.IsAny<OrderDto>()), Times.Never);
         }
 
         [Theory]
         [AutoData]
-        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_False_From_True_Then_Does_Not_Send_Email(int id, bool payed,
-            bool closed)
+        public async Task When_Updating_And_Shipped_Flag_Was_Set_To_False_From_True_Then_Does_Not_Send_Email(int id, bool payed, bool closed)
         {
             // Arrange
             var order = CreateOrder();
@@ -152,7 +170,7 @@ namespace Streetwood.Infrastructure.Tests.CommandServices
             await sut.UpdateAsync(id, payed, false, closed);
 
             // Assert
-            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(It.IsAny<Order>()), Times.Never);
+            emailServiceMock.Verify(x => x.SendOrderWasShippedEmailAsync(It.IsAny<OrderDto>()), Times.Never);
         }
 
         private static Order CreateOrder()

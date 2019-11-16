@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Streetwood.Core.Domain.Entities;
+﻿using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Managers.Abstract
@@ -11,5 +10,7 @@ namespace Streetwood.Infrastructure.Managers.Abstract
         string PrepareActivateNewUserEmail(User user, string stringTemplate);
 
         string PrepareResetPasswordEmail(User user, string stringTemplate);
+
+        string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate);
     }
 }
