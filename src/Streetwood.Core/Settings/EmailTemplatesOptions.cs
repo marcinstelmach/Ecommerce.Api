@@ -2,12 +2,12 @@
 {
     public class EmailTemplatesOptions
     {
-        public Template NewOrder { get; set; }
+        public EmailTemplate NewOrder { get; set; }
 
-        public Template ActivateNewUser { get; set; }
+        public EmailTemplate ActivateNewUser { get; set; }
 
-        public Template OrderWasShipped { get; set; }
+        public EmailTemplate OrderWasShipped { get; set; }
 
-        public Template ResetPassword { get; set; }
+        public EmailTemplate ResetPassword { get; set; }
     }
 }

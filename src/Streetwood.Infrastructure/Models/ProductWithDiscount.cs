@@ -2,9 +2,9 @@
 
 namespace Streetwood.Infrastructure.Models
 {
-    public class ApplyDiscountsToProductsResult
+    public class ProductWithDiscount
     {
-        public ApplyDiscountsToProductsResult(Product product, ProductCategoryDiscount productCategoryDiscount)
+        public ProductWithDiscount(Product product, ProductCategoryDiscount productCategoryDiscount)
         {
             Product = product;
             ProductCategoryDiscount = productCategoryDiscount;

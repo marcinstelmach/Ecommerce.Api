@@ -56,9 +56,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<IList<ProductCategoryDiscount>> GetRawActiveAsync()
             => await discountRepository.GetActiveAsync();
 
-        public IList<ApplyDiscountsToProductsResult> ApplyDiscountsToProducts(IList<Product> products, IList<ProductCategoryDiscount> discounts)
+        public IList<ProductWithDiscount> ApplyDiscountsToProducts(IList<Product> products, IList<ProductCategoryDiscount> discounts)
         {
-            var result = new List<ApplyDiscountsToProductsResult>();
+            var result = new List<ProductWithDiscount>();
 
             if (!products.Any())
             {
@@ -68,7 +68,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             foreach (var product in products)
             {
                 var discount = discounts.FirstOrDefault(x => x.DiscountCategories.Select(y => y.ProductCategory).Contains(product.ProductCategory));
-                result.Add(new ApplyDiscountsToProductsResult(product, discount));
+                result.Add(new ProductWithDiscount(product, discount));
             }
 
             return result;

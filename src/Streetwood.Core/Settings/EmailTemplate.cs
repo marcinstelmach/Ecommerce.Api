@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class Template
+    public class EmailTemplate
     {
         public string TemplateName { get; set; }
 

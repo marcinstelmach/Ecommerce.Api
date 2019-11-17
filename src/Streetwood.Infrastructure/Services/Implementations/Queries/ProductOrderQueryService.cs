@@ -29,7 +29,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
         public async Task<IList<ProductOrder>> CreateAsync(IList<ProductWithCharmsOrderDto> productsWithCharmsOrder)
         {
-            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId).ToList();
+            var productsIds = productsWithCharmsOrder.Select(s => s.ProductId).Distinct().ToList();
             var charmsIds = productsWithCharmsOrder.SelectMany(s => s.Charms).Select(s => s.CharmId).ToList();
             var products = await productQueryService.GetRawByIdsAsync(productsIds);
             var charms = await charmQueryService.GetRawByIdsAsync(charmsIds);
@@ -37,13 +37,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var productsWithDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
             var productOrders = new List<ProductOrder>();
 
-            foreach (var productWithDiscount in productsWithDiscounts)
+            foreach (var productWithCharmsOrder in productsWithCharmsOrder)
             {
-                var productWithCharmsOrder = productsWithCharmsOrder.First(x => x.ProductId == productWithDiscount.Product.Id);
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
+                var productWithDiscount = productsWithDiscounts.First(x => x.Product.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(productWithDiscount.Product);
-                var finalPrice = productWithDiscount.Product.Price;
 
+                var finalPrice = productWithDiscount.Product.Price;
                 if (productWithCharmsOrder.HaveCharms)
                 {
                     var result = productOrderHelper.ApplyCharmsToProductOrder(productOrder, productWithCharmsOrder, charms, finalPrice);
