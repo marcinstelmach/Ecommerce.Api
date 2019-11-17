@@ -37,13 +37,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var productsWithDiscounts = productCategoryDiscountQueryService.ApplyDiscountsToProducts(products, enabledDiscounts);
             var productOrders = new List<ProductOrder>();
 
-            foreach (var productWithDiscount in productsWithDiscounts)
+            foreach (var productWithCharmsOrder in productsWithCharmsOrder)
             {
-                var productWithCharmsOrder = productsWithCharmsOrder.First(x => x.ProductId == productWithDiscount.Product.Id);
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
+                var productWithDiscount = productsWithDiscounts.First(x => x.Product.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(productWithDiscount.Product);
-                var finalPrice = productWithDiscount.Product.Price;
 
+                var finalPrice = productWithDiscount.Product.Price;
                 if (productWithCharmsOrder.HaveCharms)
                 {
                     var result = productOrderHelper.ApplyCharmsToProductOrder(productOrder, productWithCharmsOrder, charms, finalPrice);

@@ -39,14 +39,14 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var result = sut.ApplyDiscountsToProducts(new List<Product>(), discounts);
 
             // Assert
-            result.Should().BeEquivalentTo(new List<ApplyDiscountsToProductsResult>());
+            result.Should().BeEquivalentTo(new List<ProductWithDiscount>());
         }
 
         [Fact]
         public void When_Applies_Discount_To_Products_And_There_Is_No_Discounts_Then_Returns_List_Of_Products_Without_Discounts()
         {
-            var expected = new List<ApplyDiscountsToProductsResult>();
-            Products.ToList().ForEach(x => expected.Add(new ApplyDiscountsToProductsResult(x, null)));
+            var expected = new List<ProductWithDiscount>();
+            Products.ToList().ForEach(x => expected.Add(new ProductWithDiscount(x, null)));
 
             // Act
             var result = sut.ApplyDiscountsToProducts(Products.ToList(), new List<ProductCategoryDiscount>());
@@ -66,9 +66,9 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             Product.SetProductCategory(productCategory);
             var discountCategory = new DiscountCategory(productCategory, ProductCategoryDiscount);
             ProductCategoryDiscount.AddProductCategory(new[] {discountCategory});
-            var expected = new List<ApplyDiscountsToProductsResult>
+            var expected = new List<ProductWithDiscount>
             {
-                new ApplyDiscountsToProductsResult(Product, ProductCategoryDiscount)
+                new ProductWithDiscount(Product, ProductCategoryDiscount)
             };
 
             // Act
@@ -84,9 +84,9 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         public void When_Applies_Discount_To_Products_And_There_Are_Discounts_But_Not_For_This_Products_Then_Returns_Correct_List_Of_Products_Without_Discounts()
         {
             // Arrange
-            var expected = new List<ApplyDiscountsToProductsResult>
+            var expected = new List<ProductWithDiscount>
             {
-                new ApplyDiscountsToProductsResult(Product, null)
+                new ProductWithDiscount(Product, null)
             };
 
             // Act
