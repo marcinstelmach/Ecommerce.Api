@@ -1,20 +1,19 @@
-﻿using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+﻿using System.Net.Mail;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
-using Streetwood.Core.Settings;
-using Streetwood.Infrastructure.Managers.Abstract;
+using Streetwood.Common.Settings;
 
-namespace Streetwood.Infrastructure.Managers.Implementations
+namespace Streetwood.Common.Email
 {
-    internal class MailKitManager : IEmailManager
+    public class MailKitManager : IEmailManager
     {
         private readonly EmailSettings emailSettings;
 
-        public MailKitManager(IOptions<EmailSettings> emailSettings)
+        public MailKitManager(IOptions<EmailSettings> emailOptions)
         {
-            this.emailSettings = emailSettings.Value;
+            this.emailSettings = emailOptions.Value;
         }
 
         public async Task SendAsync(string receiverAddress, string receiverName, string subject, string body)
@@ -36,7 +35,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         private async Task<SmtpClient> GetClient()
         {
-            var client = new SmtpClient { ServerCertificateValidationCallback = (s, c, h, e) => true };
+            var client = new SmtpClient();
+            client.ServerCertificateValidationCallback = 
 
             await client.ConnectAsync(emailSettings.Server, emailSettings.Port, emailSettings.UseSSl);
             await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
