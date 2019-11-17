@@ -51,11 +51,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     throw new StreetwoodException(ErrorCode.OrderNotFound);
                 }
 
-                if (order == null || (filter.UserType == UserType.Customer && order.User.Id != filter.UserId))
-                {
-                   throw new StreetwoodException(ErrorCode.NoAccess);
-                }
-
                 return mapper.Map<IList<OrdersListDto>>(new List<Order> { order });
             }
 

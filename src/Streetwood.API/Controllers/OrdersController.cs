@@ -21,15 +21,14 @@ namespace Streetwood.API.Controllers
             this.bus = bus;
         }
 
-        // admin can see all, but customer only his own
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
-            => Ok(await bus.SendAsync(new GetOrderQueryModel(id)));
+            => Ok(await bus.SendAsync(new GetOrderQueryModel(id).SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpGet]
         [IgnoreValidation]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get([FromQuery] GetFilteredOrdersQueryModel model)
             => Ok(await bus.SendAsync(model.SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
