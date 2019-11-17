@@ -11,7 +11,7 @@ namespace Streetwood.Core.Extensions
     {
         public static void AddJwtAuth(this IServiceCollection services)
         {
-            var options = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>().Value;
+            var options = services.BuildServiceProvider().GetRequiredService<IOptions<JwtSettings>>().Value;
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(cfg =>
                 {

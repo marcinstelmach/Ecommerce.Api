@@ -17,7 +17,7 @@ namespace Streetwood.Core.Extensions
         {
             var databaseOptions = services
                 .BuildServiceProvider()
-                .GetRequiredService<IOptions<DatabaseOptions>>()
+                .GetRequiredService<IOptions<DatabaseSettings>>()
                 .Value;
 
             services.AddDbContext<StreetwoodContext>(options =>

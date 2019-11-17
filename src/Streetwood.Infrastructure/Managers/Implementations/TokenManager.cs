@@ -15,11 +15,11 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     internal class TokenManager : ITokenManager
     {
-        private readonly JwtOptions options;
+        private readonly JwtSettings settings;
 
-        public TokenManager(IOptions<JwtOptions> options)
+        public TokenManager(IOptions<JwtSettings> options)
         {
-            this.options = options.Value;
+            this.settings = options.Value;
         }
 
         public TokenModel GetToken(Guid userId, string email, string role)
@@ -36,12 +36,12 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
             var signingCredentials =
                 new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
                     SecurityAlgorithms.HmacSha256);
-            var expires = now.AddMinutes(options.ExpiresMinutes);
+            var expires = now.AddMinutes(settings.ExpiresMinutes);
 
             var jwt = new JwtSecurityToken(
-                issuer: options.Issuer,
+                issuer: settings.Issuer,
                 claims: claims,
                 notBefore: now,
                 expires: expires,
@@ -57,9 +57,9 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
-                ValidIssuer = options.Issuer,
+                ValidIssuer = settings.Issuer,
                 ValidateLifetime = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey))
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

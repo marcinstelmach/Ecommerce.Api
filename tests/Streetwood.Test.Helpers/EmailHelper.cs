@@ -6,9 +6,9 @@ namespace Streetwood.Test.Helpers
     public class EmailHelper
     {
         public static IConfiguration Configuration { get; } = TestSettingsManager.GetConfiguration();
-        public static EmailOptions GetTestEmailOptions()
+        public static EmailSettings GetTestEmailOptions()
         {
-            var options = new EmailOptions();
+            var options = new EmailSettings();
             Configuration.GetSection("Email").Bind(options);
 
             return options;

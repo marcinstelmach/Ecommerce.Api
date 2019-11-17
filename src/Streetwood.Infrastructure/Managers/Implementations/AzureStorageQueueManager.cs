@@ -9,18 +9,18 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     internal class AzureStorageQueueManager : IQueueManager
     {
-        private readonly CloudOptions cloudOptions;
+        private readonly ExceptionToolSettings exceptionsToolSettings;
 
-        public AzureStorageQueueManager(IOptions<CloudOptions> cloudOptions)
+        public AzureStorageQueueManager(IOptions<ExceptionToolSettings> cloudOptions)
         {
-            this.cloudOptions = cloudOptions.Value;
+            this.exceptionsToolSettings = cloudOptions.Value;
         }
 
         public async Task AddMessageAsync(string message)
         {
-            var storageAccount = CloudStorageAccount.Parse(cloudOptions.StorageConnectionString);
+            var storageAccount = CloudStorageAccount.Parse(exceptionsToolSettings.StorageConnectionString);
             var queueClient = storageAccount.CreateCloudQueueClient();
-            var queue = queueClient.GetQueueReference(cloudOptions.ExceptionQueue);
+            var queue = queueClient.GetQueueReference(exceptionsToolSettings.ExceptionQueueName);
             var queueMessage = new CloudQueueMessage(message);
 
             await queue.AddMessageAsync(queueMessage);

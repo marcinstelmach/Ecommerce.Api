@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class EmailTemplatesOptions
+    public class EmailTemplateSettings
     {
         public EmailTemplate NewOrder { get; set; }
 

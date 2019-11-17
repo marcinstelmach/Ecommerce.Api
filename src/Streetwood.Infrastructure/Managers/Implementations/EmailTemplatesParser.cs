@@ -12,11 +12,11 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     public class EmailTemplatesParser : IEmailTemplateParser
     {
-        private readonly ClientOptions clientOptions;
+        private readonly ClientSettings clientSettings;
 
-        public EmailTemplatesParser(IOptions<ClientOptions> clientOptions)
+        public EmailTemplatesParser(IOptions<ClientSettings> clientOptions)
         {
-            this.clientOptions = clientOptions.Value;
+            this.clientSettings = clientOptions.Value;
         }
 
         public string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate)
@@ -63,7 +63,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string PrepareActivateNewUserEmail(User user, string stringTemplate)
         {
-            var url = $"{clientOptions.Url}activate";
+            var url = $"{clientSettings.Url}activate";
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
             stringTemplate = stringTemplate.Replace("{{{url}}}", url);
             stringTemplate = stringTemplate.Replace("{{{name}}}", user.FullName);
@@ -73,7 +73,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string PrepareResetPasswordEmail(User user, string stringTemplate)
         {
-            var url = $"{clientOptions.Url}password/recovery?token={user.ChangePasswordToken}";
+            var url = $"{clientSettings.Url}password/recovery?token={user.ChangePasswordToken}";
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
             stringTemplate = stringTemplate.Replace("{{{url}}}", url);
             stringTemplate = stringTemplate.Replace("{{{today}}}", today);
@@ -82,7 +82,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate)
         {
-            var url = $"{clientOptions.Url}profile/my-orders/{order.Id}";
+            var url = $"{clientSettings.Url}profile/my-orders/{order.Id}";
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
             stringTemplate = stringTemplate.Replace("{{{today}}}", today);
             stringTemplate = stringTemplate.Replace("{{{name}}}", order.User.FirstName);

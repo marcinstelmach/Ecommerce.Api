@@ -10,17 +10,17 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 {
     internal class MailKitManager : IEmailManager
     {
-        private readonly IEmailOptions emailOptions;
+        private readonly EmailSettings emailSettings;
 
-        public MailKitManager(IOptions<EmailOptions> emailOptions)
+        public MailKitManager(IOptions<EmailSettings> emailOptions)
         {
-            this.emailOptions = emailOptions.Value;
+            this.emailSettings = emailOptions.Value;
         }
 
         public async Task SendAsync(string receiverAddress, string receiverName, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(emailOptions.SenderName, emailOptions.SenderAddress));
+            message.From.Add(new MailboxAddress(emailSettings.SenderName, emailSettings.SenderAddress));
             message.To.Add(new MailboxAddress(receiverAddress, receiverAddress));
             message.Subject = subject;
             message.Body = new TextPart(TextFormat.Html)
@@ -38,8 +38,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
         {
             var client = new SmtpClient { ServerCertificateValidationCallback = (s, c, h, e) => true };
 
-            await client.ConnectAsync(emailOptions.Server, emailOptions.Port, emailOptions.UseSSl);
-            await client.AuthenticateAsync(emailOptions.Username, emailOptions.Password);
+            await client.ConnectAsync(emailSettings.Server, emailSettings.Port, emailSettings.UseSSl);
+            await client.AuthenticateAsync(emailSettings.Username, emailSettings.Password);
 
             return client;
         }

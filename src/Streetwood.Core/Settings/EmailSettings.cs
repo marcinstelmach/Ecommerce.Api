@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class EmailOptions : IEmailOptions
+    public class EmailSettings
     {
         public string Server { get; set; }
 

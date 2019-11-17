@@ -14,46 +14,46 @@ namespace Streetwood.Infrastructure.Services.Implementations
         private readonly IEmailTemplateParser emailTemplateParser;
         private readonly IEmailTemplatesManager emailTemplatesManager;
         private readonly IEmailManager emailManager;
-        private readonly EmailTemplatesOptions emailTemplatesOptions;
+        private readonly EmailTemplateSettings emailTemplateSettings;
 
         public EmailService(
             IEmailTemplatesManager emailTemplatesManager,
             IEmailManager emailManager, IEmailTemplateParser emailTemplateParser,
-            IOptions<EmailTemplatesOptions> emailTemplatesOptions)
+            IOptions<EmailTemplateSettings> emailTemplatesOptions)
         {
             this.emailTemplatesManager = emailTemplatesManager;
             this.emailManager = emailManager;
             this.emailTemplateParser = emailTemplateParser;
-            this.emailTemplatesOptions = emailTemplatesOptions.Value;
+            this.emailTemplateSettings = emailTemplatesOptions.Value;
         }
 
         public async Task SendNewOrderEmailAsync(OrderDto order)
         {
-            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.NewOrder.TemplateName);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.NewOrder.TemplateName);
             template = emailTemplateParser.PrepareNewOrderEmailAsync(order, template);
-            var subject = ParseSubjectOrderId(emailTemplatesOptions.NewOrder.Subject, order.Id);
+            var subject = ParseSubjectOrderId(emailTemplateSettings.NewOrder.Subject, order.Id);
             await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 
         public async Task SendNewUserEmailAsync(User user)
         {
-            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.ActivateNewUser.TemplateName);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.ActivateNewUser.TemplateName);
             template = emailTemplateParser.PrepareActivateNewUserEmail(user, template);
-            await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ActivateNewUser.Subject, template);
+            await emailManager.SendAsync(user.Email, user.FullName, emailTemplateSettings.ActivateNewUser.Subject, template);
         }
 
         public async Task SendResetPasswordEmailAsync(User user)
         {
-            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.ResetPassword.TemplateName);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.ResetPassword.TemplateName);
             template = emailTemplateParser.PrepareResetPasswordEmail(user, template);
-            await emailManager.SendAsync(user.Email, user.FullName, emailTemplatesOptions.ResetPassword.Subject, template);
+            await emailManager.SendAsync(user.Email, user.FullName, emailTemplateSettings.ResetPassword.Subject, template);
         }
 
         public async Task SendOrderWasShippedEmailAsync(OrderDto order)
         {
-            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplatesOptions.OrderWasShipped.TemplateName);
+            var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.OrderWasShipped.TemplateName);
             template = emailTemplateParser.PrepareOrderWasShippedEmail(order, template);
-            var subject = ParseSubjectOrderId(emailTemplatesOptions.OrderWasShipped.Subject, order.Id);
+            var subject = ParseSubjectOrderId(emailTemplateSettings.OrderWasShipped.Subject, order.Id);
             await emailManager.SendAsync(order.User.Email, order.User.FullName, subject, template);
         }
 

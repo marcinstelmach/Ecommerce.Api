@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class CacheOptions
+    public class CacheSettings
     {
         public int DefaultCacheTime { get; set; }
     }

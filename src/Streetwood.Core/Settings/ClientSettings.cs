@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class ClientOptions
+    public class ClientSettings
     {
         public string Url { get; set; }
     }

@@ -12,13 +12,13 @@ namespace Streetwood.Infrastructure.Managers.Implementations
     internal class MemoryCache : ICache
     {
         private readonly IMemoryCache cache;
-        private readonly CacheOptions options;
+        private readonly CacheSettings settings;
         private List<string> currentKeys;
 
-        public MemoryCache(IMemoryCache cache, IOptions<CacheOptions> options)
+        public MemoryCache(IMemoryCache cache, IOptions<CacheSettings> options)
         {
             this.cache = cache;
-            this.options = options.Value;
+            this.settings = options.Value;
             this.currentKeys = new List<string>();
         }
 
@@ -26,7 +26,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
         {
             if (!timeInMinutes.HasValue)
             {
-                timeInMinutes = options.DefaultCacheTime;
+                timeInMinutes = settings.DefaultCacheTime;
             }
 
             object obj = default;

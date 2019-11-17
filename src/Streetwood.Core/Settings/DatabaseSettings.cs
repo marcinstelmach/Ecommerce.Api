@@ -1,6 +1,6 @@
 ﻿namespace Streetwood.Core.Settings
 {
-    public class DatabaseOptions
+    public class DatabaseSettings
     {
         public string ConnectionString { get; set; }
     }

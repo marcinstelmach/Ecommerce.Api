@@ -6,15 +6,23 @@ namespace Streetwood.Core.Extensions
 {
     public static class SettingsExtensions
     {
+        private const string DatabaseSettingsKey = "DatabaseSettings";
+        private const string JwtSettingsKey = "JwtSettings";
+        private const string CacheSettingsKey = "CacheSettings";
+        private const string EmailSettingsKey = "EmailSettings";
+        private const string ExceptionToolSettingsKey = "ExceptionToolSettings";
+        private const string EmailTemplateSettingsKey = "EmailTemplateSettings";
+        private const string ClientSettingsKey = "ClientSettings";
+
         public static void AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<DatabaseOptions>(configuration.GetSection("Database"));
-            services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
-            services.Configure<CacheOptions>(configuration.GetSection("Cache"));
-            services.Configure<EmailOptions>(configuration.GetSection("Email"));
-            services.Configure<CloudOptions>(configuration.GetSection("Cloud"));
-            services.Configure<EmailTemplatesOptions>(configuration.GetSection("EmailTemplates"));
-            services.Configure<ClientOptions>(configuration.GetSection("Client"));
+            services.Configure<DatabaseSettings>(configuration.GetSection(DatabaseSettingsKey));
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettingsKey));
+            services.Configure<CacheSettings>(configuration.GetSection(CacheSettingsKey));
+            services.Configure<EmailSettings>(configuration.GetSection(EmailSettingsKey));
+            services.Configure<ExceptionToolSettings>(configuration.GetSection(ExceptionToolSettingsKey));
+            services.Configure<EmailTemplateSettings>(configuration.GetSection(EmailTemplateSettingsKey));
+            services.Configure<ClientSettings>(configuration.GetSection(ClientSettingsKey));
         }
     }
 }
