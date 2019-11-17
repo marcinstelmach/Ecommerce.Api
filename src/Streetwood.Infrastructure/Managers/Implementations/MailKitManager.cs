@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -21,7 +20,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
         public async Task SendAsync(string receiverAddress, string receiverName, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(emailOptions.SenderAddress, emailOptions.SenderAddress));
+            message.From.Add(new MailboxAddress(emailOptions.SenderName, emailOptions.SenderAddress));
             message.To.Add(new MailboxAddress(receiverAddress, receiverAddress));
             message.Subject = subject;
             message.Body = new TextPart(TextFormat.Html)
