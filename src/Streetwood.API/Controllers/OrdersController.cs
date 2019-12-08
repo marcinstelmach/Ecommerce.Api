@@ -28,7 +28,7 @@ namespace Streetwood.API.Controllers
 
         [HttpGet]
         [IgnoreValidation]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Get([FromQuery] GetFilteredOrdersQueryModel model)
             => Ok(await bus.SendAsync(model.SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
