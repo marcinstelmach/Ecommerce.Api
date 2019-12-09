@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using Streetwood.Core.Exceptions;
-using Streetwood.Core.Settings;
-using Streetwood.Infrastructure.Factories.Abstract;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
