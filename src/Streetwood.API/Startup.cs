@@ -61,9 +61,7 @@ namespace Streetwood.API
             builder.RegisterModule<FactoriesModule>();
 
             Container = builder.Build();
-            var serviceProvider = new AutofacServiceProvider(Container);
-
-            return serviceProvider;
+            return new AutofacServiceProvider(Container);
         }
 
         public void Configure(IApplicationBuilder app, IApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory)
