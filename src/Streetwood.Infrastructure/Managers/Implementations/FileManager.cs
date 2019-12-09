@@ -18,14 +18,10 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             }
 
             var imagePath = Path.Combine(directoryPath, uniqueFileName);
-            using var stream = new FileStream(imagePath, FileMode.Create);
+            var stream = new FileStream(imagePath, FileMode.Create);
             try
             {
                 await file.CopyToAsync(stream);
-            }
-            catch (Exception e)
-            {
-                throw new StreetwoodException(ErrorCode.UnableToSavePhoto, e.Message, e);
             }
             finally
             {
@@ -35,14 +31,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
 
         public void RemoveFile(string path)
         {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                throw new StreetwoodException(ErrorCode.UnableToDeletePhoto, exception.Message, exception);
-            }
+            File.Delete(path);
 
             var directoryPath = Path.GetDirectoryName(path);
 

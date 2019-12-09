@@ -77,7 +77,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             if (products.Count != ids.Count)
             {
                 var missingIds = ids.Except(products.Select(x => x.Id));
-                throw new StreetwoodException(ErrorCode.NotAllOrderProductsFound(missingIds));
+                throw new Exception($"Product missingIds: '{string.Join(',', missingIds)}'");
             }
 
             return products;

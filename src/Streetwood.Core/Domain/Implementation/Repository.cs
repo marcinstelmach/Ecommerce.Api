@@ -48,16 +48,9 @@ namespace Streetwood.Core.Domain.Implementation
 
         public async Task SaveChangesAsync()
         {
-            try
+            if (await dbContext.SaveChangesAsync() < 0)
             {
-                if (await dbContext.SaveChangesAsync() < 0)
-                {
-                    throw new StreetwoodException(ErrorCode.CannotSaveDatabase);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new StreetwoodException(ErrorCode.CannotSaveDatabase, ex.Message, ex);
+                throw new Exception("Cannot save changes in db.");
             }
         }
     }

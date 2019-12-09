@@ -42,7 +42,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             if (!charms.Any())
             {
-                throw new StreetwoodException(ErrorCode.OrderCharmsNotFound);
+                throw new Exception("Cannot find order charms in db.");
             }
 
             return charms;

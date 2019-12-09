@@ -50,7 +50,7 @@ namespace Streetwood.Core.Domain.Abstract
         {
             if (dateTime < AvailableFrom)
             {
-                throw new StreetwoodException(ErrorCode.DiscountDateToIsLowerThanFrom);
+                throw new Exception("Discount dateTo is lower that From.");
             }
 
             AvailableTo = dateTime;

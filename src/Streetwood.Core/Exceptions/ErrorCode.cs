@@ -27,11 +27,6 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode GenericNotExist(Type type, string message = null) =>
             new ErrorCode($"{type.Name}NotExist", message);
 
-        public static ErrorCode CannotSaveDatabase =>
-            new ErrorCode(nameof(CannotSaveDatabase), HttpStatusCode.InternalServerError);
-
-        public static ErrorCode DiscountDateToIsLowerThanFrom => new ErrorCode(nameof(DiscountDateToIsLowerThanFrom));
-
         public static ErrorCode InvalidUserCredentials => new ErrorCode(nameof(InvalidUserCredentials),
             "Invalid email or password", HttpStatusCode.UnprocessableEntity);
 
@@ -42,12 +37,6 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode ProductNotFound => new ErrorCode(nameof(ProductNotFound));
 
-        public static ErrorCode UnableToSavePhoto =>
-            new ErrorCode(nameof(UnableToSavePhoto), HttpStatusCode.InternalServerError);
-
-        public static ErrorCode UnableToDeletePhoto =>
-            new ErrorCode(nameof(UnableToDeletePhoto), HttpStatusCode.InternalServerError);
-
         public static ErrorCode ShipmentInUse =>
             new ErrorCode(nameof(ShipmentInUse), "Cannot delete shipment, cause it is in use");
 
@@ -56,21 +45,10 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderDiscountInUse => new ErrorCode(nameof(OrderDiscountInUse));
 
-        public static ErrorCode NotAllOrderProductsFound(IEnumerable<int> missingIds)
-            => new ErrorCode(nameof(NotAllOrderProductsFound), $"Product missingIds: '{string.Join(',', missingIds)}'", HttpStatusCode.InternalServerError);
-
-        public static ErrorCode OrderCharmsNotFound => new ErrorCode(nameof(OrderCharmsNotFound), HttpStatusCode.InternalServerError);
-
         public static ErrorCode DiscountWithThisCodeExistAlready =>
             new ErrorCode(nameof(DiscountWithThisCodeExistAlready));
 
         public static ErrorCode OrderDiscountNotFound => new ErrorCode(nameof(OrderDiscountNotFound));
-
-        public static ErrorCode NoProductsForNewOrder =>
-            new ErrorCode(nameof(NoProductsForNewOrder), HttpStatusCode.InternalServerError);
-
-        public static ErrorCode OrderBasePriceBelowZero =>
-            new ErrorCode(nameof(OrderBasePriceBelowZero), HttpStatusCode.InternalServerError);
 
         public static ErrorCode ProductNotAcceptCharms => new ErrorCode(nameof(ProductNotAcceptCharms));
 

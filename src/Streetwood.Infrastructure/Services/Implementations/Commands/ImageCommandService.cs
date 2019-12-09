@@ -48,14 +48,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         {
             var image = await imageRepository.GetAndEnsureExistAsync(id);
             var physicalImagePath = pathManager.GetPhysicalPath(image.ImageUrl);
-            try
-            {
-                File.Delete(physicalImagePath);
-            }
-            catch (Exception ex)
-            {
-                throw new StreetwoodException(ErrorCode.UnableToDeletePhoto, ex.Message, ex);
-            }
+            File.Delete(physicalImagePath);
 
             await imageRepository.DeleteAsync(image);
             await imageRepository.SaveChangesAsync();

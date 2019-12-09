@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -32,7 +33,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         {
             if (!productOrders.Any())
             {
-                throw new StreetwoodException(ErrorCode.NoProductsForNewOrder);
+                throw new ArgumentException("Empty product orders");
             }
 
             var productNames = string.Join(", ", productOrders.Select(s => s.Product).Select(s => s.Name));
@@ -41,7 +42,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             var basePrice = productOrders.Sum(s => (s.CurrentProductPrice + s.CharmsPrice) * s.Amount);
             if (basePrice <= 0)
             {
-                throw new StreetwoodException(ErrorCode.OrderBasePriceBelowZero);
+                throw new Exception("Order base price is below 0.");
             }
 
             var finalPrice = productOrders.Sum(s => s.FinalPrice * s.Amount);

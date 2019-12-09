@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Exceptions;
@@ -17,7 +18,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Helpers
                 var charm = charms.SingleOrDefault(s => s.Id == charmOrder.CharmId);
                 if (charm == null)
                 {
-                    throw new StreetwoodException(ErrorCode.OrderCharmsNotFound);
+                    throw new Exception("Cannot find order charms");
                 }
 
                 var productOrderCharm = new ProductOrderCharm(charm, charmOrder.Sequence);
