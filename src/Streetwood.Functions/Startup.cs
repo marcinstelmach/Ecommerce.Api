@@ -1,11 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Streetwood.Common.Email;
-using Streetwood.Common.Factories;
 using Streetwood.Functions;
-using Streetwood.Functions.Handlers;
-using Streetwood.Functions.Settings;
+using Streetwood.Functions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -15,13 +10,7 @@ namespace Streetwood.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddOptions<QueueSettings>()
-                .Configure<IConfiguration>((settings, configuration) => { configuration.Bind(settings); });
-            builder.Services.AddOptions<ExceptionEmailSettings>()
-                .Configure<IConfiguration>((settings, configuration) => { configuration.Bind(settings); });
-            builder.Services.AddScoped<IAzureQueueClientFactory, AzureQueueClientFactory>();
-            builder.Services.AddTransient<IEmailManager, MailKitManager>();
-            builder.Services.AddTransient<IExceptionHandler, ExceptionHandler>();
+            builder.Services.RegisterServices();
         }
     }
 }

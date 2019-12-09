@@ -21,7 +21,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(emailSettings.SenderName, emailSettings.SenderAddress));
-            message.To.Add(new MailboxAddress(receiverAddress, receiverAddress));
+            message.To.Add(new MailboxAddress(receiverName, receiverAddress));
             message.Subject = subject;
             message.Body = new TextPart(TextFormat.Html)
             {

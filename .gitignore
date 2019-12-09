@@ -267,3 +267,4 @@ __pycache__/
 /src/Streetwood.API/Properties/PublishProfiles
 /src/Streetwood.API/appsettings.Staging.json
 /tests/Streetwood.Test.Helpers/appSettings.Test.json
+/src/Streetwood.Functions/Properties/PublishProfiles/streetwood-functions - Zip Deploy.pubxml
