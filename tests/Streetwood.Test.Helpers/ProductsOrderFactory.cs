@@ -7,11 +7,11 @@ namespace Streetwood.Test.Helpers
     {
         public static List<ProductOrder> GetProductsOrders()
         {
-            var productOrder = new ProductOrder(2, "Product order comment");
+            var productOrder = new ProductOrder(2, "Product order comment", "L");
             productOrder.AddProduct(ProductFactory.GetProductWithoutCharms());
             productOrder.SetFinalPrice(99);
 
-            var productOrderWitchCharm = new ProductOrder(1, "Please give give");
+            var productOrderWitchCharm = new ProductOrder(1, "Please give give", "L");
             productOrderWitchCharm.AddProduct(ProductFactory.GetProductWithCharms());
             productOrderWitchCharm.AddProductOrderCharms(ProductOrderCharmsFactory.GetProductOrderCharms(3));
             productOrderWitchCharm.SetFinalPrice(40);
@@ -26,7 +26,7 @@ namespace Streetwood.Test.Helpers
         public static List<ProductOrder> GetProductOrdersWithDiscounts()
         {
             var productOrders = GetProductsOrders();
-            var productOrderWithDiscount = new ProductOrder(3, "Product order with discount");
+            var productOrderWithDiscount = new ProductOrder(3, "Product order with discount", "L");
             productOrderWithDiscount.AddProduct(ProductFactory.GetProductWithCharms());
             productOrderWithDiscount.AddProductOrderCharms(ProductOrderCharmsFactory.GetProductOrderCharms(5));
             productOrderWithDiscount.AddProductCategoryDiscount(DiscountFactory.GetProductCategoryDiscount());

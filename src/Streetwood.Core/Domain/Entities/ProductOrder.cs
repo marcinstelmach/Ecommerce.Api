@@ -18,9 +18,11 @@ namespace Streetwood.Core.Domain.Entities
 
         public decimal CharmsPrice { get; protected set; }
 
-        public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
-
         public int? DiscountValue { get; protected set; }
+
+        public string Size { get; protected set; }
+
+        public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
         public virtual Order Order { get; protected set; }
 
@@ -28,11 +30,12 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrderCharm> ProductOrderCharms => productOrderCharms;
 
-        public ProductOrder(int amount, string comment)
+        public ProductOrder(int amount, string comment, string size)
         {
             Id = Guid.NewGuid();
             Amount = amount;
             Comment = comment;
+            Size = size;
         }
 
         protected ProductOrder()

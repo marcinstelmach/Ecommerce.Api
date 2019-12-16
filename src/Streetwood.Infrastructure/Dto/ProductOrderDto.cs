@@ -17,6 +17,8 @@ namespace Streetwood.Infrastructure.Dto
 
         public decimal CharmsPrice { get; set; }
 
+        public string Size { get; set; }
+
         public ProductCategoryDiscountDto ProductCategoryDiscount { get; set; }
 
         public ProductDto Product { get; set; }

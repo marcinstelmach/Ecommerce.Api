@@ -39,7 +39,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             foreach (var productWithCharmsOrder in productsWithCharmsOrder)
             {
-                var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment);
+                var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment, productWithCharmsOrder.Size);
                 var productWithDiscount = productsWithDiscounts.First(x => x.Product.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(productWithDiscount.Product);
 
