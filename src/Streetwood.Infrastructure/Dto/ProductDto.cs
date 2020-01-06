@@ -24,6 +24,8 @@ namespace Streetwood.Infrastructure.Dto
 
         public int MaxCharmsCount { get; set; }
 
+        public string Sizes { get; set; }
+
         public IList<ImageDto> Images { get; set; }
 
         public Guid ProductCategoryId { get; set; }
