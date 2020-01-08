@@ -41,7 +41,10 @@ namespace Streetwood.API.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] AddProductCommandModel model)
-            => Ok(await bus.SendAsync(model));
+        {
+            var productId = await bus.SendAsync(model);
+            return Ok(new { ProductId = productId });
+        }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]

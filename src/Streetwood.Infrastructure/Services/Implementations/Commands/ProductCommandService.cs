@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
+using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
@@ -22,10 +23,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.pathManager = pathManager;
         }
 
-        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng, 
+        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng,
             bool acceptCharms, int maxCharmsCount, string sizes, Guid productCategoryId)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
+            if (category.Products.Count > 1)
+            {
+                throw new StreetwoodException(ErrorCode.ThisProductCategoryCanHasOnlyOneProduct);
+            }
+
             var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
             var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, maxCharmsCount, sizes, imagesPath);
 

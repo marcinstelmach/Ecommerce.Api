@@ -68,6 +68,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode OrderNotFound => new ErrorCode(nameof(OrderNotFound), HttpStatusCode.NotFound);
 
+        public static ErrorCode ThisProductCategoryCanHasOnlyOneProduct => new ErrorCode(nameof(ThisProductCategoryCanHasOnlyOneProduct));
+
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }
