@@ -38,7 +38,6 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
 
         public async Task<int> Handle(AddOrderCommandModel request, CancellationToken cancellationToken)
         {
-            // on this level we have everything validated and checked => no validation here
             var user = await userQueryService.GetRawByIdAsync(request.UserId);
             var productOrders = await productOrderQueryService.CreateAsync(request.Products);
             var shipment = await shipmentQueryService.GetRawAsync(request.ShipmentId);
