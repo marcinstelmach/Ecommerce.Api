@@ -17,7 +17,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.ProductCategory
 
         public async Task<Unit> Handle(AddProductCategoryCommandModel request, CancellationToken cancellationToken)
         {
-            await productCategoryCommandService.AddAsync(request.Name, request.NameEng, request.ProductCategoryId);
+            await productCategoryCommandService.AddAsync(request.Name, request.NameEng, request.ProductCategoryId, request.HasOneProduct);
             return Unit.Value;
         }
     }

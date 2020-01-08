@@ -61,7 +61,7 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
         public void When_Applies_Discount_To_Products_And_There_Are_Discounts_For_This_Products_Then_Returns_Correct_List_Of_Products_With_Discounts()
         {
             // Arrange
-            var productCategory = new ProductCategory("", "");
+            var productCategory = new ProductCategory("", "", false);
             productCategory.AddProduct(Product);
             Product.SetProductCategory(productCategory);
             var discountCategory = new DiscountCategory(productCategory, ProductCategoryDiscount);

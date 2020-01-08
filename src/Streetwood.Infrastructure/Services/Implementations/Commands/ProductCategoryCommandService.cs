@@ -17,9 +17,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.productCategoryRepository = productCategoryRepository;
         }
 
-        public async Task AddAsync(string name, string nameEng, Guid? productCategoryId)
+        public async Task AddAsync(string name, string nameEng, Guid? productCategoryId, bool hasOneProduct)
         {
-            var productCategory = new ProductCategory(name, nameEng);
+            var productCategory = new ProductCategory(name, nameEng, hasOneProduct);
             if (productCategoryId == null)
             {
                 await productCategoryRepository.AddAsync(productCategory);

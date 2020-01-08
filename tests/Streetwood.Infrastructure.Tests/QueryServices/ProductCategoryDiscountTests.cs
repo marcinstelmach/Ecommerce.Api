@@ -91,8 +91,8 @@ namespace Streetwood.Infrastructure.Tests.QueryServices
             var product3 = new Product("Test3", "Test3", 30, "Test3", "Test3", true, 5, "", "") { Id = 3 };
             var product4 = new Product("Test4", "Test3", 30, "Test3", "Test3", true,3, "", "") { Id = 4 };
 
-            var category1 = new ProductCategory("Test1", "Test1");
-            var category2 = new ProductCategory("Test2", "Test2");
+            var category1 = new ProductCategory("Test1", "Test1", false);
+            var category2 = new ProductCategory("Test2", "Test2", false);
 
             product1.SetProductCategory(category1);
             product2.SetProductCategory(category1);

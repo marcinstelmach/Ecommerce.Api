@@ -20,6 +20,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public ItemStatus Status { get; protected set; }
 
+        public bool HasOneProduct { get; protected set; }
+
         public virtual List<DiscountCategory> DiscountCategories => discountCategories;
 
         public virtual List<ProductCategory> ProductCategories => productCategories;
@@ -28,13 +30,14 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual ProductCategory Parent { get; protected set; }
 
-        public ProductCategory(string name, string nameEng)
+        public ProductCategory(string name, string nameEng, bool hasOneProduct)
         {
             Id = Guid.NewGuid();
             SetName(name);
             SetNameEng(nameEng);
             UniqueName = name.AppendRandom(5);
             SetStatus(ItemStatus.Available);
+            HasOneProduct = hasOneProduct;
         }
 
         protected ProductCategory()

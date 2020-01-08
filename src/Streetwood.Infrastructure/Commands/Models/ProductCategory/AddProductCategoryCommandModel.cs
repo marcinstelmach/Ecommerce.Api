@@ -13,5 +13,7 @@ namespace Streetwood.Infrastructure.Commands.Models.ProductCategory
         public string NameEng { get; set; }
 
         public Guid? ProductCategoryId { get; set; }
+
+        public bool HasOneProduct { get; set; }
     }
 }
