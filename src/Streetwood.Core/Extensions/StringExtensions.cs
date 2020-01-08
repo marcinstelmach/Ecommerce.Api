@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -42,6 +43,16 @@ namespace Streetwood.Core.Extensions
 
             var uniqueName = $"{value.Substring(0, index)}{random.AppendRandom(10)}{extension}";
             return uniqueName.Replace(' ', '_');
+        }
+
+        public static string FirstCharToUpper(this string input)
+        {
+            return input switch
+            {
+                null => throw new ArgumentNullException(nameof(input)),
+                "" => throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input)),
+                _ => input.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + input.Substring(1)
+            };
         }
     }
 }

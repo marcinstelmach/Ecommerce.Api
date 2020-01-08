@@ -5,5 +5,7 @@
         public string ImageUrl { get; set; }
 
         public bool IsMain { get; set; }
+
+        public string Name { get; set; }
     }
 }
