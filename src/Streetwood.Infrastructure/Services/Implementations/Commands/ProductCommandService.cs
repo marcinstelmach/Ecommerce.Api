@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
@@ -27,9 +28,13 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             bool acceptCharms, int maxCharmsCount, string sizes, Guid productCategoryId)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
-            if (category.Products.Count > 1)
+            if (category.HasOneProduct)
             {
-                throw new StreetwoodException(ErrorCode.ThisProductCategoryCanHasOnlyOneProduct);
+                var existingAvailableProducts = category.Products.Where(x => x.Status == ItemStatus.Available);
+                if (existingAvailableProducts.Any())
+                {
+                    throw new StreetwoodException(ErrorCode.ThisProductCategoryCanHasOnlyOneProduct);
+                }
             }
 
             var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
