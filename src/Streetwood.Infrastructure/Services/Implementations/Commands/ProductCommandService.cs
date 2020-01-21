@@ -6,6 +6,7 @@ using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
+using Streetwood.Infrastructure.Dto.Products;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -24,10 +25,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.pathManager = pathManager;
         }
 
-        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, int maxCharmsCount, string sizes, Guid productCategoryId)
+        public async Task<int> AddAsync(AddProductDto dto)
         {
-            var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
+            var category = await productCategoryRepository.GetAndEnsureExistAsync(dto.ProductCategoryId);
             if (category.HasOneProduct)
             {
                 var existingAvailableProducts = category.Products.Where(x => x.Status == ItemStatus.Available);
@@ -37,8 +37,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 }
             }
 
-            var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
-            var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, maxCharmsCount, sizes, imagesPath);
+            var imagesPath = pathManager.GetProductPath(category.UniqueName, dto.Name.AppendRandom(5));
+            var product = new Product(
+                dto.Name, dto.NameEng, dto.Price, dto.Description, dto.DescriptionEng, dto.AcceptCharms, dto.MaxCharmCount, dto.Sizes, imagesPath);
 
             category.AddProduct(product);
             await productCategoryRepository.SaveChangesAsync();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Streetwood.Infrastructure.Dto.Products;
 
 namespace Streetwood.Infrastructure.Dto
 {

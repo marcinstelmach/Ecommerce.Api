@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Dto.Products;
 
 namespace Streetwood.Infrastructure.Mappers.Profiles
 {

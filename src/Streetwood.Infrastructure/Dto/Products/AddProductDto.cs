@@ -1,18 +1,14 @@
-﻿using Streetwood.Core.Domain.Enums;
+﻿using System;
 
-namespace Streetwood.Infrastructure.Dto
+namespace Streetwood.Infrastructure.Dto.Products
 {
-    public class ProductListDto
+    public class AddProductDto
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string NameEng { get; set; }
 
         public decimal Price { get; set; }
-
-        public ItemStatus Status { get; set; }
 
         public string Description { get; set; }
 
@@ -20,8 +16,10 @@ namespace Streetwood.Infrastructure.Dto
 
         public bool AcceptCharms { get; set; }
 
-        public int MaxCharmsCount { get; set; }
+        public int MaxCharmCount { get; set; }
 
         public string Sizes { get; set; }
+
+        public Guid ProductCategoryId { get; set; }
     }
 }
