@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -18,15 +16,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             }
 
             var imagePath = Path.Combine(directoryPath, uniqueFileName);
-            var stream = new FileStream(imagePath, FileMode.Create);
-            try
-            {
-                await file.CopyToAsync(stream);
-            }
-            finally
-            {
-                stream.Dispose();
-            }
+            using var stream = new FileStream(imagePath, FileMode.Create);
+            await file.CopyToAsync(stream);
         }
 
         public void RemoveFile(string path)

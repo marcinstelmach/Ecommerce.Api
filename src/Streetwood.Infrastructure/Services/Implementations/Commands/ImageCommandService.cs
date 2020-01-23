@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
@@ -47,10 +46,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task DeleteAsync(Guid id)
         {
             var image = await imageRepository.GetAndEnsureExistAsync(id);
-            var physicalImagePath = pathManager.GetPhysicalPath(image.ImageUrl);
-            File.Delete(physicalImagePath);
-
-            await imageRepository.DeleteAsync(image);
+            image.Delete();
             await imageRepository.SaveChangesAsync();
         }
     }
