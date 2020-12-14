@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Core.Domain.Entities
 {
+
     public class Product : Entity
     {
         private readonly List<Image> images = new List<Image>();
@@ -30,6 +32,8 @@ namespace Streetwood.Core.Domain.Entities
         public string ImagesPath { get; protected set; }
 
         public ItemStatus Status { get; protected set; }
+
+        public Guid ProductCategoryId { get; protected set; }
 
         public virtual ProductCategory ProductCategory { get; protected set; }
 

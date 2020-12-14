@@ -1,4 +1,5 @@
-﻿using Streetwood.Core.Domain.Enums;
+﻿using System;
+using Streetwood.Core.Domain.Enums;
 
 namespace Streetwood.Infrastructure.Dto
 {
@@ -23,5 +24,9 @@ namespace Streetwood.Infrastructure.Dto
         public int MaxCharmsCount { get; set; }
 
         public string Sizes { get; set; }
+
+        public Guid ProductCategoryId { get; set; }
+
+        public string ImagePath { get; set; }
     }
 }

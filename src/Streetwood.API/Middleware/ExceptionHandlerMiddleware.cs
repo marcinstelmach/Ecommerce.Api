@@ -69,7 +69,7 @@ namespace Streetwood.API.Middleware
         {
             var statusCode = HttpStatusCode.InternalServerError;
             var errorCodeName = nameof(HttpStatusCode.InternalServerError);
-            var message = exception.Message;
+            var message = PrepareExceptionMessage(exception);
 
             if (exception is UnauthorizedAccessException)
             {

@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
-using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
@@ -33,9 +32,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         {
             var products = await productRepository
                 .GetQueryable()
+                .Include(x => x.Images)
                 .Where(s => s.Status == ItemStatus.Available)
+                .Where(x => x.Images.Any())
                 .ToListAsync();
-            return mapper.Map<IList<ProductListDto>>(products);
+            return mapper.Map<List<ProductListDto>>(products);
         }
 
         public async Task<ProductDto> GetAsync(int id)

@@ -8,6 +8,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            builder.ToTable("Products");
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
@@ -25,7 +26,7 @@ namespace Streetwood.Core.Domain.Entities.Configuration
 
             builder.HasOne(s => s.ProductCategory)
                 .WithMany(s => s.Products)
-                .HasForeignKey("ProductCategoryId");
+                .HasForeignKey(x => x.ProductCategoryId);
 
             builder.Property(s => s.Name).HasMaxLength(50);
             builder.Property(s => s.NameEng).HasMaxLength(50);
