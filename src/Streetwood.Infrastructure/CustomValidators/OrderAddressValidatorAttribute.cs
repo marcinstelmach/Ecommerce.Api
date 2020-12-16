@@ -6,7 +6,7 @@ using Streetwood.Infrastructure.Commands.Models.Order;
 namespace Streetwood.Infrastructure.CustomValidators
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class AddOrderAddressValidatorAttribute : ValidationAttribute
+    public class OrderAddressValidatorAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

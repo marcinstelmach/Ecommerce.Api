@@ -34,8 +34,7 @@ namespace Streetwood.API.Middleware
             }
             catch (StreetwoodException exception)
             {
-                var message = PrepareExceptionMessage(exception);
-                
+                var message = exception.Message;
                 if (exception.ErrorCode.StatusCode == HttpStatusCode.InternalServerError)
                 {
                     if (!environment.IsDevelopment())
@@ -50,7 +49,7 @@ namespace Streetwood.API.Middleware
                     logger.LogWarning($"Streetwood exception with code '{exception.ErrorCode.ToString()}.\n{message}");
                 }
 
-                await HandleException(context, exception);
+                await HandleException(context, exception, message);
             }
             catch (Exception exception)
             {
@@ -61,15 +60,14 @@ namespace Streetwood.API.Middleware
                     await queueManager.AddMessageAsync(message);
                 }
 
-                await HandleException(context, exception);
+                await HandleException(context, exception, message);
             }
         }
 
-        private Task HandleException(HttpContext context, Exception exception)
+        private Task HandleException(HttpContext context, Exception exception, string message)
         {
             var statusCode = HttpStatusCode.InternalServerError;
             var errorCodeName = nameof(HttpStatusCode.InternalServerError);
-            var message = PrepareExceptionMessage(exception);
 
             if (exception is UnauthorizedAccessException)
             {

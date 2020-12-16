@@ -24,6 +24,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public string Color { get; protected set; }
 
+        public string Graver { get; protected set; }
+
         public virtual ProductCategoryDiscount ProductCategoryDiscount { get; protected set; }
 
         public virtual Order Order { get; protected set; }
@@ -54,6 +56,14 @@ namespace Streetwood.Core.Domain.Entities
         public void SetCharmsPrice(decimal price)
             => CharmsPrice = price;
 
+        public void SetGraver(string graver)
+        {
+            if (Product != null && Product.AcceptGraver)
+            {
+                Graver = graver;
+            }
+        }
+
         public void AddProductCategoryDiscount(ProductCategoryDiscount discount)
         {
             ProductCategoryDiscount = discount;
@@ -68,5 +78,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public void AddProductOrderCharms(IEnumerable<ProductOrderCharm> orderCharms)
             => productOrderCharms.AddRange(orderCharms);
+
     }
 }

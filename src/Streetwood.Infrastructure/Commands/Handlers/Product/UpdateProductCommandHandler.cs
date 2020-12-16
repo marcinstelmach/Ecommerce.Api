@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Product
         public async Task<Unit> Handle(UpdateProductCommandModel request, CancellationToken cancellationToken)
         {
             await productCommandService.UpdateAsync(request.Id, request.Name, request.NameEng, request.Price,
-                request.Description, request.DescriptionEng, request.AcceptCharms, request.Sizes);
+                request.Description, request.DescriptionEng, request.AcceptCharms, request.AcceptGraver, request.Sizes);
 
             return Unit.Value;
         }

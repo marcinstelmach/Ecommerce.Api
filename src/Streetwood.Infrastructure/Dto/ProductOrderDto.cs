@@ -21,6 +21,8 @@ namespace Streetwood.Infrastructure.Dto
 
         public string Color { get; set; }
 
+        public string Graver { get; set; }
+
         public ProductCategoryDiscountDto ProductCategoryDiscount { get; set; }
 
         public ProductDto Product { get; set; }

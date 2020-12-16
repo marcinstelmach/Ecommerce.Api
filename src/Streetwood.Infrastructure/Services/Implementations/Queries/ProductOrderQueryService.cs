@@ -42,6 +42,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 var productOrder = new ProductOrder(productWithCharmsOrder.Amount, productWithCharmsOrder.Comment, productWithCharmsOrder.Size, productWithCharmsOrder.Color);
                 var productWithDiscount = productsWithDiscounts.First(x => x.Product.Id == productWithCharmsOrder.ProductId);
                 productOrder.AddProduct(productWithDiscount.Product);
+                productOrder.SetGraver(productWithCharmsOrder.Graver);
 
                 var finalPrice = productWithDiscount.Product.Price;
                 if (productWithCharmsOrder.HaveCharms)

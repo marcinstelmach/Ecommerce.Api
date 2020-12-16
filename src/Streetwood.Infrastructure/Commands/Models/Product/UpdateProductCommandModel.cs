@@ -26,6 +26,9 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
         [Required]
         public bool AcceptCharms { get; set; }
 
+        [Required]
+        public bool AcceptGraver { get; set; }
+
         public string Sizes { get; set; }
 
         public UpdateProductCommandModel SetId(int id)

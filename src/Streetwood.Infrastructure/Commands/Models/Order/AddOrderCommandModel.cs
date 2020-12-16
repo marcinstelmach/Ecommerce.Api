@@ -7,7 +7,7 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Order
 {
-    [AddOrderAddressValidator]
+    [OrderAddressValidator]
     public class AddOrderCommandModel : IRequest<int>
     {
         [Required]

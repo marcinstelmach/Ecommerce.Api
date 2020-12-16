@@ -27,6 +27,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public int MaxCharmsCount { get; protected set; }
 
+        public bool AcceptGraver { get; protected set; }
+
         public string Sizes { get; protected set; }
 
         public string ImagesPath { get; protected set; }
@@ -42,7 +44,7 @@ namespace Streetwood.Core.Domain.Entities
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
         public Product(string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, int maxCharmsCount, string sizes, string imagesPath)
+            bool acceptCharms, bool acceptGraver, int maxCharmsCount, string sizes, string imagesPath)
         {
             SetName(name);
             SetNameEng(nameEng);
@@ -50,6 +52,7 @@ namespace Streetwood.Core.Domain.Entities
             SetDescription(description);
             SetDescriptionEng(descriptionEng);
             AcceptCharms = acceptCharms;
+            AcceptGraver = acceptGraver;
             SetSizes(sizes);
             SetStatus(ItemStatus.Available);
             ImagesPath = imagesPath;
@@ -83,6 +86,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetAcceptCharms(bool acceptCharms)
             => AcceptCharms = acceptCharms;
+
+        public void SetAcceptGraver(bool acceptGraver)
+            => AcceptGraver = acceptGraver;
 
         public void AddImage(Image image)
             => images.Add(image);
