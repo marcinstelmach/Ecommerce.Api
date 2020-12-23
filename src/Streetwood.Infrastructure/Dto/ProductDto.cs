@@ -28,8 +28,10 @@ namespace Streetwood.Infrastructure.Dto
 
         public string Sizes { get; set; }
 
+        public Guid ProductCategoryId { get; set; }
+
         public IEnumerable<ImageDto> Images { get; set; }
 
-        public Guid ProductCategoryId { get; set; }
+        public IEnumerable<ProductColorDto> ProductColors { get; set; }
     }
 }

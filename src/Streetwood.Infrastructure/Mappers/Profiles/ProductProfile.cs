@@ -19,6 +19,8 @@ namespace Streetwood.Infrastructure.Mappers.Profiles
 
             CreateMap<Image, ImageDto>()
                 .ForMember(dest => dest.Name, opt => opt.ResolveUsing<ImageResolver>());
+
+            CreateMap<ProductColor, ProductColorDto>();
         }
     }
 }

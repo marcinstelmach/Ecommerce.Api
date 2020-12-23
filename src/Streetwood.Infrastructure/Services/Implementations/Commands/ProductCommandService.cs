@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Exceptions;
 using Streetwood.Core.Extensions;
+using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
@@ -24,7 +27,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         }
 
         public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, bool acceptGraver, int maxCharmsCount, string sizes, Guid productCategoryId)
+            bool acceptCharms, bool acceptGraver, int maxCharmsCount, string sizes, Guid productCategoryId, ICollection<ProductColorDto> productColorViewModels)
         {
             var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
             if (category.HasOneProduct && category.Products.Count > 0)
@@ -34,6 +37,12 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
             var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, acceptGraver, maxCharmsCount, sizes, imagesPath);
+
+            if (productColorViewModels != null && productColorViewModels.Any())
+            {
+                var productColors = productColorViewModels.Select(x => new ProductColor(x.Name, x.HexValue));
+                product.AddProductColors(productColors);
+            }
 
             category.AddProduct(product);
             await productCategoryRepository.SaveChangesAsync();

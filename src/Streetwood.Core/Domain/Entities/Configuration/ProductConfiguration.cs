@@ -28,6 +28,10 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .WithMany(s => s.Products)
                 .HasForeignKey(x => x.ProductCategoryId);
 
+            builder.HasMany(x => x.ProductColors)
+                .WithOne(y => y.Product)
+                .HasForeignKey(y => y.ProductId);
+
             builder.Property(s => s.Name).HasMaxLength(50);
             builder.Property(s => s.NameEng).HasMaxLength(50);
             builder.Property(s => s.Sizes).HasMaxLength(50);

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
+using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Product
 {
@@ -33,5 +35,7 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
 
         [Required]
         public Guid ProductCategoryId { get; set; }
+
+        public ICollection<ProductColorDto> ProductColors { get; set; }
     }
 }

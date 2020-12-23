@@ -10,6 +10,7 @@ namespace Streetwood.Core.Domain.Entities
     {
         private readonly List<Image> images = new List<Image>();
         private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
+        private readonly List<ProductColor> productColors = new List<ProductColor>();
 
         public new int Id { get; set; }
 
@@ -42,6 +43,8 @@ namespace Streetwood.Core.Domain.Entities
         public virtual IReadOnlyCollection<Image> Images => images;
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
+
+        public virtual IReadOnlyCollection<ProductColor> ProductColors => productColors;
 
         public Product(string name, string nameEng, decimal price, string description, string descriptionEng,
             bool acceptCharms, bool acceptGraver, int maxCharmsCount, string sizes, string imagesPath)
@@ -92,6 +95,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public void AddImage(Image image)
             => images.Add(image);
+
+        public void AddProductColors(IEnumerable<ProductColor> productColors)
+            => this.productColors.AddRange(productColors);
 
         internal void SetProductCategory(ProductCategory productCategory)
             => ProductCategory = productCategory;

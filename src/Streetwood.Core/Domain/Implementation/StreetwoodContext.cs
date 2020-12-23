@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Entities.Configuration;
@@ -60,6 +59,7 @@ namespace Streetwood.Core.Domain.Implementation
             builder.ApplyConfiguration(new ShipmentConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new DiscountCategoryConfiguration());
+            builder.ApplyConfiguration(new ProductColorConfiguration());
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Products
                 .Where(s => s.Id == id)
                 .Include(s => s.Images)
-                .SingleOrDefaultAsync();
+                .Include(x => x.ProductColors)
+                .FirstOrDefaultAsync();
 
             if (product == null)
             {
