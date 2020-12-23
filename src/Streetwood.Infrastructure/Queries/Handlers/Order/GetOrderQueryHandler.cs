@@ -21,12 +21,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Order
         public async Task<OrderDto> Handle(GetOrderQueryModel request, CancellationToken cancellationToken)
         {
             var orderDto = await orderQueryService.GetAsync(request.Id);
-            if (request.UserType == UserType.Admin)
-            {
-                return orderDto;
-            }
-
-            if (orderDto.User.Id == request.UserId)
+            if (request.UserType == UserType.Admin || orderDto.User.Id == request.UserId)
             {
                 return orderDto;
             }

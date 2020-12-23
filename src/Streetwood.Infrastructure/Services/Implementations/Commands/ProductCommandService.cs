@@ -50,8 +50,9 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             return product.Id;
         }
 
-        public async Task UpdateAsync(int id, string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, bool acceptGraver, string sizes)
+        public async Task UpdateAsync(int id, string name, string nameEng, decimal price, string description,
+            string descriptionEng,
+            bool acceptCharms, bool acceptGraver, string sizes, ICollection<ProductColorDto> productColorDtos)
         {
             var product = await productRepository.GetAndEnsureExistAsync(id);
             product.SetName(name);
@@ -62,6 +63,11 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             product.SetAcceptCharms(acceptCharms);
             product.SetAcceptGraver(acceptGraver);
             product.SetSizes(sizes);
+
+            if (productColorDtos != null)
+            {
+                product.AddProductColors(productColorDtos.Select(x => new ProductColor(x.Name, x.HexValue)));
+            }
 
             await productRepository.SaveChangesAsync();
         }

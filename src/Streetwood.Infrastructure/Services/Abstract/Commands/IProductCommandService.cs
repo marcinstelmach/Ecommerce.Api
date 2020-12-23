@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Streetwood.Infrastructure.Commands.Models.Product;
 using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Services.Abstract.Commands
@@ -14,7 +13,7 @@ namespace Streetwood.Infrastructure.Services.Abstract.Commands
             ICollection<ProductColorDto> productColorViewModels);
 
         Task UpdateAsync(int id, string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, bool acceptGraver, string sizes);
+            bool acceptCharms, bool acceptGraver, string sizes, ICollection<ProductColorDto> productColorDtos);
 
         Task DeleteAsync(int id);
     }

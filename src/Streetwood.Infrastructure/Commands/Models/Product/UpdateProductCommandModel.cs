@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MediatR;
+using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Commands.Models.Product
 {
@@ -30,6 +32,8 @@ namespace Streetwood.Infrastructure.Commands.Models.Product
         public bool AcceptGraver { get; set; }
 
         public string Sizes { get; set; }
+
+        public ICollection<ProductColorDto> ProductColors { get; set; }
 
         public UpdateProductCommandModel SetId(int id)
         {

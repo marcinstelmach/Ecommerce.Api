@@ -97,7 +97,10 @@ namespace Streetwood.Core.Domain.Entities
             => images.Add(image);
 
         public void AddProductColors(IEnumerable<ProductColor> productColors)
-            => this.productColors.AddRange(productColors);
+        {
+            this.productColors.Clear();
+            this.productColors.AddRange(productColors);
+        }
 
         internal void SetProductCategory(ProductCategory productCategory)
             => ProductCategory = productCategory;
