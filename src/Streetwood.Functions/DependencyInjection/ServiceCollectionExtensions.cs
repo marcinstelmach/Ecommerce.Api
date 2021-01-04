@@ -12,6 +12,7 @@ namespace Streetwood.Functions.DependencyInjection
                 .Configure<IConfiguration>((settings, configuration) => { configuration.Bind(settings); });
 
             services.AddTransient<IEmailManager, MailKitManager>();
+            services.AddHttpClient<AlwaysOnFunction>();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Password
             logger.LogInformation($"Trying change password for user: '{request.Email}' with token: '{request.Token}'.");
 
             await userCommandService.UpdateUserPasswordAsync(request.Email, request.NewPassword, request.Token);
-            logger.LogInformation($"Password successfylly changed for user: '{request.Email}'.");
+            logger.LogInformation($"Password successfully changed for user: '{request.Email}'.");
 
             return Unit.Value;
         }

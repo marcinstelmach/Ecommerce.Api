@@ -53,7 +53,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task UpdateUserPasswordAsync(string email, string newPassword, string token)
         {
             var user = await userRepository.GetByEmailAndEnsureExistAsync(email, ErrorCode.GenericNotExist(typeof(User)));
-
             if (user.ChangePasswordToken != token)
             {
                 throw new StreetwoodException(ErrorCode.InvalidChangePasswordToken);

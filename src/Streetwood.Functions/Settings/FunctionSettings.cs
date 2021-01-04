@@ -21,5 +21,7 @@
         public string EmailReceiverName { get; set; }
 
         public string EmailReceiverAddressEmail { get; set; }
+
+        public string GetProductsUrlApi { get; set; }
     }
 }
