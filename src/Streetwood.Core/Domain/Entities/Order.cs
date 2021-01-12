@@ -42,6 +42,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual Address Address { get; protected set; }
 
+        public virtual Payment Payment { get; protected set; }
+
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
         public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment,

@@ -37,6 +37,10 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.HasOne(s => s.Address)
                 .WithMany(s => s.Orders)
                 .HasForeignKey("AddressId");
+
+            builder.HasOne(x => x.Payment)
+                .WithMany()
+                .HasForeignKey("PaymentId");
         }
     }
 }

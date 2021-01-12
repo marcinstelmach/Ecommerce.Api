@@ -33,6 +33,8 @@ namespace Streetwood.Core.Domain.Implementation
 
         public DbSet<Shipment> Shipments { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public bool EnsureDatabaseCreated()
@@ -60,6 +62,7 @@ namespace Streetwood.Core.Domain.Implementation
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new DiscountCategoryConfiguration());
             builder.ApplyConfiguration(new ProductColorConfiguration());
+            builder.ApplyConfiguration(new PaymentConfiguration());
         }
     }
 }
