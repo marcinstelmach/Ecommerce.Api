@@ -19,21 +19,21 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
         private readonly IOrderDiscountQueryService orderDiscountQueryService;
         private readonly IProductOrderQueryService productOrderQueryService;
         private readonly IAddressQueryService addressQueryService;
-        private readonly IOrderCommandService orderCommandService;
+        private readonly IOrderFactory orderFactory;
         private readonly IEmailService emailService;
         private readonly IMapper mapper;
         private readonly IPaymentsRepository paymentsRepository;
 
         public CreateOrderCommandHandler(IUserQueryService userQueryService, IShipmentQueryService shipmentQueryService,
             IOrderDiscountQueryService orderDiscountQueryService, IProductOrderQueryService productOrderQueryService,
-            IAddressQueryService addressQueryService, IOrderCommandService orderCommandService, IEmailService emailService,
+            IAddressQueryService addressQueryService, IOrderFactory orderFactory, IEmailService emailService,
             IMapper mapper, IPaymentsRepository paymentsRepository)
         {
             this.userQueryService = userQueryService;
             this.shipmentQueryService = shipmentQueryService;
             this.orderDiscountQueryService = orderDiscountQueryService;
             this.productOrderQueryService = productOrderQueryService;
-            this.orderCommandService = orderCommandService;
+            this.orderFactory = orderFactory;
             this.addressQueryService = addressQueryService;
             this.emailService = emailService;
             this.mapper = mapper;
@@ -49,7 +49,7 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
             var orderDiscount = await orderDiscountQueryService.GetRawByCodeAsync(request.PromoCode);
             var address = await addressQueryService.GetAsync(request.Address, request.AddressId, request.UserId); 
 
-            var order = await orderCommandService.AddAsync(user, productOrders, shipment, payment, orderDiscount, request.Comment, address);
+            var order = await orderFactory.CreateOrderAsync(user, productOrders, shipment, payment, orderDiscount, request.Comment, address);
             await emailService.SendNewOrderEmailAsync(mapper.Map<OrderDto>(order));
 
             return order.Id;

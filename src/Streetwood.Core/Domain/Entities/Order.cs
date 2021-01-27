@@ -60,28 +60,6 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        ////public void SetIsShipped(bool isShipped)
-        ////{
-        ////    if (isShipped == IsShipped)
-        ////    {
-        ////        return;
-        ////    }
-
-        ////    IsShipped = isShipped;
-        ////    SetShipmentDateTime(DateTime.UtcNow);
-        ////}
-
-        ////public void SetIsPayed(bool isPayed)
-        ////{
-        ////    if (isPayed == IsPayed)
-        ////    {
-        ////        return;
-        ////    }
-
-        ////    IsPayed = isPayed;
-        ////    SetPayedDateTime(DateTime.UtcNow);
-        ////}
-
         public void SetIsClosed(bool isClosed)
         {
             if (isClosed == IsClosed)

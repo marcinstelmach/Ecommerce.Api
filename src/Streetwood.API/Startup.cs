@@ -19,7 +19,7 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Streetwood.API
 {
-    using Streetwood.API.Mappers;
+    using Streetwood.API.Mappings;
 
     public class Startup
     {

@@ -28,13 +28,13 @@ namespace Streetwood.API.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetOrderAsync(int id)
             => Ok(await bus.SendAsync(new GetOrderQueryModel(id).SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpGet]
         [IgnoreValidation]
         [Authorize]
-        public async Task<IActionResult> Get([FromQuery] GetFilteredOrdersQueryModel model)
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] GetFilteredOrdersQueryModel model)
             => Ok(await bus.SendAsync(model.SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpPost]
@@ -50,9 +50,11 @@ namespace Streetwood.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateOrderCommandModel model)
+        public async Task<IActionResult> UpdateOrderAsync([FromRoute] int id, [FromBody] UpdateOrderViewModel model)
         {
-            await bus.SendAsync(model.SetId(id));
+            var command = mapper.Map<UpdateOrderViewModel, UpdateOrderCommandModel>(model);
+            command.Id = id;
+            await bus.SendAsync(command);
             return Accepted();
         }
     }

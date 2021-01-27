@@ -49,7 +49,7 @@ namespace Streetwood.Infrastructure.Services.Implementations
             await emailManager.SendAsync(user.Email, user.FullName, emailTemplateSettings.ResetPassword.Subject, template);
         }
 
-        public async Task SendOrderWasShippedEmailAsync(OrderDto order)
+        public async Task SendOrderWasShippedEmailAsync(Order order)
         {
             var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.OrderWasShipped.TemplateName);
             template = emailTemplateParser.PrepareOrderWasShippedEmail(order, template);

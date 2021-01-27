@@ -1,4 +1,4 @@
-﻿namespace Streetwood.API.Mappers
+﻿namespace Streetwood.API.Mappings
 {
     using AutoMapper;
     using Streetwood.API.ViewModels.Orders;
@@ -9,6 +9,8 @@
         public OrdersViewModelProfile()
         {
             CreateMap<CreateOrderViewModel, CreateOrderCommandModel>();
+
+            CreateMap<UpdateOrderViewModel, UpdateOrderCommandModel>();
         }
     }
 }

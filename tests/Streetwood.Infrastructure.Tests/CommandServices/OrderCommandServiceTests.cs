@@ -17,20 +17,22 @@ using Xunit;
 
 namespace Streetwood.Infrastructure.Tests.CommandServices
 {
+    using Streetwood.Infrastructure.Services.Implementations;
+
     public class OrderCommandServiceTests
     {
-        private readonly Mock<IOrderRepository> orderRepositoryMock;
+        private readonly Mock<IOrdersRepository> orderRepositoryMock;
         private readonly Mock<IEmailService> emailServiceMock;
         private readonly Mock<IMapper> mapperMock;
-        private readonly OrderCommandService sut;
+        private readonly OrderFactory sut;
 
         public OrderCommandServiceTests()
         {
-            var loggerMock = new Mock<ILogger<IOrderCommandService>>();
-            orderRepositoryMock = new Mock<IOrderRepository>();
+            var loggerMock = new Mock<ILogger<IOrderFactory>>();
+            orderRepositoryMock = new Mock<IOrdersRepository>();
             emailServiceMock = new Mock<IEmailService>();
             mapperMock = new Mock<IMapper>();
-            sut = new OrderCommandService(loggerMock.Object, orderRepositoryMock.Object, emailServiceMock.Object, mapperMock.Object);
+            sut = new OrderFactory(loggerMock.Object, orderRepositoryMock.Object, emailServiceMock.Object, mapperMock.Object);
         }
 
         [Theory]

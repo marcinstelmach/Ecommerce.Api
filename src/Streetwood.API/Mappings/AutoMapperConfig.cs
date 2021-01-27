@@ -1,4 +1,4 @@
-﻿namespace Streetwood.API.Mappers
+﻿namespace Streetwood.API.Mappings
 {
     using AutoMapper;
     using Streetwood.Infrastructure.Mappers.Profiles;

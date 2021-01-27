@@ -11,6 +11,6 @@ namespace Streetwood.Infrastructure.Managers.Abstract
 
         string PrepareResetPasswordEmail(User user, string stringTemplate);
 
-        string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate);
+        string PrepareOrderWasShippedEmail(Order order, string stringTemplate);
     }
 }

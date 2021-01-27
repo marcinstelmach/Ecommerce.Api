@@ -25,7 +25,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
 
         public Mock<IAddressQueryService> AddressQueryServiceMock { get; }
 
-        public Mock<IOrderCommandService> OrderCommandServiceMock { get; }
+        public Mock<IOrderFactory> OrderCommandServiceMock { get; }
 
         public Mock<IEmailService> EmailServiceMock { get; }
 
@@ -44,7 +44,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             OrderDiscountQueryServiceMock = new Mock<IOrderDiscountQueryService>();
             ProductOrderQueryServiceMock = new Mock<IProductOrderQueryService>();
             AddressQueryServiceMock = new Mock<IAddressQueryService>();
-            OrderCommandServiceMock = new Mock<IOrderCommandService>();
+            OrderCommandServiceMock = new Mock<IOrderFactory>();
             EmailServiceMock = new Mock<IEmailService>();
             MapperMock = new Mock<IMapper>();
             PaymentsRepositoryMock = new Mock<IPaymentsRepository>();

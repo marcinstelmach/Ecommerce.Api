@@ -8,11 +8,11 @@ using Streetwood.Core.Exceptions;
 
 namespace Streetwood.Core.Domain.Implementation.Repositories
 {
-    internal class OrderRepository : Repository<Order>, IOrderRepository
+    internal class OrdersRepository : Repository<Order>, IOrdersRepository
     {
         private readonly IDbContext dbContext;
 
-        public OrderRepository(IDbContext dbContext)
+        public OrdersRepository(IDbContext dbContext)
             : base(dbContext)
         {
             this.dbContext = dbContext;

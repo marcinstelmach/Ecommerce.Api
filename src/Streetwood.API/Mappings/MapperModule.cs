@@ -1,4 +1,4 @@
-﻿namespace Streetwood.API.Mappers
+﻿namespace Streetwood.API.Mappings
 {
     using Autofac;
     using AutoMapper;

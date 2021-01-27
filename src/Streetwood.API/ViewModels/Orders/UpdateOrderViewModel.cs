@@ -1,14 +1,14 @@
-﻿namespace Streetwood.Infrastructure.Commands.Models.Order
+﻿namespace Streetwood.API.ViewModels.Orders
 {
-    using MediatR;
+    using System.ComponentModel.DataAnnotations;
     using Streetwood.Infrastructure.Dto;
 
-    public class UpdateOrderCommandModel : IRequest
+    public class UpdateOrderViewModel
     {
-        public int Id { get; set; }
-
+        [Required]
         public PaymentStatusDto PaymentStatus { get; set; }
 
+        [Required]
         public ShipmentStatusDto ShipmentStatus { get; set; }
     }
 }

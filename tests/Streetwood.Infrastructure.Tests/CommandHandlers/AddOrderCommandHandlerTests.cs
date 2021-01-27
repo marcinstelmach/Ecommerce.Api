@@ -16,7 +16,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
         public AddOrderCommandHandlerTests()
         {
             OrderCommandServiceMock
-                .Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<IList<ProductOrder>>(), It.IsAny<Shipment>(), It.IsAny<Payment>(),
+                .Setup(x => x.CreateOrderAsync(It.IsAny<User>(), It.IsAny<IList<ProductOrder>>(), It.IsAny<Shipment>(), It.IsAny<Payment>(),
                     It.IsAny<OrderDiscount>(), It.IsAny<string>(), It.IsAny<Address>()))
                 .ReturnsAsync(Order);
         }
@@ -96,7 +96,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             await Sut.Handle(Request, default);
 
             // Assert
-            OrderCommandServiceMock.Verify(x => x.AddAsync(user, productOrders, shipment, payment, OrderDiscount, Request.Comment, address));
+            OrderCommandServiceMock.Verify(x => x.CreateOrderAsync(user, productOrders, shipment, payment, OrderDiscount, Request.Comment, address));
         }
 
         [Fact]

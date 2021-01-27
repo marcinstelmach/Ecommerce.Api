@@ -15,29 +15,29 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 {
     internal class OrderQueryService : IOrderQueryService
     {
-        private readonly IOrderRepository orderRepository;
+        private readonly IOrdersRepository ordersRepository;
         private readonly IMapper mapper;
 
-        public OrderQueryService(IOrderRepository orderRepository, IMapper mapper)
+        public OrderQueryService(IOrdersRepository ordersRepository, IMapper mapper)
         {
-            this.orderRepository = orderRepository;
+            this.ordersRepository = ordersRepository;
             this.mapper = mapper;
         }
 
         public async Task<OrderDto> GetAsync(int id)
         {
-            var order = await orderRepository.GetFullAndEnsureExistsAsync(id);
+            var order = await ordersRepository.GetFullAndEnsureExistsAsync(id);
             var mapped = mapper.Map<OrderDto>(order);
 
             return mapped;
         }
 
         public async Task<Order> GetRawAndEnsureExistsAsync(int id)
-            => await orderRepository.GetFullAndEnsureExistsAsync(id);
+            => await ordersRepository.GetFullAndEnsureExistsAsync(id);
 
         public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
-            var orders = orderRepository.GetQueryable()
+            var orders = ordersRepository.GetQueryable()
                 .AsNoTracking()
                 .Include(s => s.User)
                 .AsQueryable();

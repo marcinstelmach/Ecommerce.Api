@@ -80,7 +80,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             return stringTemplate;
         }
 
-        public string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate)
+        public string PrepareOrderWasShippedEmail(Order order, string stringTemplate)
         {
             var url = $"{clientSettings.Url}profile/my-orders/{order.Id}";
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);

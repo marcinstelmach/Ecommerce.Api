@@ -38,24 +38,24 @@
 
         public void Send()
         {
-            if (Status == ShipmentStatus.Pending)
+            if (Status != ShipmentStatus.Pending)
             {
-                Status = ShipmentStatus.InProgress;
-                UpdatedAt = DateTimeOffset.UtcNow;
+                throw new StreetwoodException(ErrorCode.CannotSendNotPendingShipment);
             }
 
-            throw new StreetwoodException(ErrorCode.CannotSendNotPendingShipment);
+            Status = ShipmentStatus.InProgress;
+            UpdatedAt = DateTimeOffset.UtcNow;
         }
 
         public void Complete()
         {
-            if (Status == ShipmentStatus.InProgress)
+            if (Status != ShipmentStatus.InProgress)
             {
-                Status = ShipmentStatus.Completed;
-                UpdatedAt = DateTimeOffset.UtcNow;
+                throw new StreetwoodException(ErrorCode.CannotCompleteNotInProgressShipment);
             }
 
-            throw new StreetwoodException(ErrorCode.CannotCompleteNotInProgressShipment);
+            Status = ShipmentStatus.Completed;
+            UpdatedAt = DateTimeOffset.UtcNow;
         }
 
         private void SetShipment(Shipment shipment) => Shipment = shipment;
