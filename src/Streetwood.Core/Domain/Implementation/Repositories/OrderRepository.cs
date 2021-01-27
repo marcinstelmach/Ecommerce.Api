@@ -28,7 +28,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Where(s => s.Id == id)
                 .Include(s => s.Address)
                 .Include(s => s.OrderDiscount)
-                .Include(s => s.Shipment)
+                .Include(s => s.OrderShipment)
                 .Include(s => s.User)
                 .Include(s => s.ProductOrders)
                     .ThenInclude(s => s.ProductCategoryDiscount)

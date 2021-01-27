@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Streetwood.Infrastructure.Mappers.Profiles;
-
-namespace Streetwood.Infrastructure.Mappers
+﻿namespace Streetwood.API.Mappers
 {
+    using AutoMapper;
+    using Streetwood.Infrastructure.Mappers.Profiles;
+
     public static class AutoMapperConfig
     {
         public static IMapper Initialize()
@@ -18,6 +18,7 @@ namespace Streetwood.Infrastructure.Mappers
                 cfg.AddProfile(new AddressProfile());
                 cfg.AddProfile(new OrderDiscountProfile());
                 cfg.AddProfile(new OrderProfile());
+                cfg.AddProfile(new OrdersViewModelProfile());
             })
             .CreateMapper();
         }

@@ -3,12 +3,12 @@
     using Streetwood.Core.Domain.Abstract;
     using Streetwood.Core.Domain.Enums;
 
-    public class Payment : Entity
+    public abstract class Payment : Entity
     {
+        public PaymentType PaymentType { get; protected set; }
+
         public string Name { get; protected set; }
 
         public string NameEng { get; protected set; }
-
-        public PaymentType PaymentType { get; protected set; }
     }
 }

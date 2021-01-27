@@ -74,14 +74,16 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 orders = orders.Where(s => s.IsClosed == filter.IsClosed);
             }
 
-            if (filter.IsPayed.HasValue)
+            if (filter.PaymentStatus.HasValue)
             {
-                orders = orders.Where(s => s.IsPayed == filter.IsPayed);
+                var paymentStatus = mapper.Map<PaymentStatusDto, PaymentStatus>(filter.PaymentStatus.Value);
+                orders = orders.Where(s => s.OrderPayment.Status == paymentStatus);
             }
 
-            if (filter.IsShipped.HasValue)
+            if (filter.ShipmentStatus.HasValue)
             {
-                orders = orders.Where(s => s.IsShipped == filter.IsShipped);
+                var shipmentStatus = mapper.Map<ShipmentStatusDto, ShipmentStatus>(filter.ShipmentStatus.Value);
+                orders = orders.Where(s => s.OrderShipment.Status == shipmentStatus);
             }
 
             orders = orders.OrderByDescending(x => x.CreationDateTime);

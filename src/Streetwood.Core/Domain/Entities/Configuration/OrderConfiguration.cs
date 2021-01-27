@@ -22,10 +22,6 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .WithOne(s => s.Order)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(s => s.Shipment)
-                .WithMany(s => s.Orders)
-                .HasForeignKey("ShipmentId");
-
             builder.HasOne(s => s.OrderDiscount)
                 .WithMany(s => s.Orders)
                 .HasForeignKey("OrderDiscountId");
@@ -38,9 +34,13 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .WithMany(s => s.Orders)
                 .HasForeignKey("AddressId");
 
-            builder.HasOne(x => x.Payment)
-                .WithMany()
-                .HasForeignKey("PaymentId");
+            builder.HasOne(x => x.OrderPayment)
+                .WithOne()
+                .HasForeignKey<OrderPayment>("OrderPaymentId");
+
+            builder.HasOne(x => x.OrderShipment)
+                .WithOne()
+                .HasForeignKey<OrderShipment>("OrderShipmentId");
         }
     }
 }

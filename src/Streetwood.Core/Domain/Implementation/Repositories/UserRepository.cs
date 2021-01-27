@@ -27,6 +27,6 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
             => await dbContext.Users.SingleOrDefaultAsync(s => s.Email == email);
 
         public async Task<User> GetByEmailAndEnsureExistAsync(string email, ErrorCode errorCode)
-            => await dbContext.Users.FindAndEnsureSingleAsync(s => s.Email == email, errorCode);
+            => await dbContext.Users.FindAndEnsureExistsAsync(s => s.Email == email, errorCode);
     }
 }

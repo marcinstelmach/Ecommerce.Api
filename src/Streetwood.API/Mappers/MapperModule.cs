@@ -1,9 +1,8 @@
-﻿using Autofac;
-using AutoMapper;
-using Streetwood.Infrastructure.Mappers;
-
-namespace Streetwood.Infrastructure.Modules
+﻿namespace Streetwood.API.Mappers
 {
+    using Autofac;
+    using AutoMapper;
+
     public class MapperModule : Module
     {
         protected override void Load(ContainerBuilder builder)

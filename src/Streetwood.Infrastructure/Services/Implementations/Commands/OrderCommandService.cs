@@ -6,7 +6,6 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Services.Abstract;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
@@ -28,7 +27,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.mapper = mapper;
         }
 
-        public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment,
+        public async Task<Order> AddAsync(User user, IList<ProductOrder> productOrders, Shipment shipment, Payment payment,
             OrderDiscount orderDiscount, string comment, Address address)
         {
             if (!productOrders.Any())
@@ -52,7 +51,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
                 finalPrice -= discountValue;
             }
 
-            var order = new Order(user, productOrders, orderDiscount, shipment, basePrice, finalPrice, comment, address);
+            var order = new Order(user, productOrders, orderDiscount, shipment, payment, basePrice, finalPrice, comment, address);
             logger.LogInformation($"Trying add order {order.Id}, with base price {basePrice}...");
 
             await orderRepository.AddAsync(order);
@@ -66,18 +65,21 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
         public async Task UpdateAsync(int id, bool payed, bool shipped, bool closed)
         {
             var order = await orderRepository.GetAndEnsureExistAsync(id);
-            var shippedBeforeSave = order.IsShipped;
-            order.SetIsPayed(payed);
-            order.SetIsShipped(shipped);
+            ////var shippedBeforeSave = order.IsShipped;
+
+            ////order.OrderShipment.Send();
+
+            ////order.SetIsPayed(payed);
+            ////order.SetIsShipped(shipped);
             order.SetIsClosed(closed);
 
             await orderRepository.SaveChangesAsync();
 
-            if (!shippedBeforeSave && shipped)
-            {
-                var orderDto = mapper.Map<Order, OrderDto>(order);
-                await emailService.SendOrderWasShippedEmailAsync(orderDto);
-            }
+            ////if (!shippedBeforeSave && shipped)
+            ////{
+            ////    var orderDto = mapper.Map<Order, OrderDto>(order);
+            ////    await emailService.SendOrderWasShippedEmailAsync(orderDto);
+            ////}
         }
     }
 }

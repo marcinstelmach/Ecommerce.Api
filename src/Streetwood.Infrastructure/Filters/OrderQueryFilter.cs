@@ -4,6 +4,8 @@ using Streetwood.Infrastructure.Queries.Models.Order;
 
 namespace Streetwood.Infrastructure.Filters
 {
+    using Streetwood.Infrastructure.Dto;
+
     public class OrderQueryFilter
     {
         public int? Id { get; set; }
@@ -12,9 +14,9 @@ namespace Streetwood.Infrastructure.Filters
 
         public DateTime? DateTo { get; set; }
 
-        public bool? IsShipped { get; set; }
+        public ShipmentStatusDto? ShipmentStatus { get; set; }
 
-        public bool? IsPayed { get; set; }
+        public PaymentStatusDto? PaymentStatus { get; set; }
 
         public bool? IsClosed { get; set; }
 
@@ -29,8 +31,8 @@ namespace Streetwood.Infrastructure.Filters
             Id = filter.Id;
             DateFrom = filter.DateFrom;
             DateTo = filter.DateTo;
-            IsShipped = filter.IsShipped;
-            IsPayed = filter.IsPayed;
+            ShipmentStatus = filter.IsShipped;
+            PaymentStatus = filter.PaymentStatus;
             IsClosed = filter.IsClosed;
             Take = filter.Take;
             UserId = filter.UserId;

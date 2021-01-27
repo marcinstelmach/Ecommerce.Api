@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Streetwood.Core.Exceptions
@@ -59,6 +58,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode EmptyImageFile => new ErrorCode(nameof(EmptyImageFile));
 
+        public static ErrorCode InvalidId => new ErrorCode(nameof(InvalidId));
+
         public static ErrorCode AccessingDeactivatedUser => new ErrorCode(nameof(AccessingDeactivatedUser));
 
         public static ErrorCode InvalidChangePasswordToken =>
@@ -69,6 +70,14 @@ namespace Streetwood.Core.Exceptions
         public static ErrorCode OrderNotFound => new ErrorCode(nameof(OrderNotFound), HttpStatusCode.NotFound);
 
         public static ErrorCode ThisProductCategoryCanHasOnlyOneProduct => new ErrorCode(nameof(ThisProductCategoryCanHasOnlyOneProduct));
+
+        public static ErrorCode CannotCompleteNotPendingPayment => new ErrorCode(nameof(CannotCompleteNotPendingPayment));
+
+        public static ErrorCode CannotSendNotPendingShipment => new ErrorCode(nameof(CannotSendNotPendingShipment));
+
+        public static ErrorCode CannotCompleteNotInProgressShipment => new ErrorCode(nameof(CannotCompleteNotInProgressShipment));
+
+        public static ErrorCode PaymentDoesNotExists => new ErrorCode(nameof(PaymentDoesNotExists));
 
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }

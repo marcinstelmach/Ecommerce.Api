@@ -2,13 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Exceptions;
-using Streetwood.Infrastructure.CustomValidators;
 
 namespace Streetwood.Infrastructure.Commands.Models.Charm
 {
     public class AddCharmImageCommandModel : IRequest
     {
-        [ValidGuid]
         public Guid Id { get; protected set; }
 
         public IFormFile File { get; protected set; }
@@ -26,6 +24,11 @@ namespace Streetwood.Infrastructure.Commands.Models.Charm
             if (File == null)
             {
                 throw new StreetwoodException(ErrorCode.EmptyImageFile);
+            }
+
+            if (Id == Guid.Empty)
+            {
+                throw new StreetwoodException(ErrorCode.InvalidId);
             }
         }
     }

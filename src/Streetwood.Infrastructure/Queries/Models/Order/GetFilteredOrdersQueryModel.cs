@@ -20,9 +20,9 @@ namespace Streetwood.Infrastructure.Queries.Models.Order
             set => dateTo = value;
         }
 
-        public bool? IsShipped { get; set; }
+        public ShipmentStatusDto? IsShipped { get; set; }
 
-        public bool? IsPayed { get; set; }
+        public PaymentStatusDto? PaymentStatus { get; set; }
 
         public bool? IsClosed { get; set; }
 

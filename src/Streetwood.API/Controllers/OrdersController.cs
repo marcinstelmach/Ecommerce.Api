@@ -10,15 +10,20 @@ using Streetwood.Infrastructure.Queries.Models.Order;
 
 namespace Streetwood.API.Controllers
 {
+    using AutoMapper;
+    using Streetwood.API.ViewModels.Orders;
+
     [Route("api/Orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         private readonly IBus bus;
+        private readonly IMapper mapper;
 
-        public OrdersController(IBus bus)
+        public OrdersController(IBus bus, IMapper mapper)
         {
             this.bus = bus;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -34,9 +39,12 @@ namespace Streetwood.API.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post([FromBody] AddOrderCommandModel model)
+        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderViewModel model)
         {
-            var orderId = await bus.SendAsync(model.SetUserId(User.GetUserId()));
+            var command = mapper.Map<CreateOrderViewModel, CreateOrderCommandModel>(model);
+            command.UserId = User.GetUserId();
+
+            var orderId = await bus.SendAsync(command);
             return Ok(new NewOrderDto(orderId));
         }
 
