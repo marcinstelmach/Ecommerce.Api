@@ -6,9 +6,13 @@
     public class UpdateOrderViewModel
     {
         [Required]
-        public PaymentStatusDto PaymentStatus { get; set; }
+        public PaymentStatusDto? PaymentStatus { get; set; }
 
         [Required]
-        public ShipmentStatusDto ShipmentStatus { get; set; }
+        public ShipmentStatusDto? ShipmentStatus { get; set; }
+
+        public string ShipmentTrackingUrl { get; set; }
+
+        public string ShipmentTrackingId { get; set; }
     }
 }

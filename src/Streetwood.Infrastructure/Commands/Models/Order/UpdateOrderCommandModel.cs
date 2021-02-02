@@ -10,5 +10,9 @@
         public PaymentStatusDto PaymentStatus { get; set; }
 
         public ShipmentStatusDto ShipmentStatus { get; set; }
+
+        public string ShipmentTrackingUrl { get; set; }
+
+        public string ShipmentTrackingId { get; set; }
     }
 }

@@ -45,8 +45,9 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
                 order.Close();
             }
 
-            await ordersRepository.SaveChangesAsync();
+            order.OrderShipment.SetShipmentTrackingData(request.ShipmentTrackingUrl, request.ShipmentTrackingId);
 
+            await ordersRepository.SaveChangesAsync();
             return Unit.Value;
         }
     }

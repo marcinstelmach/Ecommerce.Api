@@ -34,6 +34,11 @@
 
         public void SetShipmentTrackingData(string trackingUrl, string trackingId)
         {
+            if (TrackingId == trackingId && TrackingUrl == trackingUrl)
+            {
+                return;
+            }
+
             TrackingUrl = trackingUrl;
             TrackingId = trackingId;
             UpdatedAt = DateTimeOffset.UtcNow;
