@@ -10,6 +10,7 @@ using Streetwood.Infrastructure.Queries.Models.Order;
 
 namespace Streetwood.API.Controllers
 {
+    using System.Net;
     using AutoMapper;
     using Streetwood.API.ViewModels.Orders;
 
@@ -28,17 +29,20 @@ namespace Streetwood.API.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
+        [ProducesResponseType(typeof(OrderDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetOrderAsync(int id)
             => Ok(await bus.SendAsync(new GetOrderQueryModel(id).SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpGet]
         [IgnoreValidation]
         [Authorize]
+        [ProducesResponseType(typeof(OrderOverviewDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetOrdersAsync([FromQuery] GetFilteredOrdersQueryModel model)
             => Ok(await bus.SendAsync(model.SetUserId(User.GetUserId()).SetUserType(User.GetUserType())));
 
         [HttpPost]
         [Authorize]
+        [ProducesResponseType(typeof(NewOrderDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderViewModel model)
         {
             var command = mapper.Map<CreateOrderViewModel, CreateOrderCommandModel>(model);
@@ -50,6 +54,7 @@ namespace Streetwood.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> UpdateOrderAsync([FromRoute] int id, [FromBody] UpdateOrderViewModel model)
         {
             var command = mapper.Map<UpdateOrderViewModel, UpdateOrderCommandModel>(model);

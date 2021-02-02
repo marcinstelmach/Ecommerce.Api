@@ -40,6 +40,8 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             var orders = ordersRepository.GetQueryable()
                 .AsNoTracking()
                 .Include(s => s.User)
+                .Include(x => x.OrderShipment)
+                .Include(x => x.OrderPayment)
                 .AsQueryable();
 
             if (filter.Id.HasValue)

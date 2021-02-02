@@ -40,6 +40,11 @@ namespace Streetwood.Infrastructure.Commands.Handlers.Order
                 order.OrderPayment.Complete();
             }
 
+            if (order.OrderPayment.Status == PaymentStatus.Completed && order.OrderShipment.Status == ShipmentStatus.Completed)
+            {
+                order.Close();
+            }
+
             await ordersRepository.SaveChangesAsync();
 
             return Unit.Value;

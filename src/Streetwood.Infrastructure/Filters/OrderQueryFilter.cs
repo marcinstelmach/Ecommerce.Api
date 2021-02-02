@@ -31,7 +31,7 @@ namespace Streetwood.Infrastructure.Filters
             Id = filter.Id;
             DateFrom = filter.DateFrom;
             DateTo = filter.DateTo;
-            ShipmentStatus = filter.IsShipped;
+            ShipmentStatus = filter.ShipmentStatus;
             PaymentStatus = filter.PaymentStatus;
             IsClosed = filter.IsClosed;
             Take = filter.Take;

@@ -11,7 +11,7 @@ namespace Streetwood.Core.Domain.Entities
         public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, Payment payment,
             decimal basePrice, decimal finalPrice, string comment, Address address)
         {
-            SetIsClosed(false);
+            IsClosed = false;
             Comment = comment;
             BasePrice = basePrice;
             SetShipment(shipment);
@@ -60,14 +60,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public void SetIsClosed(bool isClosed)
+        public void Close()
         {
-            if (isClosed == IsClosed)
-            {
-                return;
-            }
-
-            IsClosed = isClosed;
+            IsClosed = true;
             ClosedDateTime = DateTimeOffset.UtcNow;
         }
 
