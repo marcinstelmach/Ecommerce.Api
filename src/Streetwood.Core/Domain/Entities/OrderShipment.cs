@@ -11,6 +11,7 @@
         {
             Id = Guid.NewGuid();
             SetShipment(shipment);
+            Price = shipment.Price;
             UpdatedAt = DateTimeOffset.UtcNow;
             Status = ShipmentStatus.Pending;
         }
@@ -20,6 +21,8 @@
         }
 
         public virtual Shipment Shipment { get; protected set; }
+
+        public decimal Price { get; protected set; }
 
         public DateTimeOffset UpdatedAt { get; protected set; }
 

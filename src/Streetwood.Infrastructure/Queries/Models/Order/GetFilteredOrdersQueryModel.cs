@@ -6,7 +6,7 @@ using Streetwood.Infrastructure.Dto;
 
 namespace Streetwood.Infrastructure.Queries.Models.Order
 {
-    public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrdersListDto>>
+    public class GetFilteredOrdersQueryModel : IRequest<IEnumerable<OrderOverviewDto>>
     {
         private DateTime? dateTo;
 

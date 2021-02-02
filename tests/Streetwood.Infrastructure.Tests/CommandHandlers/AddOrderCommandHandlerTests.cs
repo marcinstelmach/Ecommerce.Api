@@ -100,30 +100,6 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
         }
 
         [Fact]
-        public async Task When_Adding_Order_Then_Maps_To_Order_Dto()
-        {
-            // Act
-            await Sut.Handle(Request, default);
-
-            // Assert
-            MapperMock.Verify(x => x.Map<OrderDto>(Order), Times.Once);
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task When_Adding_Order_Then_Send_New_Order_Email(OrderDto orderDto)
-        {
-            // Arrange
-            MapperMock.Setup(x => x.Map<OrderDto>(It.IsAny<Order>())).Returns(orderDto);
-
-            // Act
-            await Sut.Handle(Request, default);
-
-            // Assert
-            EmailServiceMock.Verify(x => x.SendNewOrderEmailAsync(orderDto), Times.Once);
-        }
-
-        [Fact]
         public async Task When_Adding_Order_Then_Returns_Order_Id()
         {
             // Act

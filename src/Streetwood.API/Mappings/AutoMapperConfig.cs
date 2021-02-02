@@ -19,6 +19,7 @@
                 cfg.AddProfile(new OrderDiscountProfile());
                 cfg.AddProfile(new OrderProfile());
                 cfg.AddProfile(new OrdersViewModelProfile());
+                cfg.AddProfile(new PaymentsProfile());
             })
             .CreateMapper();
         }

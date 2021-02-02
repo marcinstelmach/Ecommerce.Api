@@ -2,7 +2,7 @@
 {
     public enum ShipmentType
     {
-        Courier,
+        Courier = 1,
         CashOnDelivery,
         Personal
     }

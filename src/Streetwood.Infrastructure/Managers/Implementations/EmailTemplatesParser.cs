@@ -19,7 +19,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             this.clientSettings = clientOptions.Value;
         }
 
-        public string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate)
+        public string PrepareNewOrderEmailAsync(Order order, string stringTemplate)
         {
             var today = DateTime.Today.ToString("d", CultureInfo.InvariantCulture);
             stringTemplate = stringTemplate.Replace("{{{today}}}", today);
@@ -54,7 +54,7 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             stringTemplate = stringTemplate.Replace("{{{PhoneNumber}}}", order.Address.PhoneNumber.ToString(CultureInfo.InvariantCulture));
             stringTemplate = stringTemplate.Replace("{{{PostCode}}}", order.Address.PostCode);
             stringTemplate = stringTemplate.Replace("{{{City}}}", order.Address.City);
-            stringTemplate = stringTemplate.Replace("{{{ShipmentName}}}", order.Shipment.Name);
+            stringTemplate = stringTemplate.Replace("{{{ShipmentName}}}", order.OrderShipment.Shipment.Name);
             stringTemplate = stringTemplate.Replace("{{{ShipmentPrice}}}", order.ShipmentPrice.ToString("F", CultureInfo.InvariantCulture));
             stringTemplate = stringTemplate.Replace("{{{OrderPrice}}}", (order.FinalPrice + order.ShipmentPrice).ToString("F", CultureInfo.InvariantCulture));
             

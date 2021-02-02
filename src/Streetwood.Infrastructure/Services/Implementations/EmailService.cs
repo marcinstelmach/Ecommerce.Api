@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Settings;
-using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Services.Abstract;
 
@@ -27,7 +26,7 @@ namespace Streetwood.Infrastructure.Services.Implementations
             this.emailTemplateSettings = emailTemplatesOptions.Value;
         }
 
-        public async Task SendNewOrderEmailAsync(OrderDto order)
+        public async Task SendNewOrderEmailAsync(Order order)
         {
             var template = await emailTemplatesManager.ReadTemplateAsync(emailTemplateSettings.NewOrder.TemplateName);
             template = emailTemplateParser.PrepareNewOrderEmailAsync(order, template);

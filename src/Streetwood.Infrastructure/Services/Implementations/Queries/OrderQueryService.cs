@@ -35,7 +35,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<Order> GetRawAndEnsureExistsAsync(int id)
             => await ordersRepository.GetFullAndEnsureExistsAsync(id);
 
-        public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
+        public async Task<IList<OrderOverviewDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
             var orders = ordersRepository.GetQueryable()
                 .AsNoTracking()
@@ -51,7 +51,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     throw new StreetwoodException(ErrorCode.OrderNotFound);
                 }
 
-                return mapper.Map<IList<OrdersListDto>>(new List<Order> { order });
+                return mapper.Map<IList<OrderOverviewDto>>(new List<Order> { order });
             }
 
             if (filter.UserType == UserType.Customer)
@@ -95,7 +95,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             var ordersList = await orders
                 .ToListAsync();
-            return mapper.Map<IList<OrdersListDto>>(ordersList);
+            return mapper.Map<IList<OrderOverviewDto>>(ordersList);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Include(s => s.Address)
                 .Include(s => s.OrderDiscount)
                 .Include(s => s.OrderShipment)
+                .Include(x => x.OrderPayment)
                 .Include(s => s.User)
                 .Include(s => s.ProductOrders)
                     .ThenInclude(s => s.ProductCategoryDiscount)
@@ -38,7 +39,7 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Include(s => s.ProductOrders)
                     .ThenInclude(s => s.ProductOrderCharms)
                         .ThenInclude(s => s.Charm)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
 
             if (order == null)
             {

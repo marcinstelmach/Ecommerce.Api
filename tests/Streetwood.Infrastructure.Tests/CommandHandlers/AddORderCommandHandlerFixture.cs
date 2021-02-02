@@ -29,8 +29,6 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
 
         public Mock<IEmailService> EmailServiceMock { get; }
 
-        public Mock<IMapper> MapperMock { get; }
-
         public Mock<IPaymentsRepository> PaymentsRepositoryMock { get; }
 
         public CreateOrderCommandHandler Sut { get; }
@@ -46,12 +44,11 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             AddressQueryServiceMock = new Mock<IAddressQueryService>();
             OrderCommandServiceMock = new Mock<IOrderFactory>();
             EmailServiceMock = new Mock<IEmailService>();
-            MapperMock = new Mock<IMapper>();
             PaymentsRepositoryMock = new Mock<IPaymentsRepository>();
             Sut = new CreateOrderCommandHandler(UserQueryServiceMock.Object, ShipmentQueryServiceMock.Object,
                 OrderDiscountQueryServiceMock.Object,
                 ProductOrderQueryServiceMock.Object, AddressQueryServiceMock.Object, OrderCommandServiceMock.Object,
-                EmailServiceMock.Object, MapperMock.Object, PaymentsRepositoryMock.Object);
+                EmailServiceMock.Object, PaymentsRepositoryMock.Object);
             Request = Fixture.Build<CreateOrderCommandModel>()
                 .With(x => x.UserId, Guid.NewGuid)
                 .Create();

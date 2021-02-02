@@ -5,7 +5,7 @@ namespace Streetwood.Infrastructure.Managers.Abstract
 {
     public interface IEmailTemplateParser
     {
-        string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate);
+        string PrepareNewOrderEmailAsync(Order order, string stringTemplate);
 
         string PrepareActivateNewUserEmail(User user, string stringTemplate);
 

@@ -2,7 +2,7 @@
 
 namespace Streetwood.Infrastructure.Dto
 {
-    public class OrdersListDto
+    public class OrderOverviewDto
     {
         public int Id { get; set; }
 
