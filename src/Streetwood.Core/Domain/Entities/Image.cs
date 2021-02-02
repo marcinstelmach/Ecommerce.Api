@@ -9,6 +9,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public bool IsMain { get; protected set; }
 
+        public bool IsDeleted { get; protected set; }
+
         public virtual Product Product { get; protected set; }
 
         public Image(string imageUrl, bool isMain)
@@ -16,6 +18,7 @@ namespace Streetwood.Core.Domain.Entities
             Id = Guid.NewGuid();
             ImageUrl = imageUrl;
             SetIsMain(isMain);
+            IsDeleted = false;
         }
 
         protected Image()
@@ -24,5 +27,8 @@ namespace Streetwood.Core.Domain.Entities
 
         public void SetIsMain(bool isMain)
             => IsMain = isMain;
+
+        public void Delete()
+            => IsDeleted = true;
     }
 }

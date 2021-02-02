@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Streetwood.Core.Domain.Enums;
 
-namespace Streetwood.Infrastructure.Dto
+namespace Streetwood.Infrastructure.Dto.Products
 {
     public class ProductDto
     {

@@ -8,6 +8,7 @@ using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Dto.Products;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Queries

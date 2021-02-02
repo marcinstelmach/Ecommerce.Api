@@ -9,6 +9,8 @@ namespace Streetwood.Core.Domain.Entities.Configuration
         {
             builder.HasKey(s => s.Id);
 
+            builder.HasQueryFilter(x => x.IsDeleted == false);
+
             builder.HasOne(s => s.Product)
                 .WithMany(s => s.Images)
                 .HasForeignKey("ProductId");
