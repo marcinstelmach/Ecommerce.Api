@@ -10,6 +10,8 @@
 
         public DateTimeOffset UpdatedAt { get; set; }
 
+        public decimal Price { get; set; }
+
         public string TrackingUrl { get; set; }
 
         public string TrackingId { get; set; }

@@ -7,6 +7,8 @@ namespace Streetwood.Infrastructure.Dto
     {
         public int Id { get; set; }
 
+        public bool IsClosed { get; set; }
+
         public string Comment { get; set; }
 
         public decimal BasePrice { get; set; }

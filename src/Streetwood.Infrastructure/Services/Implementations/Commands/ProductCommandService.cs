@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Streetwood.Core.Domain.Abstract.Repositories;
-using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Domain.Enums;
-using Streetwood.Core.Exceptions;
-using Streetwood.Core.Extensions;
-using Streetwood.Infrastructure.Dto;
-using Streetwood.Infrastructure.Managers.Abstract;
-using Streetwood.Infrastructure.Services.Abstract.Commands;
-
-namespace Streetwood.Infrastructure.Services.Implementations.Commands
+﻿namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Streetwood.Core.Domain.Abstract.Repositories;
+    using Streetwood.Core.Domain.Entities;
+    using Streetwood.Core.Domain.Enums;
+    using Streetwood.Core.Exceptions;
+    using Streetwood.Core.Extensions;
+    using Streetwood.Infrastructure.Dto;
+    using Streetwood.Infrastructure.Dto.Products;
+    using Streetwood.Infrastructure.Managers.Abstract;
+    using Streetwood.Infrastructure.Services.Abstract.Commands;
+
     internal class ProductCommandService : IProductCommandService
     {
         private readonly IProductCategoryRepository productCategoryRepository;
@@ -40,7 +40,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
 
             var imagesPath = pathManager.GetProductPath(category.UniqueName, dto.Name.AppendRandom(5));
             var product = new Product(
-                dto.Name, dto.NameEng, dto.Price, dto.Description, dto.DescriptionEng, dto.AcceptCharms, dto.MaxCharmCount, dto.Sizes, imagesPath);
+                dto.Name, dto.NameEng, dto.Price, dto.Description, dto.DescriptionEng, dto.AcceptCharms, dto.AcceptGraver, dto.MaxCharmCount, dto.Sizes, imagesPath);
 
             category.AddProduct(product);
             await productCategoryRepository.SaveChangesAsync();

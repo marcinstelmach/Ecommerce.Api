@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Streetwood.Infrastructure.Dto.Products;
-
-namespace Streetwood.Infrastructure.Services.Abstract.Commands
+﻿namespace Streetwood.Infrastructure.Services.Abstract.Commands
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Streetwood.Infrastructure.Dto;
+    using Streetwood.Infrastructure.Dto.Products;
+
     public interface IProductCommandService
     {
         // because sometimes commands can return value :D

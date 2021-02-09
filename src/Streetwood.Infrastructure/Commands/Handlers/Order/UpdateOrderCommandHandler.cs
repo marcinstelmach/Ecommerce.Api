@@ -1,5 +1,4 @@
-﻿
-namespace Streetwood.Infrastructure.Commands.Handlers.Order
+﻿namespace Streetwood.Infrastructure.Commands.Handlers.Order
 {
     using System.Threading;
     using System.Threading.Tasks;

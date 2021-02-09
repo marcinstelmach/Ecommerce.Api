@@ -16,6 +16,8 @@ namespace Streetwood.Infrastructure.Dto.Products
 
         public bool AcceptCharms { get; set; }
 
+        public bool AcceptGraver { get; set; }
+
         public int MaxCharmCount { get; set; }
 
         public string Sizes { get; set; }
