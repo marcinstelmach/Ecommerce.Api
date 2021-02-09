@@ -12,7 +12,7 @@ namespace Streetwood.Core.Migrations
                 nullable: true);
 
             migrationBuilder.Sql(
-                "INSERT INTO [dbo].[Payments] ([Id], [Name], [NameEng], [PaymentType], [AccountNumber]) VALUES (NEWID(), 'Przelew bankowy', 'Bank transfer', 1)");
+                "INSERT INTO [Payments] ([Id], [Name], [NameEng], [PaymentType], [AccountNumber]) VALUES(NEWID(), 'Przelew bankowy', 'Bank transfer', 1, 25487556)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

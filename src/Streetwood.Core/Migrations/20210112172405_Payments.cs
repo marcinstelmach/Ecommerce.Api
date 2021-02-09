@@ -38,9 +38,6 @@ namespace Streetwood.Core.Migrations
                 principalTable: "Payments",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.Sql(
-                "INSERT INTO [dbo].[Payments] ([Id], [Name], [NameEng], [PaymentType]) VALUES (NEWID(), 'Przelew bankowy', 'Bank transfer', 1)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
