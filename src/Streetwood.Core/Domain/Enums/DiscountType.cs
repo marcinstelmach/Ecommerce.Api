@@ -2,7 +2,7 @@
 {
     public enum DiscountType
     {
-        Category,
+        Category = 1,
         Product
     }
 }

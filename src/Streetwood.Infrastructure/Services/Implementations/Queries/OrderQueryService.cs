@@ -15,31 +15,33 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 {
     internal class OrderQueryService : IOrderQueryService
     {
-        private readonly IOrderRepository orderRepository;
+        private readonly IOrdersRepository ordersRepository;
         private readonly IMapper mapper;
 
-        public OrderQueryService(IOrderRepository orderRepository, IMapper mapper)
+        public OrderQueryService(IOrdersRepository ordersRepository, IMapper mapper)
         {
-            this.orderRepository = orderRepository;
+            this.ordersRepository = ordersRepository;
             this.mapper = mapper;
         }
 
         public async Task<OrderDto> GetAsync(int id)
         {
-            var order = await orderRepository.GetFullAndEnsureExistsAsync(id);
+            var order = await ordersRepository.GetFullAndEnsureExistsAsync(id);
             var mapped = mapper.Map<OrderDto>(order);
 
             return mapped;
         }
 
         public async Task<Order> GetRawAndEnsureExistsAsync(int id)
-            => await orderRepository.GetFullAndEnsureExistsAsync(id);
+            => await ordersRepository.GetFullAndEnsureExistsAsync(id);
 
-        public async Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter)
+        public async Task<IList<OrderOverviewDto>> GetFilteredAsync(OrderQueryFilter filter)
         {
-            var orders = orderRepository.GetQueryable()
+            var orders = ordersRepository.GetQueryable()
                 .AsNoTracking()
                 .Include(s => s.User)
+                .Include(x => x.OrderShipment)
+                .Include(x => x.OrderPayment)
                 .AsQueryable();
 
             if (filter.Id.HasValue)
@@ -51,7 +53,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                     throw new StreetwoodException(ErrorCode.OrderNotFound);
                 }
 
-                return mapper.Map<IList<OrdersListDto>>(new List<Order> { order });
+                return mapper.Map<IList<OrderOverviewDto>>(new List<Order> { order });
             }
 
             if (filter.UserType == UserType.Customer)
@@ -74,14 +76,16 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
                 orders = orders.Where(s => s.IsClosed == filter.IsClosed);
             }
 
-            if (filter.IsPayed.HasValue)
+            if (filter.PaymentStatus.HasValue)
             {
-                orders = orders.Where(s => s.IsPayed == filter.IsPayed);
+                var paymentStatus = mapper.Map<PaymentStatusDto, PaymentStatus>(filter.PaymentStatus.Value);
+                orders = orders.Where(s => s.OrderPayment.Status == paymentStatus);
             }
 
-            if (filter.IsShipped.HasValue)
+            if (filter.ShipmentStatus.HasValue)
             {
-                orders = orders.Where(s => s.IsShipped == filter.IsShipped);
+                var shipmentStatus = mapper.Map<ShipmentStatusDto, ShipmentStatus>(filter.ShipmentStatus.Value);
+                orders = orders.Where(s => s.OrderShipment.Status == shipmentStatus);
             }
 
             orders = orders.OrderByDescending(x => x.CreationDateTime);
@@ -93,7 +97,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
 
             var ordersList = await orders
                 .ToListAsync();
-            return mapper.Map<IList<OrdersListDto>>(ordersList);
+            return mapper.Map<IList<OrderOverviewDto>>(ordersList);
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Streetwood.Core.Constants;
-
-namespace Streetwood.Core.Domain.Entities.Configuration
+﻿namespace Streetwood.Core.Domain.Entities.Configuration
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Streetwood.Core.Constants;
+
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         public void Configure(EntityTypeBuilder<Order> builder)
@@ -22,10 +22,6 @@ namespace Streetwood.Core.Domain.Entities.Configuration
                 .WithOne(s => s.Order)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(s => s.Shipment)
-                .WithMany(s => s.Orders)
-                .HasForeignKey("ShipmentId");
-
             builder.HasOne(s => s.OrderDiscount)
                 .WithMany(s => s.Orders)
                 .HasForeignKey("OrderDiscountId");
@@ -37,6 +33,14 @@ namespace Streetwood.Core.Domain.Entities.Configuration
             builder.HasOne(s => s.Address)
                 .WithMany(s => s.Orders)
                 .HasForeignKey("AddressId");
+
+            builder.HasOne(x => x.OrderPayment)
+                .WithOne()
+                .HasForeignKey<OrderPayment>("OrderId");
+
+            builder.HasOne(x => x.OrderShipment)
+                .WithOne()
+                .HasForeignKey<OrderShipment>("OrderId");
         }
     }
 }

@@ -42,13 +42,5 @@ namespace Streetwood.API.Controllers
             await bus.SendAsync(model.SetId(id));
             return Accepted();
         }
-
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            await bus.SendAsync(new DeleteShipmentCommandModel(id));
-            return Accepted();
-        }
     }
 }

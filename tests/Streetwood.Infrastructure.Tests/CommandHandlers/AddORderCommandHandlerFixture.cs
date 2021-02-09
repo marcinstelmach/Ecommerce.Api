@@ -11,6 +11,8 @@ using Streetwood.Test.Helpers.Fixtures;
 
 namespace Streetwood.Infrastructure.Tests.CommandHandlers
 {
+    using Streetwood.Core.Domain.Abstract.Repositories;
+
     public class AddOrderCommandHandlerFixture : EntitiesFixtures
     {
         public Mock<IUserQueryService> UserQueryServiceMock { get; }
@@ -23,15 +25,15 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
 
         public Mock<IAddressQueryService> AddressQueryServiceMock { get; }
 
-        public Mock<IOrderCommandService> OrderCommandServiceMock { get; }
+        public Mock<IOrderFactory> OrderCommandServiceMock { get; }
 
         public Mock<IEmailService> EmailServiceMock { get; }
 
-        public Mock<IMapper> MapperMock { get; }
+        public Mock<IPaymentsRepository> PaymentsRepositoryMock { get; }
 
-        public AddOrderCommandHandler Sut { get; }
+        public CreateOrderCommandHandler Sut { get; }
 
-        public AddOrderCommandModel Request { get; }
+        public CreateOrderCommandModel Request { get; }
 
         public AddOrderCommandHandlerFixture()
         {
@@ -40,15 +42,15 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             OrderDiscountQueryServiceMock = new Mock<IOrderDiscountQueryService>();
             ProductOrderQueryServiceMock = new Mock<IProductOrderQueryService>();
             AddressQueryServiceMock = new Mock<IAddressQueryService>();
-            OrderCommandServiceMock = new Mock<IOrderCommandService>();
+            OrderCommandServiceMock = new Mock<IOrderFactory>();
             EmailServiceMock = new Mock<IEmailService>();
-            MapperMock = new Mock<IMapper>();
-            Sut = new AddOrderCommandHandler(UserQueryServiceMock.Object, ShipmentQueryServiceMock.Object,
+            PaymentsRepositoryMock = new Mock<IPaymentsRepository>();
+            Sut = new CreateOrderCommandHandler(UserQueryServiceMock.Object, ShipmentQueryServiceMock.Object,
                 OrderDiscountQueryServiceMock.Object,
                 ProductOrderQueryServiceMock.Object, AddressQueryServiceMock.Object, OrderCommandServiceMock.Object,
-                EmailServiceMock.Object, MapperMock.Object);
-            Request = Fixture.Build<AddOrderCommandModel>()
-                .Do(s => s.SetUserId(Guid.NewGuid()))
+                EmailServiceMock.Object, PaymentsRepositoryMock.Object);
+            Request = Fixture.Build<CreateOrderCommandModel>()
+                .With(x => x.UserId, Guid.NewGuid)
                 .Create();
         }
     }

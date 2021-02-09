@@ -5,12 +5,12 @@ namespace Streetwood.Infrastructure.Managers.Abstract
 {
     public interface IEmailTemplateParser
     {
-        string PrepareNewOrderEmailAsync(OrderDto order, string stringTemplate);
+        string PrepareNewOrderEmailAsync(Order order, string stringTemplate);
 
         string PrepareActivateNewUserEmail(User user, string stringTemplate);
 
         string PrepareResetPasswordEmail(User user, string stringTemplate);
 
-        string PrepareOrderWasShippedEmail(OrderDto order, string stringTemplate);
+        string PrepareOrderWasShippedEmail(Order order, string stringTemplate);
     }
 }

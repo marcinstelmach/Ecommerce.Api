@@ -16,7 +16,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
         public AddOrderCommandHandlerTests()
         {
             OrderCommandServiceMock
-                .Setup(x => x.AddAsync(It.IsAny<User>(), It.IsAny<IList<ProductOrder>>(), It.IsAny<Shipment>(),
+                .Setup(x => x.CreateOrderAsync(It.IsAny<User>(), It.IsAny<IList<ProductOrder>>(), It.IsAny<Shipment>(), It.IsAny<Payment>(),
                     It.IsAny<OrderDiscount>(), It.IsAny<string>(), It.IsAny<Address>()))
                 .ReturnsAsync(Order);
         }
@@ -83,7 +83,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
 
         [Theory]
         [AutoData]
-        public async Task When_Adding_Order_Then_Adds_With_Service(User user, IList<ProductOrder> productOrders, Shipment shipment, Address address)
+        public async Task When_Adding_Order_Then_Adds_With_Service(User user, IList<ProductOrder> productOrders, Shipment shipment, Payment payment, Address address)
         {
             // Arrange
             UserQueryServiceMock.Setup(x => x.GetRawByIdAsync(It.IsAny<Guid>())).ReturnsAsync(user);
@@ -96,31 +96,7 @@ namespace Streetwood.Infrastructure.Tests.CommandHandlers
             await Sut.Handle(Request, default);
 
             // Assert
-            OrderCommandServiceMock.Verify(x => x.AddAsync(user, productOrders, shipment, OrderDiscount, Request.Comment, address));
-        }
-
-        [Fact]
-        public async Task When_Adding_Order_Then_Maps_To_Order_Dto()
-        {
-            // Act
-            await Sut.Handle(Request, default);
-
-            // Assert
-            MapperMock.Verify(x => x.Map<OrderDto>(Order), Times.Once);
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task When_Adding_Order_Then_Send_New_Order_Email(OrderDto orderDto)
-        {
-            // Arrange
-            MapperMock.Setup(x => x.Map<OrderDto>(It.IsAny<Order>())).Returns(orderDto);
-
-            // Act
-            await Sut.Handle(Request, default);
-
-            // Assert
-            EmailServiceMock.Verify(x => x.SendNewOrderEmailAsync(orderDto), Times.Once);
+            OrderCommandServiceMock.Verify(x => x.CreateOrderAsync(user, productOrders, shipment, payment, OrderDiscount, Request.Comment, address));
         }
 
         [Fact]

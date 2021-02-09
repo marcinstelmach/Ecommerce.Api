@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Castle.Core.Internal;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Internal;
-using Streetwood.Core.Exceptions;
-using Streetwood.Infrastructure.Mappers;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace Streetwood.Convention.Tests
+﻿namespace Streetwood.Convention.Tests
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using Castle.Core.Internal;
+    using FluentAssertions;
+    using Microsoft.EntityFrameworkCore.Internal;
+    using Streetwood.API.Mappings;
+    using Streetwood.Core.Exceptions;
+    using Xunit;
+    using Xunit.Abstractions;
+
     public class MethodTests
     {
         private readonly ITestOutputHelper output;

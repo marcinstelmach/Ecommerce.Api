@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Streetwood.Core.Domain.Enums;
 using Streetwood.Core.Domain.Implementation;
 
 namespace Streetwood.Core.Migrations
@@ -109,6 +110,8 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<string>("ImageUrl");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<bool>("IsMain");
 
                     b.Property<int?>("ProductId");
@@ -131,11 +134,11 @@ namespace Streetwood.Core.Migrations
                     b.Property<decimal>("BasePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("ClosedDateTime");
+                    b.Property<DateTimeOffset?>("ClosedDateTime");
 
                     b.Property<string>("Comment");
 
-                    b.Property<DateTime>("CreationDateTime");
+                    b.Property<DateTimeOffset>("CreationDateTime");
 
                     b.Property<int?>("DiscountValue");
 
@@ -144,17 +147,7 @@ namespace Streetwood.Core.Migrations
 
                     b.Property<bool>("IsClosed");
 
-                    b.Property<bool>("IsPayed");
-
-                    b.Property<bool>("IsShipped");
-
                     b.Property<Guid?>("OrderDiscountId");
-
-                    b.Property<DateTime?>("PayedDateTime");
-
-                    b.Property<DateTime?>("ShipmentDateTime");
-
-                    b.Property<Guid?>("ShipmentId");
 
                     b.Property<decimal>("ShipmentPrice")
                         .HasColumnType("decimal(18,2)");
@@ -166,8 +159,6 @@ namespace Streetwood.Core.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("OrderDiscountId");
-
-                    b.HasIndex("ShipmentId");
 
                     b.HasIndex("UserId");
 
@@ -204,6 +195,78 @@ namespace Streetwood.Core.Migrations
                     b.HasAlternateKey("Code");
 
                     b.ToTable("OrderDiscounts");
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.OrderPayment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<Guid?>("PaymentId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<DateTimeOffset>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("OrderPayment");
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.OrderShipment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<Guid?>("ShipmentId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("TrackingId");
+
+                    b.Property<string>("TrackingUrl");
+
+                    b.Property<DateTimeOffset>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.HasIndex("ShipmentId");
+
+                    b.ToTable("OrderShipment");
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NameEng");
+
+                    b.Property<int>("PaymentType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payments");
+
+                    b.HasDiscriminator<int>("PaymentType");
                 });
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Product", b =>
@@ -440,6 +503,15 @@ namespace Streetwood.Core.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.BankTransferPayment", b =>
+                {
+                    b.HasBaseType("Streetwood.Core.Domain.Entities.Payment");
+
+                    b.Property<int>("AccountNumber");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Charm", b =>
                 {
                     b.HasOne("Streetwood.Core.Domain.Entities.CharmCategory", "CharmCategory")
@@ -479,14 +551,32 @@ namespace Streetwood.Core.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("OrderDiscountId");
 
-                    b.HasOne("Streetwood.Core.Domain.Entities.Shipment", "Shipment")
-                        .WithMany("Orders")
-                        .HasForeignKey("ShipmentId");
-
                     b.HasOne("Streetwood.Core.Domain.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.OrderPayment", b =>
+                {
+                    b.HasOne("Streetwood.Core.Domain.Entities.Order")
+                        .WithOne("OrderPayment")
+                        .HasForeignKey("Streetwood.Core.Domain.Entities.OrderPayment", "OrderId");
+
+                    b.HasOne("Streetwood.Core.Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId");
+                });
+
+            modelBuilder.Entity("Streetwood.Core.Domain.Entities.OrderShipment", b =>
+                {
+                    b.HasOne("Streetwood.Core.Domain.Entities.Order")
+                        .WithOne("OrderShipment")
+                        .HasForeignKey("Streetwood.Core.Domain.Entities.OrderShipment", "OrderId");
+
+                    b.HasOne("Streetwood.Core.Domain.Entities.Shipment", "Shipment")
+                        .WithMany()
+                        .HasForeignKey("ShipmentId");
                 });
 
             modelBuilder.Entity("Streetwood.Core.Domain.Entities.Product", b =>

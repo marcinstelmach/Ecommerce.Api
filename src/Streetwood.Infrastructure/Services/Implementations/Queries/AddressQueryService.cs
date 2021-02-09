@@ -33,15 +33,15 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
             return mapper.Map<IList<AddressDto>>(addresses);
         }
 
-        public async Task<Address> GetAsync(NewAddressDto addressDto, Guid? id, Guid userId)
+        public async Task<Address> GetAsync(NewAddressDto addressDto, Guid? addressId, Guid userId)
         {
-            if (id != null)
+            if (addressId != null)
             {
                 var user = await userRepository.GetAndEnsureExistAsync(userId);
                 return user.Orders
                     .Select(s => s.Address)
                     .Distinct()
-                    .EnsureSingleExists(s => s.Id == id.Value);
+                    .EnsureFirstExists(s => s.Id == addressId.Value);
             }
 
             return new Address(addressDto.Street, addressDto.City, addressDto.Country, addressDto.PostCode, addressDto.PhoneNumber);

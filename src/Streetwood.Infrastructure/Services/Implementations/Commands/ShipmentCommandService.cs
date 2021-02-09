@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Streetwood.Core.Domain.Abstract.Repositories;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Domain.Enums;
-using Streetwood.Core.Exceptions;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
 namespace Streetwood.Infrastructure.Services.Implementations.Commands
@@ -34,19 +33,6 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             shipment.SetPrice(price);
             shipment.SetType(type);
 
-            await shipmentRepository.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            var shipment = await shipmentRepository.GetAndEnsureExistAsync(id);
-
-            if (shipment.Orders.Count > 0)
-            {
-                throw new StreetwoodException(ErrorCode.ShipmentInUse);
-            }
-
-            await shipmentRepository.DeleteAsync(shipment);
             await shipmentRepository.SaveChangesAsync();
         }
     }

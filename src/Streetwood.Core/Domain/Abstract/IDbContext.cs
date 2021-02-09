@@ -34,6 +34,8 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<Shipment> Shipments { get; set; }
 
+        DbSet<Payment> Payments { get; set; }
+
         DbSet<User> Users { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

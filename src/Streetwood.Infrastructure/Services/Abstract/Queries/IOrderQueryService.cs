@@ -13,6 +13,6 @@ namespace Streetwood.Infrastructure.Services.Abstract.Queries
 
         Task<Order> GetRawAndEnsureExistsAsync(int id);
 
-        Task<IList<OrdersListDto>> GetFilteredAsync(OrderQueryFilter filter);
+        Task<IList<OrderOverviewDto>> GetFilteredAsync(OrderQueryFilter filter);
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Dto.Products;
 using Streetwood.Infrastructure.Queries.Models.Product;
 using Streetwood.Infrastructure.Services.Abstract.Queries;
 

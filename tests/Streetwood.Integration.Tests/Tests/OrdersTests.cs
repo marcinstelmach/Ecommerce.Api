@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Streetwood.API;
 using Streetwood.Infrastructure.Commands.Models.Order;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Dto.Products;
 using Streetwood.Test.Helpers;
 using Xunit;
 using Xunit.Abstractions;

@@ -7,9 +7,9 @@ namespace Streetwood.Core.Extensions
 {
     public static class CollectionsExtensions
     {
-        public static T EnsureSingleExists<T>(this IEnumerable<T> collection, Func<T, bool> condition)
+        public static T EnsureFirstExists<T>(this IEnumerable<T> collection, Func<T, bool> condition)
         {
-            var record = collection.SingleOrDefault(condition);
+            var record = collection.FirstOrDefault(condition);
             if (record == null)
             {
                 throw new StreetwoodException(ErrorCode.GenericNotExist(typeof(T)));

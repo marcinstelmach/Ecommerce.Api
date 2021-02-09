@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Streetwood.Test.Helpers\Streetwood.Test.Helpers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
 </Project>

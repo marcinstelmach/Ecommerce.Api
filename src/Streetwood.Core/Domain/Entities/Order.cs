@@ -8,11 +8,29 @@ namespace Streetwood.Core.Domain.Entities
     {
         private readonly List<ProductOrder> productOrders = new List<ProductOrder>();
 
+        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment, Payment payment,
+            decimal basePrice, decimal finalPrice, string comment, Address address)
+        {
+            IsClosed = false;
+            Comment = comment;
+            BasePrice = basePrice;
+            SetShipment(shipment);
+            SetPayment(payment);
+            ShipmentPrice = shipment.Price;
+            CreationDateTime = DateTimeOffset.UtcNow;
+            AddProductOrders(productOrders);
+            SetDiscount(orderDiscount);
+            SetAddress(address);
+            FinalPrice = finalPrice;
+            SetUser(user);
+            DiscountValue = orderDiscount?.PercentValue;
+        }
+
+        protected Order()
+        {
+        }
+
         public new int Id { get; set; }
-
-        public bool IsShipped { get; protected set; }
-
-        public bool IsPayed { get; protected set; }
 
         public bool IsClosed { get; protected set; }
 
@@ -26,15 +44,9 @@ namespace Streetwood.Core.Domain.Entities
 
         public int? DiscountValue { get; protected set; }
 
-        public DateTime CreationDateTime { get; protected set; }
+        public DateTimeOffset CreationDateTime { get; protected set; }
 
-        public DateTime? PayedDateTime { get; protected set; }
-
-        public DateTime? ShipmentDateTime { get; protected set; }
-
-        public DateTime? ClosedDateTime { get; protected set; }
-
-        public virtual Shipment Shipment { get; protected set; }
+        public DateTimeOffset? ClosedDateTime { get; protected set; }
 
         public virtual User User { get; protected set; }
 
@@ -42,75 +54,27 @@ namespace Streetwood.Core.Domain.Entities
 
         public virtual Address Address { get; protected set; }
 
+        public virtual OrderShipment OrderShipment { get; protected set; }
+
+        public virtual OrderPayment OrderPayment { get; protected set; }
+
         public virtual IReadOnlyCollection<ProductOrder> ProductOrders => productOrders;
 
-        public Order(User user, IEnumerable<ProductOrder> productOrders, OrderDiscount orderDiscount, Shipment shipment,
-            decimal basePrice, decimal finalPrice, string comment, Address address)
+        public void Close()
         {
-            SetIsShipped(false);
-            SetIsPayed(false);
-            SetIsClosed(false);
-            Comment = comment;
-            BasePrice = basePrice;
-            SetShipment(shipment);
-            ShipmentPrice = shipment.Price;
-            CreationDateTime = DateTime.UtcNow;
-            AddProductOrders(productOrders);
-            SetDiscount(orderDiscount);
-            SetAddress(address);
-            FinalPrice = finalPrice;
-            SetUser(user);
-            DiscountValue = orderDiscount?.PercentValue;
+            IsClosed = true;
+            ClosedDateTime = DateTimeOffset.UtcNow;
         }
-
-        protected Order()
-        {
-        }
-
-        public void SetIsShipped(bool isShipped)
-        {
-            if (isShipped == IsShipped)
-            {
-                return;
-            }
-
-            IsShipped = isShipped;
-            SetShipmentDateTime(DateTime.UtcNow);
-        }
-
-        public void SetIsPayed(bool isPayed)
-        {
-            if (isPayed == IsPayed)
-            {
-                return;
-            }
-
-            IsPayed = isPayed;
-            SetPayedDateTime(DateTime.UtcNow);
-        }
-
-        public void SetIsClosed(bool isClosed)
-        {
-            if (isClosed == IsClosed)
-            {
-                return;
-            }
-
-            IsClosed = isClosed;
-            SetClosedDate(DateTime.UtcNow);
-        }
-
-        public void SetPayedDateTime(DateTime dateTime)
-            => PayedDateTime = dateTime;
-
-        public void SetShipmentDateTime(DateTime dateTime)
-            => ShipmentDateTime = dateTime;
-
-        public void SetClosedDate(DateTime dateTime)
-            => ClosedDateTime = dateTime;
 
         public void SetShipment(Shipment shipment)
-            => Shipment = shipment;
+        {
+            OrderShipment = new OrderShipment(shipment);
+        }
+
+        public void SetPayment(Payment payment)
+        {
+            OrderPayment = new OrderPayment(payment);
+        }
 
         public void SetDiscount(OrderDiscount discount)
             => OrderDiscount = discount;
@@ -121,10 +85,7 @@ namespace Streetwood.Core.Domain.Entities
         public void SetUser(User user)
             => User = user;
 
-        public void AddProductOrder(ProductOrder productOrder)
-            => productOrders.Add(productOrder);
-
-        public void AddProductOrders(IEnumerable<ProductOrder> productOrderss)
-            => this.productOrders.AddRange(productOrderss);
+        public void AddProductOrders(IEnumerable<ProductOrder> productOrders)
+            => this.productOrders.AddRange(productOrders);
     }
 }

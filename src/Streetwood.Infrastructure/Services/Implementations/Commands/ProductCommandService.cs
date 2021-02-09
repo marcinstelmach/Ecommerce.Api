@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Streetwood.Core.Domain.Abstract.Repositories;
-using Streetwood.Core.Domain.Entities;
-using Streetwood.Core.Domain.Enums;
-using Streetwood.Core.Exceptions;
-using Streetwood.Core.Extensions;
-using Streetwood.Infrastructure.Dto;
-using Streetwood.Infrastructure.Managers.Abstract;
-using Streetwood.Infrastructure.Services.Abstract.Commands;
-
-namespace Streetwood.Infrastructure.Services.Implementations.Commands
+﻿namespace Streetwood.Infrastructure.Services.Implementations.Commands
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Streetwood.Core.Domain.Abstract.Repositories;
+    using Streetwood.Core.Domain.Entities;
+    using Streetwood.Core.Domain.Enums;
+    using Streetwood.Core.Exceptions;
+    using Streetwood.Core.Extensions;
+    using Streetwood.Infrastructure.Dto;
+    using Streetwood.Infrastructure.Dto.Products;
+    using Streetwood.Infrastructure.Managers.Abstract;
+    using Streetwood.Infrastructure.Services.Abstract.Commands;
+
     internal class ProductCommandService : IProductCommandService
     {
         private readonly IProductCategoryRepository productCategoryRepository;
@@ -26,23 +26,21 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             this.pathManager = pathManager;
         }
 
-        public async Task<int> AddAsync(string name, string nameEng, decimal price, string description, string descriptionEng,
-            bool acceptCharms, bool acceptGraver, int maxCharmsCount, string sizes, Guid productCategoryId, ICollection<ProductColorDto> productColorViewModels)
+        public async Task<int> AddAsync(AddProductDto dto)
         {
-            var category = await productCategoryRepository.GetAndEnsureExistAsync(productCategoryId);
-            if (category.HasOneProduct && category.Products.Count > 0)
+            var category = await productCategoryRepository.GetAndEnsureExistAsync(dto.ProductCategoryId);
+            if (category.HasOneProduct)
             {
-                throw new StreetwoodException(ErrorCode.ThisProductCategoryCanHasOnlyOneProduct);
+                var existingAvailableProducts = category.Products.Where(x => x.Status == ItemStatus.Available);
+                if (existingAvailableProducts.Any())
+                {
+                    throw new StreetwoodException(ErrorCode.ThisProductCategoryCanHasOnlyOneProduct);
+                }
             }
 
-            var imagesPath = pathManager.GetProductPath(category.UniqueName, name.AppendRandom(5));
-            var product = new Product(name, nameEng, price, description, descriptionEng, acceptCharms, acceptGraver, maxCharmsCount, sizes, imagesPath);
-
-            if (productColorViewModels != null && productColorViewModels.Any())
-            {
-                var productColors = productColorViewModels.Select(x => new ProductColor(x.Name, x.HexValue));
-                product.AddProductColors(productColors);
-            }
+            var imagesPath = pathManager.GetProductPath(category.UniqueName, dto.Name.AppendRandom(5));
+            var product = new Product(
+                dto.Name, dto.NameEng, dto.Price, dto.Description, dto.DescriptionEng, dto.AcceptCharms, dto.AcceptGraver, dto.MaxCharmCount, dto.Sizes, imagesPath);
 
             category.AddProduct(product);
             await productCategoryRepository.SaveChangesAsync();

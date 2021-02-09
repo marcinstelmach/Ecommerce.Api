@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Streetwood.Core.Domain.Abstract;
 using Streetwood.Core.Domain.Enums;
 
@@ -7,8 +6,6 @@ namespace Streetwood.Core.Domain.Entities
 {
     public class Shipment : Entity
     {
-        private readonly List<Order> orders = new List<Order>();
-
         public string Name { get; protected set; }
 
         public string NameEng { get; protected set; }
@@ -22,8 +19,6 @@ namespace Streetwood.Core.Domain.Entities
         public bool IsActive { get; protected set; }
 
         public ShipmentType Type { get; protected set; }
-
-        public virtual IReadOnlyCollection<Order> Orders => orders;
 
         public Shipment(string name, string nameEng, string description, string descriptionEng, decimal price, ShipmentType type)
         {

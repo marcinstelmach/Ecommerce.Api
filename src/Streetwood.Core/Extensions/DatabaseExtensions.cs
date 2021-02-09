@@ -38,10 +38,10 @@ namespace Streetwood.Core.Extensions
             services.AddScoped<IDbContext>(prov => prov.GetRequiredService<StreetwoodContext>());
         }
 
-        public static async Task<T> FindAndEnsureSingleAsync<T>(this DbSet<T> set, Expression<Func<T, bool>> expression, ErrorCode code)
+        public static async Task<T> FindAndEnsureExistsAsync<T>(this DbSet<T> set, Expression<Func<T, bool>> expression, ErrorCode code)
             where T : Entity
         {
-            var result = await set.SingleOrDefaultAsync(expression);
+            var result = await set.FirstOrDefaultAsync(expression);
             if (result == null)
             {
                 throw new StreetwoodException(code);

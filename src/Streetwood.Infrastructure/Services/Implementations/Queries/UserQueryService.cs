@@ -81,7 +81,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Queries
         public async Task<User> CreateChangePasswordTokenAsync(string email)
         {
             var user = await userRepository.GetByEmailAndEnsureExistAsync(email, ErrorCode.GenericNotExist(typeof(User)));
-            if (user.UserStatus == UserStatus.Deactivated)
+            if (user.UserStatus == UserStatus.Deleted)
             {
                 throw new StreetwoodException(ErrorCode.AccessingDeactivatedUser);
             }

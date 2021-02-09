@@ -45,7 +45,7 @@ namespace Streetwood.Infrastructure.Services.Implementations.Commands
             user.SetEmail("erased");
             user.SetFirstName("erased");
             user.SetLastName("Erased");
-            user.SetUserStatus(UserStatus.Deactivated);
+            user.SetUserStatus(UserStatus.Deleted);
 
             await userRepository.SaveChangesAsync();
         }

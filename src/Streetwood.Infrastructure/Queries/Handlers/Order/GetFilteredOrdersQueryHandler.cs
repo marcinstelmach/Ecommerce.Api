@@ -9,7 +9,7 @@ using Streetwood.Infrastructure.Services.Abstract.Queries;
 
 namespace Streetwood.Infrastructure.Queries.Handlers.Order
 {
-    public class GetFilteredOrdersQueryHandler : IRequestHandler<GetFilteredOrdersQueryModel, IEnumerable<OrdersListDto>>
+    public class GetFilteredOrdersQueryHandler : IRequestHandler<GetFilteredOrdersQueryModel, IEnumerable<OrderOverviewDto>>
     {
         private readonly IOrderQueryService orderQueryService;
 
@@ -18,7 +18,7 @@ namespace Streetwood.Infrastructure.Queries.Handlers.Order
             this.orderQueryService = orderQueryService;
         }
 
-        public async Task<IEnumerable<OrdersListDto>> Handle(GetFilteredOrdersQueryModel request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<OrderOverviewDto>> Handle(GetFilteredOrdersQueryModel request, CancellationToken cancellationToken)
         {
             var filter = new OrderQueryFilter(request);
             var result = await orderQueryService.GetFilteredAsync(filter);

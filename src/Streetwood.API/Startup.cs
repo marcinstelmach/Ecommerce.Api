@@ -19,6 +19,10 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Streetwood.API
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using Streetwood.API.Mappings;
+
     public class Startup
     {
         private readonly ILogger logger;
@@ -40,7 +44,12 @@ namespace Streetwood.API
         {
             logger.LogInformation("Application (re)started.");
             services.AddMvc(opt => opt.Filters.Add(typeof(ValidationActionFilter)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(x =>
+                {
+                    x.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+
             services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
             services.AddApplicationSettings(Configuration);
             services.AddJwtAuth();

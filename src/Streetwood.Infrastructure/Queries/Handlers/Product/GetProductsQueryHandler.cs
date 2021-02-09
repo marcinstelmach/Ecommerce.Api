@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Streetwood.Core.Constants;
 using Streetwood.Core.Extensions;
 using Streetwood.Infrastructure.Dto;
+using Streetwood.Infrastructure.Dto.Products;
 using Streetwood.Infrastructure.Managers.Abstract;
 using Streetwood.Infrastructure.Queries.Models.Product;
 using Streetwood.Infrastructure.Services.Abstract.Queries;

@@ -1,25 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MediatR;
-
-namespace Streetwood.Infrastructure.Commands.Models.Order
+﻿namespace Streetwood.Infrastructure.Commands.Models.Order
 {
+    using MediatR;
+    using Streetwood.Infrastructure.Dto;
+
     public class UpdateOrderCommandModel : IRequest
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
-        [Required]
-        public bool Payed { get; set; }
+        public PaymentStatusDto PaymentStatus { get; set; }
 
-        [Required]
-        public bool Shipped { get; set; }
+        public ShipmentStatusDto ShipmentStatus { get; set; }
 
-        [Required]
-        public bool Closed { get; set; }
+        public string ShipmentTrackingUrl { get; set; }
 
-        public UpdateOrderCommandModel SetId(int id)
-        {
-            Id = id;
-            return this;
-        }
+        public string ShipmentTrackingId { get; set; }
     }
 }
