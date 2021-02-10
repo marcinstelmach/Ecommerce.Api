@@ -37,6 +37,8 @@ namespace Streetwood.Core.Domain.Implementation
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Slide> Slides { get; set; }
+
         public bool EnsureDatabaseCreated()
             => Database.EnsureCreated();
 
@@ -63,6 +65,7 @@ namespace Streetwood.Core.Domain.Implementation
             builder.ApplyConfiguration(new DiscountCategoryConfiguration());
             builder.ApplyConfiguration(new ProductColorConfiguration());
             builder.ApplyConfiguration(new PaymentConfiguration());
+            builder.ApplyConfiguration(new SlideConfiguration());
         }
     }
 }
