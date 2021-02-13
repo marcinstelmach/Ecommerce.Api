@@ -17,5 +17,7 @@ namespace Streetwood.Core.Constants
         public static string CharmCategoriesList => nameof(CharmCategoriesList);
 
         public static string ProductsWithDiscounts(Guid id) => $"{nameof(ProductsWithDiscounts)}{id.ToString()}";
+
+        public static string Slides => nameof(Slides);
     }
 }

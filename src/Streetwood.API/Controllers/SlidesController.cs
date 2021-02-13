@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Streetwood.API.Bus;
     using Streetwood.API.ViewModels.Slides;
+    using Streetwood.Core.Extensions;
     using Streetwood.Infrastructure.Commands.Models.Slides;
     using Streetwood.Infrastructure.Dto;
     using Streetwood.Infrastructure.Queries.Models.Slides;
@@ -28,7 +29,7 @@
         [ProducesResponseType(typeof(IEnumerable<SlideDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetSlidesAsync()
         {
-            return Ok(await bus.SendAsync(new GetSlidesQueryModel()));
+            return Ok(await bus.SendAsync(new GetSlidesQueryModel(User.GetUserType())));
         }
 
         [HttpPost]
