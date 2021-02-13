@@ -11,5 +11,7 @@
         string GetPhysicalPath(string path);
 
         string GetEmailTemplatePath(string templateName);
+
+        string GetSlideImagesPath();
     }
 }
