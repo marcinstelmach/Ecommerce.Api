@@ -1,18 +1,19 @@
 ﻿namespace Streetwood.Core.Domain.Implementation.Repositories
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Streetwood.Core.Domain.Abstract;
     using Streetwood.Core.Domain.Abstract.Repositories;
     using Streetwood.Core.Domain.Entities;
 
-    public class SlidesRepository : ISlidesRepository
+    public class SlidesRepository : Repository<Slide>, ISlidesRepository
     {
         private readonly IDbContext dbContext;
 
         public SlidesRepository(IDbContext dbContext)
+            : base(dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -22,9 +23,17 @@
             return await dbContext.Slides.ToArrayAsync();
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<int> GetLastOrderIndexAsync()
         {
-            await dbContext.SaveChangesAsync();
+            return await dbContext.Slides
+                .OrderByDescending(x => x.OrderIndex)
+                .Select(x => x.OrderIndex)
+                .FirstOrDefaultAsync();
+        }
+
+        public void Add(Slide slide)
+        {
+            dbContext.Slides.Add(slide);
         }
     }
 }
