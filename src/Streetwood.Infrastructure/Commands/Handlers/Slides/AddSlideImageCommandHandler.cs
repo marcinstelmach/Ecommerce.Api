@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using MediatR;
     using Streetwood.Core.Domain.Abstract.Repositories;
+    using Streetwood.Core.Exceptions;
     using Streetwood.Core.Extensions;
     using Streetwood.Infrastructure.Commands.Models.Slides;
     using Streetwood.Infrastructure.Managers.Abstract;
@@ -25,6 +26,10 @@
         public async Task<Unit> Handle(AddSlideImageCommandModel request, CancellationToken cancellationToken)
         {
             var slide = await slidesRepository.GetAndEnsureExistAsync(request.Id);
+            if (slide.ImageUrl != null)
+            {
+                throw new StreetwoodException(ErrorCode.SlideAlreadyHaveImage);
+            }
 
             var imageUniqueName = request.File.FileName.GetUniqueFileName();
             var path = pathManager.GetSlideImagesPath();

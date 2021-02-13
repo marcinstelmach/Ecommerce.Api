@@ -26,5 +26,13 @@
         public string ImageUrl { get; protected set; }
 
         public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
+
+        public void SetOrderIndex(int orderIndex)
+        {
+            if (orderIndex > 0 && OrderIndex != orderIndex)
+            {
+                OrderIndex = orderIndex;
+            }
+        }
     }
 }

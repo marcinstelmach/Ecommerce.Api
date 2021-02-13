@@ -20,7 +20,9 @@
 
         public async Task<IEnumerable<Slide>> GetSlidesAsync()
         {
-            return await dbContext.Slides.ToArrayAsync();
+            return await dbContext.Slides
+                .OrderBy(x => x.OrderIndex)
+                .ToArrayAsync();
         }
 
         public async Task<int> GetLastOrderIndexAsync()

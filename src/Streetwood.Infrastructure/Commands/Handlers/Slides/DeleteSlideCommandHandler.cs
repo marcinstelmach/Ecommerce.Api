@@ -1,5 +1,6 @@
 ﻿namespace Streetwood.Infrastructure.Commands.Handlers.Slides
 {
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using MediatR;
@@ -24,7 +25,7 @@
             await slidesRepository.DeleteAsync(slide);
             await slidesRepository.SaveChangesAsync();
 
-            fileManager.RemoveFile(slide.ImageUrl);
+            fileManager.RemoveFile(Path.Combine("wwwroot", slide.ImageUrl));
             return Unit.Value;
         }
     }

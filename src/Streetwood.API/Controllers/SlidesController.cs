@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Streetwood.API.Bus;
+    using Streetwood.API.ViewModels.Slides;
     using Streetwood.Infrastructure.Commands.Models.Slides;
     using Streetwood.Infrastructure.Dto;
     using Streetwood.Infrastructure.Queries.Models.Slides;
@@ -62,5 +63,18 @@
             return NoContent();
         }
 
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType((int) HttpStatusCode.NoContent)]
+        public async Task<IActionResult> UpdateSlideOrderIndexAsync([FromRoute] Guid id, [FromBody] UpdateSlideOrderIndexViewModel viewModel)
+        {
+            var command = new UpdateSlideOrderIndexCommandModel
+            {
+                Id = id,
+                OrderIndex = viewModel.OrderIndex
+            };
+            await bus.SendAsync(command);
+            return Accepted();
+        }
     }
 }

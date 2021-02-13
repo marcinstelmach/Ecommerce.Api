@@ -79,6 +79,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode PaymentDoesNotExists => new ErrorCode(nameof(PaymentDoesNotExists));
 
+        public static ErrorCode SlideAlreadyHaveImage => new ErrorCode(nameof(SlideAlreadyHaveImage));
+
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }
