@@ -41,5 +41,10 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             var path = Path.Combine("wwwroot", "EmailTemplates", templateName);
             return path;
         }
+
+        public string GetSlideImagesPath()
+        {
+            return Path.Combine("Images", "Slides");
+        }
     }
 }

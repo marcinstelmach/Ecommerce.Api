@@ -38,9 +38,9 @@ namespace Streetwood.Core.Domain.Abstract
 
         DbSet<User> Users { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        DbSet<Slide> Slides { get; set; }
 
-        int SaveChanges();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

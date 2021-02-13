@@ -21,6 +21,7 @@ namespace Streetwood.Core.Modules
             builder.RegisterType<OrderDiscountRepository>().As<IOrderDiscountRepository>().InstancePerLifetimeScope();
             builder.RegisterType<OrdersRepository>().As<IOrdersRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PaymentsRepository>().As<IPaymentsRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<SlidesRepository>().As<ISlidesRepository>().InstancePerLifetimeScope();
         }
     }
 }

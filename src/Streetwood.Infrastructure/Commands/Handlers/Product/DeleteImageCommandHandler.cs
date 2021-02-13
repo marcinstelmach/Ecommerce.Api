@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Streetwood.Infrastructure.Commands.Models;
 using Streetwood.Infrastructure.Commands.Models.Product;
 using Streetwood.Infrastructure.Services.Abstract.Commands;
 
