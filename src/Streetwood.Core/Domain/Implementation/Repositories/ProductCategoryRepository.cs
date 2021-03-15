@@ -44,11 +44,12 @@ namespace Streetwood.Core.Domain.Implementation.Repositories
                 .Include(s => s.ProductCategories)
                 .Include(s => s.DiscountCategories)
                     .ThenInclude(s => s.ProductCategoryDiscount)
+                .OrderBy(x => x.Name)
                 .ToListAsync();
 
             foreach (var category in categories)
             {
-                var subCategories = category.ProductCategories.Where(s => s.Status == ItemStatus.Available).ToList();
+                var subCategories = category.ProductCategories.Where(s => s.Status == ItemStatus.Available).OrderBy(x => x.Name).ToList();
                 category.ProductCategories.Clear();
                 category.ProductCategories.AddRange(subCategories);
             }

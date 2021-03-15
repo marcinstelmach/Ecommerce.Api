@@ -2,6 +2,7 @@
 {
     public enum PaymentType
     {
-        BankTransfer = 1
+        PaymentOnDelivery = 1,
+        BankTransfer
     }
 }

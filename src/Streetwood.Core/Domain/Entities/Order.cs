@@ -16,7 +16,6 @@ namespace Streetwood.Core.Domain.Entities
             BasePrice = basePrice;
             SetShipment(shipment);
             SetPayment(payment);
-            ShipmentPrice = shipment.Price;
             CreationDateTime = DateTimeOffset.UtcNow;
             AddProductOrders(productOrders);
             SetDiscount(orderDiscount);
@@ -37,8 +36,6 @@ namespace Streetwood.Core.Domain.Entities
         public string Comment { get; protected set; }
 
         public decimal BasePrice { get; protected set; }
-
-        public decimal ShipmentPrice { get; protected set; }
 
         public decimal FinalPrice { get; protected set; }
 

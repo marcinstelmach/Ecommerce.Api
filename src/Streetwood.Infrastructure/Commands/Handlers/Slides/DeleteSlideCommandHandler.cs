@@ -25,7 +25,11 @@
             await slidesRepository.DeleteAsync(slide);
             await slidesRepository.SaveChangesAsync();
 
-            fileManager.RemoveFile(Path.Combine("wwwroot", slide.ImageUrl));
+            if (slide.ImageUrl != null)
+            {
+                fileManager.RemoveFile(Path.Combine("wwwroot", slide.ImageUrl));
+            }
+
             return Unit.Value;
         }
     }

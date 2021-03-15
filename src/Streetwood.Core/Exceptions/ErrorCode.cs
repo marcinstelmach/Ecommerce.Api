@@ -81,6 +81,8 @@ namespace Streetwood.Core.Exceptions
 
         public static ErrorCode SlideAlreadyHaveImage => new ErrorCode(nameof(SlideAlreadyHaveImage));
 
+        public static ErrorCode InvalidShipmentType => new ErrorCode(nameof(InvalidShipmentType));
+
         public new string ToString() => $"{ErrorCodeName}: StatusCode: '{StatusCode}', Message: '{Message}'.";
     }
 }

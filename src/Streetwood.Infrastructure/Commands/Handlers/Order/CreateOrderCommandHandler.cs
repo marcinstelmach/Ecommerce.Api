@@ -4,6 +4,8 @@
     using System.Threading.Tasks;
     using MediatR;
     using Streetwood.Core.Domain.Abstract.Repositories;
+    using Streetwood.Core.Domain.Enums;
+    using Streetwood.Core.Exceptions;
     using Streetwood.Infrastructure.Commands.Models.Order;
     using Streetwood.Infrastructure.Services.Abstract;
     using Streetwood.Infrastructure.Services.Abstract.Queries;
@@ -40,8 +42,14 @@
             var productOrders = await productOrderQueryService.CreateAsync(request.Products);
             var shipment = await shipmentQueryService.GetRawAsync(request.ShipmentId);
             var payment = await paymentsRepository.GetPaymentAsync(request.PaymentId);
+            if ((shipment.Type == ShipmentType.CashOnDelivery && payment.PaymentType != PaymentType.PaymentOnDelivery)
+                || (shipment.Type != ShipmentType.CashOnDelivery && payment.PaymentType == PaymentType.PaymentOnDelivery))
+            {
+                throw new StreetwoodException(ErrorCode.InvalidShipmentType);
+            }
+
             var orderDiscount = await orderDiscountQueryService.GetRawByCodeAsync(request.PromoCode);
-            var address = await addressQueryService.GetAsync(request.Address, request.AddressId, request.UserId); 
+            var address = await addressQueryService.GetAsync(request.Address, request.AddressId, request.UserId);
 
             var order = await orderFactory.CreateOrderAsync(user, productOrders, shipment, payment, orderDiscount, request.Comment, address);
             await emailService.SendNewOrderEmailAsync(order);
