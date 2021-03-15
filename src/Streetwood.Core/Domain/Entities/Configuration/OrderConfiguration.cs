@@ -13,8 +13,6 @@
                 .ValueGeneratedOnAdd();
             builder.Property(s => s.BasePrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
-            builder.Property(s => s.ShipmentPrice)
-                .HasColumnType(ConstantValues.PriceDecimalType);
             builder.Property(s => s.FinalPrice)
                 .HasColumnType(ConstantValues.PriceDecimalType);
 

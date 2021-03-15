@@ -2,6 +2,6 @@
 {
     public class BankTransferPayment : Payment
     {
-        public int AccountNumber { get; private set; }
+        public long AccountNumber { get; private set; }
     }
 }

@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Streetwood.Core.Domain.Entities;
 using Streetwood.Core.Settings;
-using Streetwood.Infrastructure.Dto;
 using Streetwood.Infrastructure.Managers.Abstract;
 
 namespace Streetwood.Infrastructure.Managers.Implementations
@@ -55,8 +54,8 @@ namespace Streetwood.Infrastructure.Managers.Implementations
             stringTemplate = stringTemplate.Replace("{{{PostCode}}}", order.Address.PostCode);
             stringTemplate = stringTemplate.Replace("{{{City}}}", order.Address.City);
             stringTemplate = stringTemplate.Replace("{{{ShipmentName}}}", order.OrderShipment.Shipment.Name);
-            stringTemplate = stringTemplate.Replace("{{{ShipmentPrice}}}", order.ShipmentPrice.ToString("F", CultureInfo.InvariantCulture));
-            stringTemplate = stringTemplate.Replace("{{{OrderPrice}}}", (order.FinalPrice + order.ShipmentPrice).ToString("F", CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{ShipmentPrice}}}", order.OrderShipment.Price.ToString("F", CultureInfo.InvariantCulture));
+            stringTemplate = stringTemplate.Replace("{{{OrderPrice}}}", (order.FinalPrice + order.OrderShipment.Price).ToString("F", CultureInfo.InvariantCulture));
             
             return stringTemplate;
         }

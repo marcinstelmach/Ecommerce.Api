@@ -13,6 +13,9 @@
 
             CreateMap<BankTransferPayment, BankTransferPaymentDto>()
                 .IncludeBase<Payment, PaymentDto>();
+
+            CreateMap<OnDeliveryPayment, OnDeliveryPaymentDto>()
+                .IncludeBase<Payment, PaymentDto>();
         }
     }
 }

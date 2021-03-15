@@ -2,6 +2,6 @@
 {
     public class BankTransferPaymentDto : PaymentDto
     {
-        public int AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
     }
 }

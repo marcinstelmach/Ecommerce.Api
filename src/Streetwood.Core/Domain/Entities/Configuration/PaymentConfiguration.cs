@@ -12,7 +12,8 @@
             builder.HasKey(x => x.Id);
 
             builder.HasDiscriminator(x => x.PaymentType)
-                .HasValue<BankTransferPayment>(PaymentType.BankTransfer);
+                .HasValue<BankTransferPayment>(PaymentType.BankTransfer)
+                .HasValue<OnDeliveryPayment>(PaymentType.PaymentOnDelivery);
         }
     }
 }
